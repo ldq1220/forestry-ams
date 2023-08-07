@@ -5,7 +5,7 @@
 		<div
 			class="app-topbar__collapse"
 			:class="{
-				unfold: !app.isFold
+				unfold: !app.isFold,
 			}"
 			@click="app.fold()"
 		>
@@ -19,10 +19,12 @@
 
 		<!-- 工具栏 -->
 		<ul class="app-topbar__tools">
-			<auto-menu-btn />
+			<!-- AI极速编码 -->
+			<!-- <auto-menu-btn /> -->
 
 			<li>
-				<cl-chat />
+				<!-- 信息 -->
+				<!-- <cl-chat /> -->
 			</li>
 
 			<li>
@@ -56,24 +58,24 @@
 </template>
 
 <script lang="ts" name="app-topbar" setup>
-import { useBase } from "/$/base";
-import { useCool } from "/@/cool";
-import RouteNav from "./route-nav.vue";
-import AMenu from "./amenu.vue";
-import AutoMenuBtn from "/$/magic/components/auto-menu/btn.vue";
+import { useBase } from '/$/base'
+import { useCool } from '/@/cool'
+import RouteNav from './route-nav.vue'
+import AMenu from './amenu.vue'
+import AutoMenuBtn from '/$/magic/components/auto-menu/btn.vue'
 
-const { router, service } = useCool();
-const { user, app } = useBase();
+const { router, service } = useCool()
+const { user, app } = useBase()
 
 async function onCommand(name: string) {
 	switch (name) {
-		case "my":
-			router.push("/my/info");
-			break;
-		case "exit":
-			await service.base.comm.logout();
-			user.logout();
-			break;
+		case 'my':
+			router.push('/my/info')
+			break
+		case 'exit':
+			await service.base.comm.logout()
+			user.logout()
+			break
 	}
 }
 </script>

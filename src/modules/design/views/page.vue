@@ -15,29 +15,29 @@
 </template>
 
 <script lang="ts" setup>
-import { useCool } from "/@/cool";
-import { ElMessage, ElMessageBox } from "element-plus";
-import Dp from "../components/index.vue";
+import { useCool } from '/@/cool'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import Dp from '../components/index.vue'
 
-const { refs, setRefs } = useCool();
+const { refs, setRefs } = useCool()
 
 function save() {
-	refs.dp.saveDraft();
-	ElMessage.success("保存草稿成功");
+	refs.dp.saveDraft()
+	ElMessage.success('保存草稿成功')
 }
 
 function create() {
-	refs.preview.open(refs.dp.getData());
+	refs.preview.open(refs.dp.getData())
 }
 
 function clear() {
-	ElMessageBox.confirm("是否清空列表所有数据？", "提示", {
-		type: "warning"
+	ElMessageBox.confirm('是否清空列表所有数据？', '提示', {
+		type: 'warning',
 	})
 		.then(() => {
-			refs.dp.clear();
+			refs.dp.clear()
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 </script>
 

@@ -13,35 +13,30 @@
 				ghostClass: 'Ghost',
 				dragClass: 'Drag',
 				draggable: '.is-drag',
-				put: isPut
+				put: isPut,
 			}"
 			:clone="onClone"
 		>
 			<template #footer>
-				<div class="tips">可拖入多个组件<span>（不包含组合组件）</span></div>
+				<div class="tips">
+					可拖入多个组件
+					<span>（不包含组合组件）</span>
+				</div>
 			</template>
 
 			<template #item="{ element: item, index }">
 				<div
 					class="item"
 					:class="{
-						active: dp.form.active == item.id
+						active: dp.form.active == item.id,
 					}"
 					@click.stop="dp.toDet(item)"
 				>
-					<el-icon
-						class="close"
-						@click.stop="remove(index)"
-						v-show="dp.form.active == item.id && item.isDel !== false"
-					>
+					<el-icon class="close" @click.stop="remove(index)" v-show="dp.form.active == item.id && item.isDel !== false">
 						<close-bold />
 					</el-icon>
 
-					<component
-						:is="item.component.name"
-						:data="item"
-						v-bind="item.component.props"
-					/>
+					<component :is="item.component.name" :data="item" v-bind="item.component.props" />
 				</div>
 			</template>
 		</draggable>
@@ -49,55 +44,55 @@
 </template>
 
 <script lang="ts" setup name="demo-group">
-import { ref, watch } from "vue";
-import Draggable from "vuedraggable/src/vuedraggable";
-import { CloseBold } from "@element-plus/icons-vue";
-import { useCool } from "/@/cool";
-import { useDp } from "../../hooks";
+import { ref, watch } from 'vue'
+import Draggable from 'vuedraggable/src/vuedraggable'
+import { CloseBold } from '@element-plus/icons-vue'
+import { useCool } from '/@/cool'
+import { useDp } from '../../hooks'
 
 const props = defineProps({
 	label: String,
-	children: Array
-});
+	children: Array,
+})
 
-const emit = defineEmits(["update:children"]);
+const emit = defineEmits(['update:children'])
 
-const { mitt } = useCool();
-const { dp } = useDp();
+const { mitt } = useCool()
+const { dp } = useDp()
 
-const list = ref<any[]>(props.children || []);
-const isPut = ref(true);
+const list = ref<any[]>(props.children || [])
+const isPut = ref(true)
 
 function remove(index: number) {
-	dp.clearConfig(list.value[index].id);
-	list.value?.splice(index, 1);
+	dp.clearConfig(list.value[index].id)
+	list.value?.splice(index, 1)
 }
 
 function onClone(data: any) {
-	mitt.emit("dp.pull", data);
-	return data;
+	mitt.emit('dp.pull', data)
+	return data
 }
 
-mitt.on("dp.setActive", (id: string) => {
-	const d = list.value?.find((e) => e.id == id);
+mitt.on('dp.setActive', (id: string) => {
+	const d = list.value?.find((e) => e.id == id)
 	if (d) {
-		dp.toDet(d);
+		dp.toDet(d)
 	}
-});
+})
 
-mitt.on("dp.pull", (d) => {
-	isPut.value = d?.component.name != "demo-group";
-});
+mitt.on('dp.pull', (d) => {
+	isPut.value = d?.component.name != 'demo-group'
+})
 
 watch(
 	list,
 	(val) => {
-		emit("update:children", val);
+		emit('update:children', val)
 	},
 	{
-		deep: true
-	}
-);
+		deep: true,
+	},
+)
 </script>
 
 <style lang="scss" scoped>

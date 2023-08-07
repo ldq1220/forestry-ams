@@ -9,28 +9,28 @@
 </template>
 
 <script lang="ts" name="demo-select" setup>
-import { useForm } from "@cool-vue/crud";
-import { CirclePlus, Remove } from "@element-plus/icons-vue";
-import { isEmpty } from "lodash-es";
-import { onMounted } from "vue";
+import { useForm } from '@cool-vue/crud'
+import { CirclePlus, Remove } from '@element-plus/icons-vue'
+import { isEmpty } from 'lodash-es'
+import { onMounted } from 'vue'
 
-const Form = useForm();
+const Form = useForm()
 
 function add(index: number) {
 	Form.value?.form.options.splice(index + 1, 0, {
-		label: ""
-	});
+		label: '',
+	})
 }
 
 function del(index: number) {
-	Form.value?.form.options.splice(index, 1);
+	Form.value?.form.options.splice(index, 1)
 }
 
 onMounted(() => {
 	if (isEmpty(Form.value?.form.options)) {
-		add(0);
+		add(0)
 	}
-});
+})
 </script>
 
 <style lang="scss" scoped>

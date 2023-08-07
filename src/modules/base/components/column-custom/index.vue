@@ -7,9 +7,7 @@
 				<div class="left">
 					<draggable item-key="prop" v-model="list">
 						<template #item="{ element: item }">
-							<el-checkbox border v-model="item.checked">{{
-								item.label
-							}}</el-checkbox>
+							<el-checkbox border v-model="item.checked">{{ item.label }}</el-checkbox>
 						</template>
 					</draggable>
 				</div>
@@ -26,16 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, nextTick, watch } from "vue";
-import store from "store";
-import Draggable from "vuedraggable/src/vuedraggable";
-import { isBoolean, orderBy } from "lodash-es";
+import { defineComponent, ref, PropType, nextTick, watch } from 'vue'
+import store from 'store'
+import Draggable from 'vuedraggable/src/vuedraggable'
+import { isBoolean, orderBy } from 'lodash-es'
 
 export default defineComponent({
-	name: "cl-column-custom",
+	name: 'cl-column-custom',
 
 	components: {
-		Draggable
+		Draggable,
 	},
 
 	props: {
@@ -43,96 +41,96 @@ export default defineComponent({
 		columns: {
 			type: Array as PropType<any[]>,
 			required: true,
-			default: () => []
-		}
+			default: () => [],
+		},
 	},
 
 	setup(props) {
 		// 是否可见
-		const visible = ref(false);
+		const visible = ref(false)
 
 		// 名称
-		const name = `column-custom__${props.name || location.pathname}`;
+		const name = `column-custom__${props.name || location.pathname}`
 
 		// 列数据
-		const list = ref<{ label: string; prop: any; checked?: boolean; orderNum?: number }[]>([]);
+		const list = ref<{ label: string; prop: any; checked?: boolean; orderNum?: number }[]>([])
 
 		// 改变列
 		function change() {
 			nextTick(() => {
 				props.columns.forEach((e) => {
 					if (!e.type && e.prop) {
-						e.hidden = !list.value.find((a) => a.prop == e.prop)?.checked;
-						e.orderNum = list.value.findIndex((a) => a.prop == e.prop);
+						e.hidden = !list.value.find((a) => a.prop == e.prop)?.checked
+						e.orderNum = list.value.findIndex((a) => a.prop == e.prop)
 					}
-				});
-			});
+				})
+			})
 		}
 
 		// 保存
 		function save() {
-			store.set(name, list.value);
-			change();
-			close();
+			store.set(name, list.value)
+			change()
+			close()
 		}
 
 		// 打开
 		function open() {
-			visible.value = true;
+			visible.value = true
 		}
 
 		// 关闭
 		function close() {
-			visible.value = false;
+			visible.value = false
 		}
 
 		watch(
 			() => props.columns,
 			(val) => {
 				if (val) {
-					const selection: any[] = store.get(name);
+					const selection: any[] = store.get(name)
 
 					list.value = orderBy(
 						val
 							.filter((e) => !e.type && e.prop)
 							.map((e) => {
-								let checked = true;
-								let orderNum = e.orderNum || 0;
+								let checked = true
+								let orderNum = e.orderNum || 0
 
 								if (isBoolean(e.hidden)) {
-									checked = !e.hidden;
+									checked = !e.hidden
 								}
 
 								if (selection) {
-									checked = selection.find((a) => a.prop == e.prop)?.checked;
-									orderNum = selection.findIndex((a) => a.prop == e.prop);
+									checked = selection.find((a) => a.prop == e.prop)?.checked
+									orderNum = selection.findIndex((a) => a.prop == e.prop)
 								}
 
 								return {
 									label: e.label,
 									prop: e.prop,
 									checked,
-									orderNum
-								};
+									orderNum,
+								}
 							}),
-						"orderNum",
-						"asc"
-					);
+						'orderNum',
+						'asc',
+					)
 
-					change();
+					change()
 				}
-			}
-		);
+			},
+		)
 
 		return {
 			visible,
 			list,
 			open,
 			close,
-			save
-		};
-	}
-});
+			save,
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

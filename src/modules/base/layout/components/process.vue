@@ -5,11 +5,7 @@
 			<span>后退</span>
 		</div>
 
-		<div
-			class="app-process__icon"
-			:class="{ active: route.path == '/' }"
-			@click="router.push('/')"
-		>
+		<div class="app-process__icon" :class="{ active: route.path == '/' }" @click="router.push('/')">
 			<el-icon><home-filled /></el-icon>
 			<span>首页</span>
 		</div>
@@ -35,24 +31,24 @@
 </template>
 
 <script lang="ts" name="app-process" setup>
-import { watch } from "vue";
-import { last } from "lodash-es";
-import { useCool } from "/@/cool";
-import { ArrowLeftBold, CloseBold, HomeFilled } from "@element-plus/icons-vue";
-import { ContextMenu } from "@cool-vue/crud";
-import { useBase } from "/$/base";
-import { Process } from "/$/base/types";
+import { watch } from 'vue'
+import { last } from 'lodash-es'
+import { useCool } from '/@/cool'
+import { ArrowLeftBold, CloseBold, HomeFilled } from '@element-plus/icons-vue'
+import { ContextMenu } from '@cool-vue/crud'
+import { useBase } from '/$/base'
+import { Process } from '/$/base/types'
 
-const { refs, setRefs, route, router } = useCool();
-const { process } = useBase();
+const { refs, setRefs, route, router } = useCool()
+const { process } = useBase()
 
 // 跳转
 function toPath() {
-	const d = process.list.find((e) => e.active);
+	const d = process.list.find((e) => e.active)
 
 	if (!d) {
-		const next = last(process.list);
-		router.push(next ? next.fullPath : "/");
+		const next = last(process.list)
+		router.push(next ? next.fullPath : '/')
 	}
 }
 
@@ -60,73 +56,73 @@ function toPath() {
 function scrollTo(left: number) {
 	refs.scroller.scrollTo({
 		left,
-		behavior: "smooth"
-	});
+		behavior: 'smooth',
+	})
 }
 
 // 调整滚动位置
 function adScroll(index: number) {
-	const el = refs[`item-${index}`];
+	const el = refs[`item-${index}`]
 
 	if (el) {
-		scrollTo(el.offsetLeft + el.clientWidth - refs.scroller.clientWidth);
+		scrollTo(el.offsetLeft + el.clientWidth - refs.scroller.clientWidth)
 	}
 }
 
 // 选择
 function onTap(item: Process.Item, index: number) {
-	adScroll(index);
-	router.push(item.fullPath);
+	adScroll(index)
+	router.push(item.fullPath)
 }
 
 // 删除
 function onDel(index: number) {
-	process.remove(index);
-	toPath();
+	process.remove(index)
+	toPath()
 }
 
 // 右键菜单
 function openCM(e: any, item: Process.Item) {
 	ContextMenu.open(e, {
 		hover: {
-			target: "app-process__item"
+			target: 'app-process__item',
 		},
 		list: [
 			{
-				label: "关闭当前",
+				label: '关闭当前',
 				hidden: item.fullPath !== route.path,
 				callback(done) {
-					onDel(process.list.findIndex((e) => e.fullPath == item.fullPath));
-					done();
-					toPath();
-				}
+					onDel(process.list.findIndex((e) => e.fullPath == item.fullPath))
+					done()
+					toPath()
+				},
 			},
 			{
-				label: "关闭其他",
+				label: '关闭其他',
 				callback(done) {
-					process.set(process.list.filter((e) => e.fullPath == item.fullPath));
-					done();
-					toPath();
-				}
+					process.set(process.list.filter((e) => e.fullPath == item.fullPath))
+					done()
+					toPath()
+				},
 			},
 			{
-				label: "关闭所有",
+				label: '关闭所有',
 				callback(done) {
-					process.clear();
-					done();
-					toPath();
-				}
-			}
-		]
-	});
+					process.clear()
+					done()
+					toPath()
+				},
+			},
+		],
+	})
 }
 
 watch(
 	() => route.path,
 	function (val) {
-		adScroll(process.list.findIndex((e) => e.fullPath === val) || 0);
-	}
-);
+		adScroll(process.list.findIndex((e) => e.fullPath === val) || 0)
+	},
+)
 </script>
 
 <style lang="scss" scoped>

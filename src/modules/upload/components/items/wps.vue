@@ -13,78 +13,78 @@
  * @param {string} token 授权
  */
 
-import { ElMessage } from "element-plus";
-import WebOfficeSDK, { IAppConfig } from "ts-wps";
-import { ref } from "vue";
-import { useBase } from "/$/base";
-import { useCool } from "/@/cool";
+import { ElMessage } from 'element-plus'
+import WebOfficeSDK, { IAppConfig } from 'ts-wps'
+import { ref } from 'vue'
+import { useBase } from '/$/base'
+import { useCool } from '/@/cool'
 
 const props = defineProps({
 	officeType: {
 		type: String,
-		default: "Writer"
+		default: 'Writer',
 	},
 	fileId: {
 		type: String,
-		default: ""
+		default: '',
 	},
-	token: String
-});
+	token: String,
+})
 
-const { service } = useCool();
-const { user } = useBase();
+const { service } = useCool()
+const { user } = useBase()
 
 // 应用ID
-const appId = ref("");
+const appId = ref('')
 
 // 是否可见
-const visible = ref(false);
+const visible = ref(false)
 
 // 获取应用ID
 async function getAppId() {
 	if (!appId.value) {
 		await service.space.info.getConfig().then((res) => {
-			appId.value = res.appId;
-		});
+			appId.value = res.appId
+		})
 	}
 }
 
-let wps: any = null;
+let wps: any = null
 
 /**
  * 打开wps预览
  * @param data WebOfficeSDK.IAppConfig
  */
 async function open(data: IAppConfig) {
-	visible.value = true;
+	visible.value = true
 
-	await getAppId();
+	await getAppId()
 
 	if (!appId.value) {
-		return ElMessage.error("请先配置WPS的应用ID");
+		return ElMessage.error('请先配置WPS的应用ID')
 	}
 
 	wps = WebOfficeSDK.init({
 		officeType: WebOfficeSDK.OfficeType[data.officeType || props.officeType],
 		appId: appId.value,
 		fileId: data.fileId || props.fileId,
-		mount: document.querySelector(".wps-viewer") as HTMLElement,
+		mount: document.querySelector('.wps-viewer') as HTMLElement,
 		fileToken: {
 			token: user.token,
-			timeout: 10 * 60 * 1000
-		}
-	});
+			timeout: 10 * 60 * 1000,
+		},
+	})
 
-	wps.ready();
+	wps.ready()
 }
 
 function onClosed() {
-	wps.destroy();
+	wps.destroy()
 }
 
 defineExpose({
-	open
-});
+	open,
+})
 </script>
 
 <style lang="scss">

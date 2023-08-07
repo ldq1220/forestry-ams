@@ -2,7 +2,7 @@
 	<div
 		class="func-dev"
 		:class="{
-			'is-mini': browser.isMini
+			'is-mini': browser.isMini,
 		}"
 	>
 		<div class="head">
@@ -15,14 +15,10 @@
 		<div class="card code">
 			<div class="h">
 				<el-tooltip content="重新加载函数代码,将会丢失当前未保存的编辑" effect="light">
-					<el-button size="small" :loading="loading" @click="refresh(true)">
-						刷新
-					</el-button>
+					<el-button size="small" :loading="loading" @click="refresh(true)">刷新</el-button>
 				</el-tooltip>
 
-				<el-button size="small" type="success" :loading="saving" @click="save">
-					保存(S)
-				</el-button>
+				<el-button size="small" type="success" :loading="saving" @click="save">保存(S)</el-button>
 
 				<cl-flex1 />
 			</div>
@@ -33,12 +29,12 @@
 					height="100%"
 					language="typescript"
 					:options="{
-						fontSize: 18
+						fontSize: 18,
 					}"
 					v-model="info.content"
 					@change="
 						(val) => {
-							onCodeChange('devCode', val);
+							onCodeChange('devCode', val)
 						}
 					"
 					@keydown="onCodeKeydown"
@@ -52,22 +48,20 @@
 					<div class="card br">
 						<div class="h">
 							<span>调用参数</span>
-							<el-button size="small" type="success" :loading="running" @click="run">
-								运行(B)
-							</el-button>
+							<el-button size="small" type="success" :loading="running" @click="run">运行(B)</el-button>
 						</div>
 						<div class="c">
 							<cl-editor-monaco
 								:ref="setRefs('req')"
 								height="100%"
 								:options="{
-									fontSize: 18
+									fontSize: 18,
 								}"
 								v-model="debug.req"
 								@keydown="onReqKeydown"
 								@change="
 									(val) => {
-										onCodeChange('devReq', val);
+										onCodeChange('devReq', val)
 									}
 								"
 							/>
@@ -79,9 +73,7 @@
 					<div class="card">
 						<div class="h">
 							<span>执行日志</span>
-							<el-button text size="small" @click="refs.logs?.open(info)">
-								查看全部
-							</el-button>
+							<el-button text size="small" @click="refs.logs?.open(info)">查看全部</el-button>
 						</div>
 						<div class="c is-border">
 							<el-scrollbar v-loading="running">
@@ -106,11 +98,7 @@
 
 										<div class="row">执行结果：</div>
 
-										<cl-code-json
-											height="auto"
-											:model-value="debug.log.result"
-											v-if="debug.log.type == 1"
-										/>
+										<cl-code-json height="auto" :model-value="debug.log.result" v-if="debug.log.type == 1" />
 
 										<div class="error" v-else>
 											{{ debug.log.error }}
@@ -134,140 +122,140 @@
 </template>
 
 <script lang="ts" name="cloud-func-dev" setup>
-import { onMounted, reactive, ref } from "vue";
-import { storage, useBrowser, useCool } from "/@/cool";
-import { Back } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
-import { CodeSnippets } from "../../dict";
-import FuncLogs from "../../components/func-logs.vue";
+import { onMounted, reactive, ref } from 'vue'
+import { storage, useBrowser, useCool } from '/@/cool'
+import { Back } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+import { CodeSnippets } from '../../dict'
+import FuncLogs from '../../components/func-logs.vue'
 
-const { route, service, refs, setRefs, router } = useCool();
-const { browser } = useBrowser();
+const { route, service, refs, setRefs, router } = useCool()
+const { browser } = useBrowser()
 
 // 加载状态
-const loading = ref(false);
+const loading = ref(false)
 
 // 保存状态
-const saving = ref(false);
+const saving = ref(false)
 
 // 运行状态
-const running = ref(false);
+const running = ref(false)
 
 // 调试
 const debug = reactive({
-	req: "",
+	req: '',
 	log: {
-		error: "",
+		error: '',
 		type: 0,
 		time: 0,
-		createTime: "",
+		createTime: '',
 		result: {},
 		request: {
-			method: ""
-		}
-	}
-});
+			method: '',
+		},
+	},
+})
 
 // 云函数详情
 const info = ref<Eps.CloudFuncInfoEntity>({
-	content: ""
-});
+	content: '',
+})
 
 // 获取云函数详情
 async function refresh(sync?: boolean) {
-	loading.value = true;
+	loading.value = true
 
 	await service.cloud.func.info
 		.info({
-			id: route.query.id
+			id: route.query.id,
 		})
 		.then((res) => {
 			if (!sync) {
-				res.content = storage.get(`cloud.devCode-${res.id}`) || res.content;
-				debug.req = storage.get(`cloud.devReq-${res.id}`) || CodeSnippets.req;
+				res.content = storage.get(`cloud.devCode-${res.id}`) || res.content
+				debug.req = storage.get(`cloud.devReq-${res.id}`) || CodeSnippets.req
 			}
-			info.value = res;
+			info.value = res
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 
-	loading.value = false;
+	loading.value = false
 }
 
 // 保存
 async function save() {
-	saving.value = true;
+	saving.value = true
 
-	await refs.code.formatCode();
+	await refs.code.formatCode()
 
 	await service.cloud.func.info
 		.update({
 			id: info.value.id,
-			content: info.value.content
+			content: info.value.content,
 		})
 		.then(() => {
-			ElMessage.success("保存成功");
+			ElMessage.success('保存成功')
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 
-	saving.value = false;
+	saving.value = false
 }
 
 // 运行
 async function run() {
-	running.value = true;
+	running.value = true
 
-	await refs.req.formatCode();
+	await refs.req.formatCode()
 
 	try {
 		await service.cloud.func.info
 			.invoke({
 				id: info.value.id,
 				content: info.value.content,
-				...JSON.parse(debug.req)
+				...JSON.parse(debug.req),
 			})
 			.then((res) => {
-				debug.log = res;
-				ElMessage.success("运行成功");
+				debug.log = res
+				ElMessage.success('运行成功')
 			})
 			.catch((err) => {
-				debug.log.time = 0;
-				ElMessage.error(err.message);
-			});
+				debug.log.time = 0
+				ElMessage.error(err.message)
+			})
 	} catch (e) {
-		ElMessage.error(e?.toString());
+		ElMessage.error(e?.toString())
 	}
 
-	running.value = false;
+	running.value = false
 }
 
 // 代码保存到本地
 function onCodeChange(name: string, value: string) {
-	storage.set(`cloud.${name}-${info.value.id}`, value);
+	storage.set(`cloud.${name}-${info.value.id}`, value)
 }
 
 // ctrk + s 保存
 function onCodeKeydown(e: KeyboardEvent) {
-	if (e.ctrlKey && e.key.toLocaleLowerCase() == "s") {
-		save();
-		e.preventDefault();
+	if (e.ctrlKey && e.key.toLocaleLowerCase() == 's') {
+		save()
+		e.preventDefault()
 	}
 }
 
 // ctrk + b 运行
 function onReqKeydown(e: KeyboardEvent) {
-	if (e.ctrlKey && e.key.toLocaleLowerCase() == "b") {
-		run();
-		e.preventDefault();
+	if (e.ctrlKey && e.key.toLocaleLowerCase() == 'b') {
+		run()
+		e.preventDefault()
 	}
 }
 
 onMounted(() => {
-	refresh();
-});
+	refresh()
+})
 </script>
 
 <style lang="scss" scoped>

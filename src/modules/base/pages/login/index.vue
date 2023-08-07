@@ -3,45 +3,29 @@
 		<div class="box">
 			<div class="logo">
 				<img src="/logo.png" alt="Logo" />
-				<span>{{ app.info.name }}</span>
+				<span>广东省林业调查规划院</span>
 			</div>
-			<p class="desc">一款快速开发后台权限管理系统</p>
+			<p class="desc">物资管理系统</p>
 
 			<el-form label-position="top" class="form" :disabled="saving">
 				<el-form-item label="用户名">
-					<input
-						v-model="form.username"
-						placeholder="请输入用户名"
-						maxlength="20"
-						autocomplete="on"
-					/>
+					<input v-model="form.username" placeholder="请输入用户名" maxlength="20" autocomplete="on" />
 				</el-form-item>
 
 				<el-form-item label="密码">
-					<input
-						v-model="form.password"
-						type="password"
-						placeholder="请输入密码"
-						maxlength="20"
-						autocomplete="off"
-					/>
+					<input v-model="form.password" type="password" placeholder="请输入密码" maxlength="20" autocomplete="off" />
 				</el-form-item>
 
 				<el-form-item label="验证码">
 					<div class="row">
-						<input
-							v-model="form.verifyCode"
-							placeholder="图片验证码"
-							maxlength="4"
-							@keyup.enter="toLogin"
-						/>
+						<input v-model="form.verifyCode" placeholder="图片验证码" maxlength="4" @keyup.enter="toLogin" />
 
 						<captcha
 							:ref="setRefs('captcha')"
 							v-model="form.captchaId"
 							@change="
 								() => {
-									form.verifyCode = '';
+									form.verifyCode = ''
 								}
 							"
 						/>
@@ -57,59 +41,59 @@
 </template>
 
 <script lang="ts" name="login" setup>
-import { reactive, ref } from "vue";
-import { ElMessage } from "element-plus";
-import { useCool } from "/@/cool";
-import { useBase } from "/$/base";
-import Captcha from "./components/captcha.vue";
+import { reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useCool } from '/@/cool'
+import { useBase } from '/$/base'
+import Captcha from './components/captcha.vue'
 
-const { refs, setRefs, router, service } = useCool();
-const { user, app } = useBase();
+const { refs, setRefs, router, service } = useCool()
+const { user, app } = useBase()
 
 // 状态1
-const saving = ref(false);
+const saving = ref(false)
 
 // 表单数据
 const form = reactive({
-	username: "",
-	password: "",
-	captchaId: "",
-	verifyCode: ""
-});
+	username: '',
+	password: '',
+	captchaId: '',
+	verifyCode: '',
+})
 
 // 登录
 async function toLogin() {
 	if (!form.username) {
-		return ElMessage.error("用户名不能为空");
+		return ElMessage.error('用户名不能为空')
 	}
 
 	if (!form.password) {
-		return ElMessage.error("密码不能为空");
+		return ElMessage.error('密码不能为空')
 	}
 
 	if (!form.verifyCode) {
-		return ElMessage.error("图片验证码不能为空");
+		return ElMessage.error('图片验证码不能为空')
 	}
 
-	saving.value = true;
+	saving.value = true
 
 	try {
 		// 登录
 		await service.base.open.login(form).then((res) => {
-			user.setToken(res);
-		});
+			user.setToken(res)
+		})
 
 		// token 事件
-		await Promise.all(app.events.hasToken.map((e) => e()));
+		await Promise.all(app.events.hasToken.map((e) => e()))
 
 		// 跳转
-		router.push("/");
+		router.push('/')
 	} catch (err: any) {
-		refs.captcha.refresh();
-		ElMessage.error(err.message);
+		refs.captcha.refresh()
+		ElMessage.error(err.message)
 	}
 
-	saving.value = false;
+	saving.value = false
 }
 </script>
 
@@ -121,14 +105,19 @@ async function toLogin() {
 	height: 100%;
 	width: 100%;
 	position: relative;
-	background-color: #2f3447;
+	// background-color: #2f3447;
+	background-image: url('/public/login-bg.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 
 	.box {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
+		padding: 20px;
+		// background-color: rgba(255, 255, 255, 0.72);
 		.logo {
 			height: 50px;
 			margin-bottom: 30px;
@@ -150,7 +139,7 @@ async function toLogin() {
 
 		.desc {
 			color: #eee;
-			font-size: 14px;
+			font-size: 38px;
 			letter-spacing: 1px;
 			margin-bottom: 50px;
 		}

@@ -4,13 +4,13 @@
 </template>
 
 <script lang="ts" name="auto-menu" setup>
-import { useCool, isDev } from "/@/cool";
-import Quick from "./quick.vue";
-import { MagicStick } from "@element-plus/icons-vue";
+import { useCool, isDev } from '/@/cool'
+import Quick from './quick.vue'
+import { MagicStick } from '@element-plus/icons-vue'
 
-const { router } = useCool();
+const { router } = useCool()
 
 function toCode() {
-	router.push("/magic/ai-code");
+	router.push('/magic/ai-code')
 }
 </script>

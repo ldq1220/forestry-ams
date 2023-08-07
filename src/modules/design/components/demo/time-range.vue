@@ -14,9 +14,9 @@ defineProps({
 	required: Boolean,
 	placeholder: {
 		type: String,
-		default: "请选择"
+		default: '请选择',
 	},
 	arrowIcon: Boolean,
-	duration: Boolean
-});
+	duration: Boolean,
+})
 </script>

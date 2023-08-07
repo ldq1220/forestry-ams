@@ -1,8 +1,6 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
-			<!-- 刷新按钮 -->
-			<!-- <cl-refresh-btn /> -->
 			<!-- 新增按钮 -->
 			<cl-add-btn />
 			<!-- 删除按钮 -->
@@ -28,7 +26,7 @@
 	</cl-crud>
 </template>
 
-<script lang="ts" name="assets-assetsCategory" setup>
+<script lang="ts" name="assets-department" setup>
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
 
@@ -36,11 +34,19 @@ const { service } = useCool()
 
 // cl-upsert
 const Upsert = useUpsert({
+	dialog: {
+		width: '500px',
+	},
 	items: [
 		{
-			prop: 'categoryName',
-			label: '类别名称',
+			prop: 'name',
+			label: '部门名称',
 			required: true,
+			component: { name: 'el-input' },
+		},
+		{
+			prop: 'parentId',
+			label: '上级部门',
 			component: { name: 'el-input' },
 		},
 	],
@@ -61,20 +67,17 @@ const Table = useTable({
 			label: 'ID',
 		},
 		{
-			prop: 'categoryName',
-			label: '类别名称',
+			prop: 'name',
+			label: '部门名称',
+		},
+		{
+			prop: 'parentId',
+			label: '上级部门',
 		},
 		{
 			prop: 'createTime',
 			label: '创建时间',
 			sortable: 'desc',
-			width: 160,
-		},
-		{
-			prop: 'updateTime',
-			label: '更新时间',
-			sortable: 'desc',
-			width: 160,
 		},
 		{
 			type: 'op',
@@ -86,7 +89,7 @@ const Table = useTable({
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.assets.assetsCategory,
+		service: service.assets.department,
 	},
 	(app) => {
 		app.refresh()

@@ -5,58 +5,58 @@
 </template>
 
 <script lang="ts" setup name="item-video">
-import { computed, ref, watch } from "vue";
-import { useSpace } from "../../hooks";
+import { computed, ref, watch } from 'vue'
+import { useSpace } from '../../hooks'
 
 const props = defineProps({
 	data: Object,
-	list: Array
-});
+	list: Array,
+})
 
-const { space } = useSpace();
+const { space } = useSpace()
 
-const Video = ref<HTMLVideoElement>();
+const Video = ref<HTMLVideoElement>()
 
-const info = computed<Eps.SpaceInfoEntity>(() => props.data || {});
+const info = computed<Eps.SpaceInfoEntity>(() => props.data || {})
 
 const loaded = computed(() => {
-	return info.value.progress === undefined || info.value.progress === 100;
-});
+	return info.value.progress === undefined || info.value.progress === 100
+})
 
 function play() {
 	space.list.value.forEach((e) => {
-		e.isPlay = info.value.id == e.id;
-	});
+		e.isPlay = info.value.id == e.id
+	})
 
-	Video.value?.play();
+	Video.value?.play()
 }
 
 function pause() {
-	const item = space.list.value.find((e) => e.id == info.value.id);
+	const item = space.list.value.find((e) => e.id == info.value.id)
 
 	if (item) {
-		item.isPlay = false;
+		item.isPlay = false
 	}
 
-	Video.value?.pause();
+	Video.value?.pause()
 }
 
 watch(
 	() => info.value.isPlay,
 	(val) => {
 		if (val) {
-			play();
+			play()
 		} else {
-			pause();
+			pause()
 		}
-	}
-);
+	},
+)
 
 defineExpose({
 	play,
 	pause,
-	loaded
-});
+	loaded,
+})
 </script>
 
 <style lang="scss" scoped>

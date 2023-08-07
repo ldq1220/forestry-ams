@@ -14,54 +14,54 @@
 </template>
 
 <script lang="ts" setup>
-import { ContextMenu } from "@cool-vue/crud";
-import { ElMessage } from "element-plus";
+import { ContextMenu } from '@cool-vue/crud'
+import { ElMessage } from 'element-plus'
 
 function open(e: any) {
 	ContextMenu.open(e, {
 		list: [
 			{
-				label: "新增",
-				suffixIcon: "el-icon-plus",
+				label: '新增',
+				suffixIcon: 'el-icon-plus',
 				callback(done) {
-					ElMessage.info("点击了新增");
-					done();
-				}
+					ElMessage.info('点击了新增')
+					done()
+				},
 			},
 			{
-				label: "编辑",
-				suffixIcon: "el-icon-edit",
+				label: '编辑',
+				suffixIcon: 'el-icon-edit',
 				callback(done) {
-					ElMessage.info("点击了编辑");
-					done();
-				}
+					ElMessage.info('点击了编辑')
+					done()
+				},
 			},
 			{
-				label: "删除",
-				suffixIcon: "el-icon-delete"
+				label: '删除',
+				suffixIcon: 'el-icon-delete',
 			},
 			{
-				label: "二级",
-				suffixIcon: "el-icon-right",
+				label: '二级',
+				suffixIcon: 'el-icon-right',
 				children: [
 					{
-						label: "文本超出隐藏，有一天晚上",
-						ellipsis: true
+						label: '文本超出隐藏，有一天晚上',
+						ellipsis: true,
 					},
 					{
-						label: "禁用",
-						disabled: true
+						label: '禁用',
+						disabled: true,
 					},
 					{
-						label: "更多",
+						label: '更多',
 						callback(done) {
-							ElMessage.warning("开发中");
-							done();
-						}
-					}
-				]
-			}
-		]
-	});
+							ElMessage.warning('开发中')
+							done()
+						},
+					},
+				],
+			},
+		],
+	})
 }
 </script>

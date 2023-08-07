@@ -5,41 +5,41 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
-import { isNumber } from "lodash-es";
+import { computed, defineComponent, ref } from 'vue'
+import { isNumber } from 'lodash-es'
 
 export default defineComponent({
-	name: "cl-svg",
+	name: 'cl-svg',
 
 	props: {
 		name: {
-			type: String
+			type: String,
 		},
 		className: {
-			type: String
+			type: String,
 		},
 		size: {
-			type: [String, Number]
-		}
+			type: [String, Number],
+		},
 	},
 
 	setup(props) {
 		const style = ref({
-			fontSize: isNumber(props.size) ? props.size + "px" : props.size
-		});
+			fontSize: isNumber(props.size) ? props.size + 'px' : props.size,
+		})
 
-		const iconName = computed(() => `#icon-${props.name}`);
+		const iconName = computed(() => `#icon-${props.name}`)
 		const svgClass = computed(() => {
-			return ["cl-svg", `cl-svg__${props.name}`, String(props.className || "")];
-		});
+			return ['cl-svg', `cl-svg__${props.name}`, String(props.className || '')]
+		})
 
 		return {
 			style,
 			iconName,
-			svgClass
-		};
-	}
-});
+			svgClass,
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

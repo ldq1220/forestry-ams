@@ -17,7 +17,7 @@
 					<div
 						class="item"
 						:class="{
-							'is-right': item.isMy
+							'is-right': item.isMy,
 						}"
 					>
 						<div class="avatar">
@@ -28,7 +28,7 @@
 							class="det"
 							@contextmenu="
 								(e) => {
-									onContextMenu(e, item);
+									onContextMenu(e, item)
 								}
 							"
 						>
@@ -43,12 +43,7 @@
 
 								<!-- 图片 -->
 								<div class="is-image" v-else-if="item.contentType == 1">
-									<el-image
-										:src="item.content.imageUrl"
-										:preview-src-list="previewUrls"
-										:initial-index="item._index"
-										scroll-container=".chat-message .list"
-									/>
+									<el-image :src="item.content.imageUrl" :preview-src-list="previewUrls" :initial-index="item._index" scroll-container=".chat-message .list" />
 								</div>
 							</div>
 						</div>
@@ -89,7 +84,7 @@
 					resize="none"
 					:autosize="{
 						minRows: 4,
-						maxRows: 10
+						maxRows: 10,
 					}"
 					placeholder="输入内容"
 				></el-input>
@@ -100,46 +95,46 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue";
-import { useChat } from "../hooks";
-import { useStore } from "../store";
-import { PictureFilled, VideoCamera, Microphone, Location } from "@element-plus/icons-vue";
-import { useBase } from "/$/base";
-import { ContextMenu } from "@cool-vue/crud";
-import { useClipboard } from "@vueuse/core";
-import { Chat } from "../types";
-import { ElMessage } from "element-plus";
+import { computed, ref } from 'vue'
+import { useChat } from '../hooks'
+import { useStore } from '../store'
+import { PictureFilled, VideoCamera, Microphone, Location } from '@element-plus/icons-vue'
+import { useBase } from '/$/base'
+import { ContextMenu } from '@cool-vue/crud'
+import { useClipboard } from '@vueuse/core'
+import { Chat } from '../types'
+import { ElMessage } from 'element-plus'
 
-const { user } = useBase();
-const { chat } = useChat();
-const { message, session } = useStore();
-const { copy } = useClipboard();
+const { user } = useBase()
+const { chat } = useChat()
+const { message, session } = useStore()
+const { copy } = useClipboard()
 
-const value = ref("");
+const value = ref('')
 
 // 过滤列表
 const list = computed(() => {
-	let n = 0;
+	let n = 0
 
 	return message.list.map((e) => {
 		if (e.contentType == 1) {
-			e._index = n++;
+			e._index = n++
 		}
 
 		// 是否自己发的消息
-		e.isMy = e.fromId == user.info?.id;
+		e.isMy = e.fromId == user.info?.id
 
-		return e;
-	});
-});
+		return e
+	})
+})
 
 // 预览图片地址
 const previewUrls = computed(() =>
 	message.list
 		.filter((e) => e.contentType == 1)
 		.map((e) => e.content?.imageUrl)
-		.filter(Boolean)
-);
+		.filter(Boolean),
+)
 
 // 文本消息
 function onTextSend() {
@@ -147,12 +142,12 @@ function onTextSend() {
 		{
 			contentType: 0,
 			content: {
-				text: value.value
-			}
+				text: value.value,
+			},
 		},
-		true
-	);
-	value.value = "";
+		true,
+	)
+	value.value = ''
 }
 
 // 图片消息
@@ -161,37 +156,37 @@ function onImageSend(res: any) {
 		{
 			contentType: 1,
 			content: {
-				imageUrl: res.url
-			}
+				imageUrl: res.url,
+			},
 		},
-		true
-	);
-	value.value = "";
+		true,
+	)
+	value.value = ''
 }
 
 // 右键菜单
 function onContextMenu(e: Event, item: Chat.Message) {
 	ContextMenu.open(e, {
 		hover: {
-			target: "content"
+			target: 'content',
 		},
 		list: [
 			{
-				label: "复制",
+				label: '复制',
 				callback(done) {
-					copy(item.content.text || "");
-					ElMessage.success("复制成功");
-					done();
-				}
+					copy(item.content.text || '')
+					ElMessage.success('复制成功')
+					done()
+				},
 			},
 			{
-				label: "转发"
+				label: '转发',
 			},
 			{
-				label: "删除"
-			}
-		]
-	});
+				label: '删除',
+			},
+		],
+	})
 }
 </script>
 

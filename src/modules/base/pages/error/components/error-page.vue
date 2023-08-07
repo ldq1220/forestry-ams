@@ -19,31 +19,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useCool } from "/@/cool";
-import { useBase } from "/$/base";
+import { ref } from 'vue'
+import { useCool } from '/@/cool'
+import { useBase } from '/$/base'
 
 defineProps({
 	code: Number,
-	desc: String
-});
+	desc: String,
+})
 
-const { router } = useCool();
-const { user } = useBase();
+const { router } = useCool()
+const { user } = useBase()
 
-const isLogout = ref(false);
+const isLogout = ref(false)
 
 function toLogin() {
-	router.push("/login");
+	router.push('/login')
 }
 
 async function reLogin() {
-	isLogout.value = true;
-	user.logout();
+	isLogout.value = true
+	user.logout()
 }
 
 function home() {
-	router.push("/");
+	router.push('/')
 }
 </script>
 

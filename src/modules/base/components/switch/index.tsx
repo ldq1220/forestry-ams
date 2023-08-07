@@ -1,10 +1,10 @@
-import { useCrud } from "@cool-vue/crud";
-import { ElMessage } from "element-plus";
-import { defineComponent, ref, watch } from "vue";
-import { isBoolean, isFunction } from "lodash-es";
+import { useCrud } from '@cool-vue/crud'
+import { ElMessage } from 'element-plus'
+import { defineComponent, ref, watch } from 'vue'
+import { isBoolean, isFunction } from 'lodash-es'
 
 export default defineComponent({
-	name: "cl-switch",
+	name: 'cl-switch',
 
 	props: {
 		scope: null,
@@ -13,36 +13,36 @@ export default defineComponent({
 		api: Function,
 		activeValue: {
 			type: [Number, String, Boolean],
-			default: 1
+			default: 1,
 		},
 		inactiveValue: {
 			type: [Number, String, Boolean],
-			default: 0
-		}
+			default: 0,
+		},
 	},
 
-	emits: ["update:modelValue", "change"],
+	emits: ['update:modelValue', 'change'],
 
 	setup(props, { emit }) {
 		// cl-crud
-		const Crud = useCrud();
+		const Crud = useCrud()
 
 		// 状态
-		const status = ref<boolean | number | string>();
+		const status = ref<boolean | number | string>()
 
 		watch(
 			() => props.modelValue,
 			(val: any) => {
 				if (isBoolean(props.activeValue)) {
-					status.value = Boolean(val);
+					status.value = Boolean(val)
 				} else {
-					status.value = val;
+					status.value = val
 				}
 			},
 			{
-				immediate: true
-			}
-		);
+				immediate: true,
+			},
+		)
 
 		// 监听改变
 		function onChange(val: boolean | string | number) {
@@ -50,38 +50,29 @@ export default defineComponent({
 				if (val !== undefined) {
 					const params = {
 						...props.scope,
-						[props.column.property]: val
-					};
+						[props.column.property]: val,
+					}
 
-					const req = isFunction(props.api)
-						? props.api(params)
-						: Crud.value?.service.update(params);
+					const req = isFunction(props.api) ? props.api(params) : Crud.value?.service.update(params)
 
 					if (req) {
 						req.then(() => {
-							ElMessage.success("更新成功");
-							emit("update:modelValue", val);
-							emit("change", val);
+							ElMessage.success('更新成功')
+							emit('update:modelValue', val)
+							emit('change', val)
 						}).catch((err: any) => {
-							ElMessage.error(err.message);
-						});
+							ElMessage.error(err.message)
+						})
 					}
 				}
 			} else {
-				emit("update:modelValue", val);
-				emit("change", val);
+				emit('update:modelValue', val)
+				emit('change', val)
 			}
 		}
 
 		return () => {
-			return (
-				<el-switch
-					v-model={status.value}
-					active-value={props.activeValue}
-					inactive-value={props.inactiveValue}
-					onChange={onChange}
-				/>
-			);
-		};
-	}
-});
+			return <el-switch v-model={status.value} active-value={props.activeValue} inactive-value={props.inactiveValue} onChange={onChange} />
+		}
+	},
+})

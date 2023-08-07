@@ -11,7 +11,7 @@
 						v-for="(item, index) in options.type"
 						:key="index"
 						:class="{
-							active: item.value == type
+							active: item.value == type,
 						}"
 						@click="changeDate(item.value)"
 					>
@@ -54,38 +54,38 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref } from 'vue'
 
 // 日期
-const date = ref();
+const date = ref()
 
 // 类型
-const type = ref("day");
+const type = ref('day')
 
 // 选项
 const options = reactive({
 	type: [
 		{
-			label: "今日",
-			value: "day"
+			label: '今日',
+			value: 'day',
 		},
 		{
-			label: "本周",
-			value: "week"
+			label: '本周',
+			value: 'week',
 		},
 		{
-			label: "本月",
-			value: "month"
+			label: '本月',
+			value: 'month',
 		},
 		{
-			label: "全年",
-			value: "year"
-		}
-	]
-});
+			label: '全年',
+			value: 'year',
+		},
+	],
+})
 
 function changeDate(value: string) {
-	type.value = value;
+	type.value = value
 }
 </script>
 

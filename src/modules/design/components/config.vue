@@ -27,106 +27,106 @@
 </template>
 
 <script lang="tsx" setup>
-import { useForm } from "@cool-vue/crud";
-import { computed, nextTick, reactive, ref, watch } from "vue";
-import { useCool } from "/@/cool";
-import { WarningFilled } from "@element-plus/icons-vue";
-import { useDp } from "../hooks";
+import { useForm } from '@cool-vue/crud'
+import { computed, nextTick, reactive, ref, watch } from 'vue'
+import { useCool } from '/@/cool'
+import { WarningFilled } from '@element-plus/icons-vue'
+import { useDp } from '../hooks'
 
-const { mitt } = useCool();
-const { dp } = useDp();
-const Form = useForm();
+const { mitt } = useCool()
+const { dp } = useDp()
+const Form = useForm()
 
-const visible = ref(true);
-const t = ref("");
-const data = reactive<any>({});
-const tips = ref("");
+const visible = ref(true)
+const t = ref('')
+const data = reactive<any>({})
+const tips = ref('')
 
 // 是否组
-const isGroup = computed(() => data.isTemp);
+const isGroup = computed(() => data.isTemp)
 
 // 是否显示删除套件
 const showDel = computed(() => {
-	return isGroup.value || (!!dp.getGroup(data.id) && data.isDel === false);
-});
+	return isGroup.value || (!!dp.getGroup(data.id) && data.isDel === false)
+})
 
 function refresh(options: any) {
 	for (const i in data) {
-		delete data[i];
+		delete data[i]
 	}
 
-	Object.assign(data, options);
+	Object.assign(data, options)
 
-	const { title, items = [] } = options.config;
+	const { title, items = [] } = options.config
 
-	t.value = title || "未配置";
-	tips.value = options.config.tips;
+	t.value = title || '未配置'
+	tips.value = options.config.tips
 
 	Form.value?.open({
 		form: options.component.props,
 		items,
 		props: {
-			labelPosition: "top"
+			labelPosition: 'top',
 		},
 		op: {
-			hidden: true
-		}
-	});
+			hidden: true,
+		},
+	})
 }
 
 function onRChange(v: any) {
 	if (isGroup.value) {
 		data.component.props.children.forEach((e: any) => {
-			e.component.props.required = v;
-		});
+			e.component.props.required = v
+		})
 	}
 }
 
 function del() {
-	clear();
+	clear()
 	dp.removeBy({
-		id: dp.getGroup(data.id).id
-	});
+		id: dp.getGroup(data.id).id,
+	})
 }
 
 function clear() {
-	Form.value?.close();
-	t.value = "";
-	tips.value = "";
+	Form.value?.close()
+	t.value = ''
+	tips.value = ''
 }
 
-let stop: any = null;
+let stop: any = null
 
-mitt.on("dp.setConfig", (options: any) => {
-	visible.value = false;
+mitt.on('dp.setConfig', (options: any) => {
+	visible.value = false
 
 	if (stop) {
-		stop();
+		stop()
 	}
 
 	nextTick(() => {
-		visible.value = true;
+		visible.value = true
 
 		nextTick(() => {
-			refresh(options || {});
+			refresh(options || {})
 
 			stop = watch(
 				() => Form.value?.form,
 				(val) => {
 					if (val) {
-						Object.assign(options.component.props, val);
+						Object.assign(options.component.props, val)
 					}
 				},
 				{
 					immediate: true,
-					deep: true
-				}
-			);
-		});
-	});
-});
+					deep: true,
+				},
+			)
+		})
+	})
+})
 
-mitt.on("dp.clearConfig", clear);
+mitt.on('dp.clearConfig', clear)
 </script>
 
 <style lang="scss" scoped>

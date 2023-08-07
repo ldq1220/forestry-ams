@@ -6,52 +6,52 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from "vue";
-import { ElMessage } from "element-plus";
-import { useCool } from "/@/cool";
+import { onMounted, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import { useCool } from '/@/cool'
 
-const emit = defineEmits(["update:modelValue", "change"]);
+const emit = defineEmits(['update:modelValue', 'change'])
 
-const { service } = useCool();
+const { service } = useCool()
 
 // base64
-const base64 = ref("");
+const base64 = ref('')
 
 // svg
-const svg = ref("");
+const svg = ref('')
 
 function refresh() {
 	service.base.open
 		.captcha({
 			height: 40,
-			width: 150
+			width: 150,
 		})
 		.then(({ captchaId, data }) => {
-			if (data.includes(";base64,")) {
-				base64.value = data;
+			if (data.includes(';base64,')) {
+				base64.value = data
 			} else {
-				svg.value = data;
+				svg.value = data
 			}
 
-			emit("update:modelValue", captchaId);
-			emit("change", {
+			emit('update:modelValue', captchaId)
+			emit('change', {
 				base64,
 				svg,
-				captchaId
-			});
+				captchaId,
+			})
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 }
 
 onMounted(() => {
-	refresh();
-});
+	refresh()
+})
 
 defineExpose({
-	refresh
-});
+	refresh,
+})
 </script>
 
 <style lang="scss" scoped>

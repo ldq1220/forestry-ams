@@ -5,31 +5,31 @@
 </template>
 
 <script lang="ts" name="frame" setup>
-import { ref, watch, onMounted } from "vue";
-import { useCool } from "/@/cool";
+import { ref, watch, onMounted } from 'vue'
+import { useCool } from '/@/cool'
 
-const loading = ref(false);
-const url = ref();
+const loading = ref(false)
+const url = ref()
 
-const { route, refs, setRefs } = useCool();
+const { route, refs, setRefs } = useCool()
 
 watch(
 	() => route,
 	(val) => {
-		url.value = val.meta?.iframeUrl;
+		url.value = val.meta?.iframeUrl
 	},
 	{
-		immediate: true
-	}
-);
+		immediate: true,
+	},
+)
 
 onMounted(() => {
-	loading.value = true;
+	loading.value = true
 
 	refs.iframe.onload = () => {
-		loading.value = false;
-	};
-});
+		loading.value = false
+	}
+})
 </script>
 
 <style lang="scss" scoped>

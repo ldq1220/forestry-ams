@@ -22,6 +22,123 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface DepartmentEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 部门名称
+		 */
+		name?: string;
+		/**
+		 * 上级部门ID
+		 */
+		parentId?: BigInt;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface EmployeeEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 姓名
+		 */
+		name?: string;
+		/**
+		 * 性别
+		 */
+		gender?: number;
+		/**
+		 * 部门ID
+		 */
+		deptId?: number;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface AssetsFixedFieldEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 字段ID
+		 */
+		fieldId?: string;
+		/**
+		 * 字段名称
+		 */
+		fieldName?: string;
+		/**
+		 * 排序号
+		 */
+		sortOrder?: number;
+		/**
+		 * 支持搜索
+		 */
+		searchEnable?: number;
+		/**
+		 * 数据类型
+		 */
+		dataType?: string;
+		/**
+		 * 是否使用
+		 */
+		inUse?: number;
+		/**
+		 * 保留小数位数
+		 */
+		decimalPlaces?: number;
+		/**
+		 * 选项
+		 */
+		options?: string;
+		/**
+		 * 关联表(选项)查询方法
+		 */
+		joinTableMethod?: string;
+		/**
+		 * 关联字段
+		 */
+		joinField?: string;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface GoodsSupplierEntity {
 		/**
 		 * ID
@@ -1105,6 +1222,189 @@ declare namespace Eps {
 			info: boolean;
 			list: boolean;
 			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsDepartment {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<DepartmentEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<DepartmentEntity[]>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: DepartmentEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsEmployee {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<EmployeeEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<EmployeeEntity[]>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: EmployeeEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsFixedAssetsFixedField {
+		/**
+		 * 固定资产表配置 保存
+		 */
+		saveAssetsFixedFieldSet(data?: any): Promise<any>;
+		/**
+		 * 字段类型
+		 */
+		getAllDataType(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<AssetsFixedFieldEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<AssetsFixedFieldEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedFieldEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			saveAssetsFixedFieldSet: string;
+			getAllDataType: string;
+			info: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			saveAssetsFixedFieldSet: boolean;
+			getAllDataType: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
 			add: boolean;
 		};
 		/**
@@ -2621,7 +2921,13 @@ declare namespace Eps {
 		}): Promise<any>;
 		chat: { message: ChatMessage; session: ChatSession };
 		test: Test;
-		assets: { assetsCategory: AssetsAssetsCategory; goodsSupplier: AssetsGoodsSupplier };
+		assets: {
+			assetsCategory: AssetsAssetsCategory;
+			department: AssetsDepartment;
+			employee: AssetsEmployee;
+			fixed: { assetsFixedField: AssetsFixedAssetsFixedField };
+			goodsSupplier: AssetsGoodsSupplier;
+		};
 		base: {
 			comm: BaseComm;
 			open: BaseOpen;

@@ -1,12 +1,6 @@
 <template>
 	<div class="item-file__wrap">
-		<div
-			class="item-file"
-			:class="[`is-${info.type}`]"
-			@click="select()"
-			@dblclick="confirm()"
-			@contextmenu.stop.prevent="onContextMenu"
-		>
+		<div class="item-file" :class="[`is-${info.type}`]" @click="select()" @dblclick="confirm()" @contextmenu.stop.prevent="onContextMenu">
 			<!-- 错误 -->
 			<template v-if="info.error">
 				<div class="item-file__error">上传失败：{{ info.error }}</div>
@@ -40,7 +34,7 @@
 				<span
 					class="item-file__type"
 					:style="{
-						backgroundColor: type?.color
+						backgroundColor: type?.color,
 					}"
 				>
 					{{ type?.label }}
@@ -92,46 +86,46 @@
 </template>
 
 <script lang="ts" name="item-file" setup>
-import { computed, PropType } from "vue";
-import { ContextMenu } from "@cool-vue/crud";
-import { useClipboard } from "@vueuse/core";
-import { ElMessage } from "element-plus";
-import { ZoomIn, Delete, VideoPause, VideoPlay } from "@element-plus/icons-vue";
-import { useCool } from "/@/cool";
-import { extname } from "/@/cool/utils";
-import { fileName, fileRule } from "../../utils";
-import { useSpace } from "../../hooks";
-import ItemVideo from "./video.vue";
+import { computed, PropType } from 'vue'
+import { ContextMenu } from '@cool-vue/crud'
+import { useClipboard } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
+import { ZoomIn, Delete, VideoPause, VideoPlay } from '@element-plus/icons-vue'
+import { useCool } from '/@/cool'
+import { extname } from '/@/cool/utils'
+import { fileName, fileRule } from '../../utils'
+import { useSpace } from '../../hooks'
+import ItemVideo from './video.vue'
 
 const props = defineProps({
 	data: Object,
-	list: Array as PropType<Eps.SpaceInfoEntity[]>
-});
+	list: Array as PropType<Eps.SpaceInfoEntity[]>,
+})
 
-const emit = defineEmits(["select", "remove", "confirm"]);
+const emit = defineEmits(['select', 'remove', 'confirm'])
 
-const { refs, setRefs } = useCool();
-const { copy } = useClipboard();
-const { space } = useSpace();
+const { refs, setRefs } = useCool()
+const { copy } = useClipboard()
+const { space } = useSpace()
 
 // 文件信息
-const info = computed<Eps.SpaceInfoEntity>(() => props.data || {});
+const info = computed<Eps.SpaceInfoEntity>(() => props.data || {})
 
 // 已选的序号
-const index = computed(() => space.selection.value.findIndex((e) => e.id === info.value.id));
+const index = computed(() => space.selection.value.findIndex((e) => e.id === info.value.id))
 
 // 是否已选择
-const isSelected = computed(() => index.value >= 0);
+const isSelected = computed(() => index.value >= 0)
 
 // 地址
-const url = computed(() => info.value.preload || info.value.url);
+const url = computed(() => info.value.preload || info.value.url)
 
 // 类型
-const type = computed(() => fileRule(info.value.type || ""));
+const type = computed(() => fileRule(info.value.type || ''))
 
 // 选择
 function select() {
-	emit("select", info.value);
+	emit('select', info.value)
 }
 
 // 确认
@@ -141,55 +135,55 @@ function confirm() {
 
 // 移除
 function remove() {
-	emit("remove", info.value);
+	emit('remove', info.value)
 }
 
 // 预览
 function preview() {
-	space.preview(info.value);
+	space.preview(info.value)
 }
 
 // 右键菜单
 function onContextMenu(e: any) {
 	ContextMenu.open(e, {
 		hover: {
-			target: "item-file__wrap"
+			target: 'item-file__wrap',
 		},
 		list: [
 			{
-				label: "预览",
+				label: '预览',
 				callback(done) {
-					preview();
-					done();
-				}
+					preview()
+					done()
+				},
 			},
 			{
-				label: "复制链接",
+				label: '复制链接',
 				callback(done) {
 					if (info.value.url) {
-						copy(info.value.url);
-						ElMessage.success("复制成功");
+						copy(info.value.url)
+						ElMessage.success('复制成功')
 					}
 
-					done();
-				}
+					done()
+				},
 			},
 			{
-				label: isSelected.value ? "取消选中" : "选中",
+				label: isSelected.value ? '取消选中' : '选中',
 				callback(done) {
-					select();
-					done();
-				}
+					select()
+					done()
+				},
 			},
 			{
-				label: "删除",
+				label: '删除',
 				callback(done) {
-					remove();
-					done();
-				}
-			}
-		]
-	});
+					remove()
+					done()
+				},
+			},
+		],
+	})
 }
 </script>
 
@@ -291,7 +285,7 @@ function onContextMenu(e: any) {
 			font-size: 26px;
 
 			&::after {
-				content: "%";
+				content: '%';
 				margin-left: 2px;
 			}
 		}

@@ -19,15 +19,7 @@
 				<!-- 名称 -->
 				<template #column-name="{ scope }">
 					<span>{{ scope.row.name }}</span>
-					<el-tag
-						v-if="!scope.row.isShow"
-						effect="dark"
-						type="danger"
-						size="small"
-						disable-transitions
-						style="margin-left: 10px"
-						>隐藏</el-tag
-					>
+					<el-tag v-if="!scope.row.isShow" effect="dark" type="danger" size="small" disable-transitions style="margin-left: 10px">隐藏</el-tag>
 				</template>
 
 				<!-- 图标 -->
@@ -37,21 +29,12 @@
 
 				<!-- 权限 -->
 				<template #column-perms="{ scope }">
-					<el-tag
-						v-for="(item, index) in scope.row.permList"
-						:key="index"
-						effect="plain"
-						size="small"
-						style="margin: 2px; letter-spacing: 0.5px"
-						>{{ item }}</el-tag
-					>
+					<el-tag v-for="(item, index) in scope.row.permList" :key="index" effect="plain" size="small" style="margin: 2px; letter-spacing: 0.5px">{{ item }}</el-tag>
 				</template>
 
 				<!-- 路由 -->
 				<template #column-router="{ scope }">
-					<el-link v-if="scope.row.type == 1" type="success" :href="scope.row.router">{{
-						scope.row.router
-					}}</el-link>
+					<el-link v-if="scope.row.type == 1" type="success" :href="scope.row.router">{{ scope.row.router }}</el-link>
 					<span v-else>{{ scope.row.router }}</span>
 				</template>
 
@@ -71,11 +54,12 @@
 						text
 						bg
 						v-permission="{
-							and: [service.base.sys.menu.permission.add, scope.row.type != 2]
+							and: [service.base.sys.menu.permission.add, scope.row.type != 2],
 						}"
 						@click="append(scope.row)"
-						>新增</el-button
 					>
+						新增
+					</el-button>
 				</template>
 			</cl-table>
 		</cl-row>
@@ -90,247 +74,247 @@
 </template>
 
 <script lang="ts" name="sys-menu" setup>
-import { Check, Close } from "@element-plus/icons-vue";
-import { setFocus, useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-import { deepTree } from "/@/cool/utils";
-import AutoMenu from "/$/magic/components/auto-menu/index.vue";
-import { useStore } from "../store";
+import { Check, Close } from '@element-plus/icons-vue'
+import { setFocus, useCrud, useTable, useUpsert } from '@cool-vue/crud'
+import { useCool } from '/@/cool'
+import { deepTree } from '/@/cool/utils'
+import AutoMenu from '/$/magic/components/auto-menu/index.vue'
+import { useStore } from '../store'
 
-const { service, mitt } = useCool();
-const { menu } = useStore();
+const { service, mitt } = useCool()
+const { menu } = useStore()
 
 // cl-table
 const Table = useTable({
 	contextMenu: [
 		(row) => {
 			return {
-				label: "新增",
+				label: '新增',
 				hidden: !(row.type != 2 && service.base.sys.user._permission.add),
 				callback(done) {
-					append(row);
-					done();
-				}
-			};
+					append(row)
+					done()
+				},
+			}
 		},
-		"update",
-		"delete",
+		'update',
+		'delete',
 		(row) => {
 			return {
-				label: "添加权限",
+				label: '添加权限',
 				hidden: !(row.type == 1 && service.base.sys.user._permission.add),
 				callback(done) {
-					addPermission(row);
-					done();
-				}
-			};
-		}
+					addPermission(row)
+					done()
+				},
+			}
+		},
 	],
 	columns: [
 		{
-			type: "selection"
+			type: 'selection',
 		},
 		{
-			prop: "name",
-			label: "名称",
-			align: "left",
+			prop: 'name',
+			label: '名称',
+			align: 'left',
 			width: 200,
-			fixed: "left"
+			fixed: 'left',
 		},
 		{
-			prop: "icon",
-			label: "图标",
-			width: 80
+			prop: 'icon',
+			label: '图标',
+			width: 80,
 		},
 		{
-			prop: "type",
-			label: "类型",
+			prop: 'type',
+			label: '类型',
 			width: 100,
 			dict: [
 				{
-					label: "目录",
-					value: 0
+					label: '目录',
+					value: 0,
 				},
 				{
-					label: "菜单",
+					label: '菜单',
 					value: 1,
-					type: "success"
+					type: 'success',
 				},
 				{
-					label: "权限",
+					label: '权限',
 					value: 2,
-					type: "danger"
-				}
-			]
+					type: 'danger',
+				},
+			],
 		},
 		{
-			prop: "router",
-			label: "节点路由",
-			minWidth: 160
+			prop: 'router',
+			label: '节点路由',
+			minWidth: 160,
 		},
 		{
-			prop: "keepAlive",
-			label: "路由缓存",
-			width: 100
+			prop: 'keepAlive',
+			label: '路由缓存',
+			width: 100,
 		},
 		{
-			prop: "viewPath",
-			label: "文件路径",
+			prop: 'viewPath',
+			label: '文件路径',
 			minWidth: 200,
-			showOverflowTooltip: true
+			showOverflowTooltip: true,
 		},
 		{
-			prop: "perms",
-			label: "权限",
-			headerAlign: "center",
-			minWidth: 300
+			prop: 'perms',
+			label: '权限',
+			headerAlign: 'center',
+			minWidth: 300,
 		},
 		{
-			prop: "orderNum",
-			label: "排序号",
+			prop: 'orderNum',
+			label: '排序号',
 			width: 90,
-			fixed: "right"
+			fixed: 'right',
 		},
 		{
-			prop: "updateTime",
-			label: "更新时间",
-			sortable: "custom",
-			width: 160
+			prop: 'updateTime',
+			label: '更新时间',
+			sortable: 'custom',
+			width: 160,
 		},
 		{
-			label: "操作",
-			type: "op",
+			label: '操作',
+			type: 'op',
 			width: 250,
-			buttons: ["slot-add", "edit", "delete"]
-		}
-	]
-});
+			buttons: ['slot-add', 'edit', 'delete'],
+		},
+	],
+})
 
 // cl-upsert
 const Upsert = useUpsert({
 	dialog: {
-		width: "800px"
+		width: '800px',
 	},
 	items: [
 		{
-			prop: "type",
+			prop: 'type',
 			value: 0,
-			label: "节点类型",
+			label: '节点类型',
 			required: true,
 			component: {
-				name: "el-radio-group",
+				name: 'el-radio-group',
 				options: [
 					{
-						label: "目录",
-						value: 0
+						label: '目录',
+						value: 0,
 					},
 					{
-						label: "菜单",
-						value: 1
+						label: '菜单',
+						value: 1,
 					},
 					{
-						label: "权限",
-						value: 2
-					}
-				]
-			}
-		},
-		{
-			prop: "name",
-			label: "节点名称",
-			component: {
-				name: "el-input"
+						label: '权限',
+						value: 2,
+					},
+				],
 			},
-			required: true
 		},
 		{
-			prop: "parentId",
-			label: "上级节点",
-			hook: "empty",
+			prop: 'name',
+			label: '节点名称',
 			component: {
-				name: "slot-parentId"
-			}
+				name: 'el-input',
+			},
+			required: true,
 		},
 		{
-			prop: "router",
-			label: "节点路由",
+			prop: 'parentId',
+			label: '上级节点',
+			hook: 'empty',
+			component: {
+				name: 'slot-parentId',
+			},
+		},
+		{
+			prop: 'router',
+			label: '节点路由',
 			hidden: ({ scope }) => scope.type != 1,
 			component: {
-				name: "el-input",
+				name: 'el-input',
 				props: {
-					placeholder: "请输入节点路由，如：/test"
-				}
-			}
+					placeholder: '请输入节点路由，如：/test',
+				},
+			},
 		},
 		{
-			prop: "keepAlive",
+			prop: 'keepAlive',
 			value: true,
-			label: "路由缓存",
+			label: '路由缓存',
 			hidden: ({ scope }) => scope.type != 1,
 			component: {
-				name: "el-radio-group",
+				name: 'el-radio-group',
 				options: [
 					{
-						label: "开启",
-						value: true
+						label: '开启',
+						value: true,
 					},
 					{
-						label: "关闭",
-						value: false
-					}
-				]
-			}
+						label: '关闭',
+						value: false,
+					},
+				],
+			},
 		},
 		{
-			prop: "isShow",
-			label: "是否显示",
+			prop: 'isShow',
+			label: '是否显示',
 			value: true,
 			hidden: ({ scope }) => scope.type == 2,
 			flex: false,
 			component: {
-				name: "el-switch"
-			}
+				name: 'el-switch',
+			},
 		},
 		{
-			prop: "viewPath",
-			label: "文件路径",
+			prop: 'viewPath',
+			label: '文件路径',
 			hidden: ({ scope }) => scope.type != 1,
 			component: {
-				name: "cl-menu-file"
-			}
+				name: 'cl-menu-file',
+			},
 		},
 		{
-			prop: "icon",
-			label: "节点图标",
+			prop: 'icon',
+			label: '节点图标',
 			hidden: ({ scope }) => scope.type == 2,
 			component: {
-				name: "cl-menu-icon"
-			}
+				name: 'cl-menu-icon',
+			},
 		},
 		{
-			prop: "orderNum",
-			label: "排序号",
+			prop: 'orderNum',
+			label: '排序号',
 			component: {
-				name: "el-input-number",
+				name: 'el-input-number',
 				props: {
-					placeholder: "请填写排序号",
+					placeholder: '请填写排序号',
 					min: 0,
 					max: 99,
-					"controls-position": "right"
-				}
-			}
+					'controls-position': 'right',
+				},
+			},
 		},
 		{
-			prop: "perms",
-			label: "权限",
+			prop: 'perms',
+			label: '权限',
 			hidden: ({ scope }) => scope.type != 2,
 			component: {
-				name: "cl-menu-perms"
-			}
-		}
+				name: 'cl-menu-perms',
+			},
+		},
 	],
-	plugins: [setFocus("name")]
-});
+	plugins: [setFocus('name')],
+})
 
 // cl-crud
 const Crud = useCrud(
@@ -339,28 +323,28 @@ const Crud = useCrud(
 		onRefresh(_, { render }) {
 			service.base.sys.menu.list().then((list) => {
 				list.map((e) => {
-					e.permList = e.perms ? e.perms.split(",") : [];
-				});
+					e.permList = e.perms ? e.perms.split(',') : []
+				})
 
-				render(deepTree(list));
-				menu.get();
-			});
-		}
+				render(deepTree(list))
+				menu.get()
+			})
+		},
 	},
 	(app) => {
-		app.refresh();
-	}
-);
+		app.refresh()
+	},
+)
 
 // 刷新
 function refresh(params?: any) {
-	Crud.value?.refresh(params);
+	Crud.value?.refresh(params)
 }
 
 // 行点击展开
 function onRowClick(row: any, column: any) {
 	if (column?.property && row.children) {
-		Table.value?.toggleRowExpansion(row);
+		Table.value?.toggleRowExpansion(row)
 	}
 }
 
@@ -371,17 +355,17 @@ function append({ type, id }: any) {
 		parentType: type,
 		type: type + 1,
 		keepAlive: true,
-		isShow: true
-	});
+		isShow: true,
+	})
 }
 
 // 设置权限
 function addPermission({ id }: any) {
 	Crud.value?.rowAppend({
 		parentId: id,
-		type: 2
-	});
+		type: 2,
+	})
 }
 
-mitt.on("magic.createMenu", refresh);
+mitt.on('magic.createMenu', refresh)
 </script>

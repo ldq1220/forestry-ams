@@ -14,5 +14,5 @@
 </template>
 
 <script lang="ts" setup>
-import FormBtn from "./form-btn.vue";
+import FormBtn from './form-btn.vue'
 </script>

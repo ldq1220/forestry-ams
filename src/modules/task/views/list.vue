@@ -8,7 +8,7 @@
 				@click="edit(item)"
 				@contextmenu="
 					(e) => {
-						onContextMenu(e, item);
+						onContextMenu(e, item)
 					}
 				"
 			>
@@ -26,11 +26,7 @@
 					<template v-if="item.status">
 						<el-tag disable-transitions effect="dark" type="success">进行中</el-tag>
 
-						<el-icon
-							class="pause"
-							@click.stop="stop(item)"
-							v-permission="service.task.info.permission.stop"
-						>
+						<el-icon class="pause" @click.stop="stop(item)" v-permission="service.task.info.permission.stop">
 							<video-pause />
 						</el-icon>
 					</template>
@@ -38,40 +34,24 @@
 					<template v-else>
 						<el-tag disable-transitions effect="dark" type="danger">已停止</el-tag>
 
-						<el-icon
-							class="play"
-							@click.stop="start(item)"
-							v-permission="service.task.info.permission.start"
-						>
+						<el-icon class="play" @click.stop="start(item)" v-permission="service.task.info.permission.start">
 							<video-play />
 						</el-icon>
 					</template>
 
 					<cl-flex1 />
 
-					<el-icon
-						class="log"
-						@click.stop="log(item)"
-						v-permission="service.task.info.permission.log"
-					>
+					<el-icon class="log" @click.stop="log(item)" v-permission="service.task.info.permission.log">
 						<tickets />
 					</el-icon>
 
-					<el-icon
-						class="delete"
-						@click.stop="remove(item)"
-						v-permission="service.task.info.permission.delete"
-					>
+					<el-icon class="delete" @click.stop="remove(item)" v-permission="service.task.info.permission.delete">
 						<delete />
 					</el-icon>
 				</div>
 			</div>
 
-			<div
-				class="item is-add"
-				@click="edit()"
-				v-permission="service.task.info.permission.add"
-			>
+			<div class="item is-add" @click="edit()" v-permission="service.task.info.permission.add">
 				<el-icon>
 					<plus />
 				</el-icon>
@@ -88,223 +68,223 @@
 </template>
 
 <script lang="ts" name="task-list" setup>
-import { onActivated, ref } from "vue";
-import { useBrowser, useCool } from "/@/cool";
-import { VideoPlay, VideoPause, Plus, Tickets, Delete } from "@element-plus/icons-vue";
-import { ContextMenu, useForm } from "@cool-vue/crud";
-import { ElMessage, ElMessageBox } from "element-plus";
-import TaskLogs from "../components/logs.vue";
+import { onActivated, ref } from 'vue'
+import { useBrowser, useCool } from '/@/cool'
+import { VideoPlay, VideoPause, Plus, Tickets, Delete } from '@element-plus/icons-vue'
+import { ContextMenu, useForm } from '@cool-vue/crud'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import TaskLogs from '../components/logs.vue'
 
-const { service, refs, setRefs } = useCool();
-const { browser } = useBrowser();
-const Form = useForm();
+const { service, refs, setRefs } = useCool()
+const { browser } = useBrowser()
+const Form = useForm()
 
-const list = ref<Eps.TaskInfoEntity[]>([]);
+const list = ref<Eps.TaskInfoEntity[]>([])
 
 // 刷新
 function refresh() {
 	service.task.info.page({ size: 100, page: 1 }).then((res) => {
 		list.value = res.list.map((e) => {
 			if (e.every) {
-				e._every = parseInt(String(e.every / 1000));
+				e._every = parseInt(String(e.every / 1000))
 			}
 
-			return e;
-		});
-	});
+			return e
+		})
+	})
 }
 
 // 启用任务
 function start(item: Eps.TaskInfoEntity) {
-	ElMessageBox.confirm(`此操作将启用任务（${item.name}），是否继续？`, "提示", {
-		type: "warning"
+	ElMessageBox.confirm(`此操作将启用任务（${item.name}），是否继续？`, '提示', {
+		type: 'warning',
 	})
 		.then(() => {
 			service.task.info
 				.start({ id: item.id, type: item.type })
 				.then(() => {
-					refresh();
+					refresh()
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 
 // 停用任务
 function stop(item: Eps.TaskInfoEntity) {
-	ElMessageBox.confirm(`此操作将停用任务（${item.name}），是否继续？`, "提示", {
-		type: "warning"
+	ElMessageBox.confirm(`此操作将停用任务（${item.name}），是否继续？`, '提示', {
+		type: 'warning',
 	})
 		.then(() => {
 			service.task.info
 				.stop({ id: item.id })
 				.then(() => {
-					refresh();
+					refresh()
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 
 // 删除任务
 function remove(item: Eps.TaskInfoEntity) {
-	ElMessageBox.confirm(`此操作将删除任务（${item.name}），是否继续？`, "提示", {
-		type: "warning"
+	ElMessageBox.confirm(`此操作将删除任务（${item.name}），是否继续？`, '提示', {
+		type: 'warning',
 	})
 		.then(() => {
 			service.task.info
 				.delete({ ids: [item.id] })
 				.then(() => {
-					refresh();
+					refresh()
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 
 // 任务日志
 function log(item: Eps.TaskInfoEntity) {
-	refs.log.open(item);
+	refs.log.open(item)
 }
 
 // 新增、编辑
 async function edit(item?: Eps.TaskInfoEntity) {
 	if (item && !service.task.info._permission.update) {
-		return false;
+		return false
 	}
 
 	Form.value?.open({
-		title: "编辑计划任务",
-		width: "600px",
+		title: '编辑计划任务',
+		width: '600px',
 		props: {
-			labelWidth: "80px"
+			labelWidth: '80px',
 		},
 		items: [
 			{
-				label: "名称",
-				prop: "name",
+				label: '名称',
+				prop: 'name',
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						placeholder: "请输入名称"
-					}
+						placeholder: '请输入名称',
+					},
 				},
-				required: true
+				required: true,
 			},
 			{
-				label: "类型",
-				prop: "taskType",
+				label: '类型',
+				prop: 'taskType',
 				value: 0,
 				component: {
-					name: "el-radio-group",
+					name: 'el-radio-group',
 					options: [
 						{
-							label: "cron",
-							value: 0
+							label: 'cron',
+							value: 0,
 						},
 						{
-							label: "时间间隔",
-							value: 1
-						}
-					]
+							label: '时间间隔',
+							value: 1,
+						},
+					],
 				},
-				required: true
+				required: true,
 			},
 			{
-				label: "cron",
-				prop: "cron",
+				label: 'cron',
+				prop: 'cron',
 				hidden: ({ scope }) => scope.taskType == 1,
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						placeholder: "* * * * * *"
-					}
+						placeholder: '* * * * * *',
+					},
 				},
-				required: true
+				required: true,
 			},
 			{
-				label: "间隔(秒)",
-				prop: "every",
+				label: '间隔(秒)',
+				prop: 'every',
 				hidden: ({ scope }) => scope.taskType == 0,
 				hook: {
 					bind(value) {
-						return value / 1000;
+						return value / 1000
 					},
 					submit(value) {
-						return value * 1000;
-					}
+						return value * 1000
+					},
 				},
 				component: {
-					name: "el-input-number",
+					name: 'el-input-number',
 					props: {
 						min: 1,
-						max: 100000000
-					}
+						max: 100000000,
+					},
 				},
-				required: true
+				required: true,
 			},
 			{
-				label: "service",
-				prop: "service",
+				label: 'service',
+				prop: 'service',
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						placeholder: "taskDemoService.test([1, 2])"
-					}
-				}
+						placeholder: 'taskDemoService.test([1, 2])',
+					},
+				},
 			},
 			{
-				label: "开始时间",
-				prop: "startDate",
+				label: '开始时间',
+				prop: 'startDate',
 				hidden: ({ scope }) => scope.taskType == 1,
 				component: {
-					name: "el-date-picker",
+					name: 'el-date-picker',
 					props: {
-						type: "datetime",
-						"value-format": "YYYY-MM-DD HH:mm:ss"
-					}
-				}
+						type: 'datetime',
+						'value-format': 'YYYY-MM-DD HH:mm:ss',
+					},
+				},
 			},
 			{
-				label: "备注",
-				prop: "remark",
+				label: '备注',
+				prop: 'remark',
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						type: "textarea",
-						rows: 3
-					}
-				}
-			}
+						type: 'textarea',
+						rows: 3,
+					},
+				},
+			},
 		],
 		form: {
-			...item
+			...item,
 		},
 		on: {
 			submit: (data, { close, done }) => {
 				if (!data.limit) {
-					data.limit = null;
+					data.limit = null
 				}
 
-				service.task.info[item?.id ? "update" : "add"](data)
+				service.task.info[item?.id ? 'update' : 'add'](data)
 					.then(() => {
-						refresh();
-						ElMessage.success("保存成功");
-						close();
+						refresh()
+						ElMessage.success('保存成功')
+						close()
 					})
 					.catch((err) => {
-						ElMessage.error(err.message);
-						done();
-					});
-			}
-		}
-	});
+						ElMessage.error(err.message)
+						done()
+					})
+			},
+		},
+	})
 }
 
 // 执行一次
@@ -312,11 +292,11 @@ function once(item: Eps.TaskInfoEntity) {
 	service.task.info
 		.once({ id: item.id })
 		.then(() => {
-			refresh();
+			refresh()
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 }
 
 // 右键菜单
@@ -325,62 +305,60 @@ function onContextMenu(e: any, item: Eps.TaskInfoEntity) {
 		list: [
 			item.status
 				? {
-						label: "暂停",
+						label: '暂停',
 						hidden: !service.task.info._permission.stop,
 						callback(done) {
-							stop(item);
-							done();
-						}
+							stop(item)
+							done()
+						},
 				  }
 				: {
-						label: "开始",
+						label: '开始',
 						hidden: !service.task.info._permission.start,
 						callback(done) {
-							start(item);
-							done();
-						}
+							start(item)
+							done()
+						},
 				  },
 			{
-				label: "立即执行",
+				label: '立即执行',
 				hidden: !service.task.info._permission.once,
 				callback(done) {
-					once(item);
-					done();
-				}
+					once(item)
+					done()
+				},
 			},
 			{
-				label: "编辑",
-				hidden: !(
-					service.task.info._permission.update && service.task.info._permission.info
-				),
+				label: '编辑',
+				hidden: !(service.task.info._permission.update && service.task.info._permission.info),
 				callback(done) {
-					edit(item);
-					done();
-				}
+					edit(item)
+					done()
+				},
 			},
 			{
-				label: "删除",
+				label: '删除',
 				hidden: !service.task.info._permission.delete,
 				callback(done) {
-					remove(item);
-					done();
-				}
+					remove(item)
+					done()
+				},
 			},
 			{
-				label: "查看日志",
+				label: '查看日志',
 				hidden: !service.task.info._permission.log,
 				callback(done) {
-					log(item);
-					done();
-				}
-			}
-		]
-	});
+					log(item)
+					done()
+				},
+			},
+		],
+	})
 }
 
 onActivated(() => {
-	refresh();
-});
+	refresh()
+})
 </script>
 
 <style lang="scss" scoped>

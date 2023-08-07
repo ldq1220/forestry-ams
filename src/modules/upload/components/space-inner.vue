@@ -25,12 +25,7 @@
 						</div>
 
 						<template v-if="!selectable">
-							<el-button
-								type="danger"
-								:disabled="selection.length == 0"
-								@click="remove()"
-								>删除选中文件</el-button
-							>
+							<el-button type="danger" :disabled="selection.length == 0" @click="remove()">删除选中文件</el-button>
 						</template>
 					</div>
 
@@ -42,21 +37,11 @@
 								<div
 									class="list"
 									:class="{
-										'is-mini': browser.isMini
+										'is-mini': browser.isMini,
 									}"
 								>
-									<div
-										class="item"
-										v-for="item in list"
-										:key="item.preload || item.url"
-									>
-										<item-file
-											:data="item"
-											:list="list"
-											@confirm="confirm"
-											@select="select"
-											@remove="remove"
-										/>
+									<div class="item" v-for="item in list" :key="item.preload || item.url">
+										<item-file :data="item" :list="list" @confirm="confirm" @select="select" @remove="remove" />
 									</div>
 								</div>
 							</template>
@@ -80,84 +65,84 @@
 </template>
 
 <script lang="ts" name="cl-upload-space-inner" setup>
-import { provide, reactive, ref, watch } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { UploadFilled } from "@element-plus/icons-vue";
-import { useCool } from "/@/cool";
-import { useViewGroup } from "/$/base";
-import ItemFile from "./items/file.vue";
-import Viewer from "./items/viewer.vue";
+import { provide, reactive, ref, watch } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { UploadFilled } from '@element-plus/icons-vue'
+import { useCool } from '/@/cool'
+import { useViewGroup } from '/$/base'
+import ItemFile from './items/file.vue'
+import Viewer from './items/viewer.vue'
 
 const props = defineProps({
 	limit: {
 		type: Number,
-		default: 99
+		default: 99,
 	},
 	accept: String,
-	selectable: Boolean
-});
+	selectable: Boolean,
+})
 
-const emit = defineEmits(["selection-change", "confirm"]);
+const emit = defineEmits(['selection-change', 'confirm'])
 
-const { service, browser, refs, setRefs } = useCool();
+const { service, browser, refs, setRefs } = useCool()
 
 const { ViewGroup } = useViewGroup({
-	label: "分类",
-	title: "文件列表",
+	label: '分类',
+	title: '文件列表',
 	service: service.space.type,
 	onEdit() {
 		return {
-			width: "400px",
+			width: '400px',
 			props: {
-				labelPosition: "top"
+				labelPosition: 'top',
 			},
 			dialog: {
-				controls: ["close"]
+				controls: ['close'],
 			},
 			items: [
 				{
-					label: "名称",
-					prop: "name",
-					value: "",
+					label: '名称',
+					prop: 'name',
+					value: '',
 					required: true,
 					component: {
-						name: "el-input",
+						name: 'el-input',
 						props: {
 							maxlength: 20,
-							clearable: true
-						}
-					}
-				}
-			]
-		};
+							clearable: true,
+						},
+					},
+				},
+			],
+		}
 	},
 	onSelect(item) {
 		refresh({
 			classifyId: item.id,
-			page: 1
-		});
-	}
-});
+			page: 1,
+		})
+	},
+})
 
 // 是否加载中
-const loading = ref(false);
+const loading = ref(false)
 
 // 已选列表
-const selection = ref<Eps.SpaceInfoEntity[]>([]);
+const selection = ref<Eps.SpaceInfoEntity[]>([])
 
 // 文件列表
-const list = ref<Eps.SpaceInfoEntity[]>([]);
+const list = ref<Eps.SpaceInfoEntity[]>([])
 
 // 分页信息
 const pagination = reactive({
 	page: 1,
 	size: 50,
-	total: 0
-});
+	total: 0,
+})
 
 // 清空选择
 function clear() {
-	selection.value = [];
+	selection.value = []
 }
 
 // 上传成功
@@ -165,70 +150,70 @@ function onSuccess<T extends { id: number }>(data: T) {
 	service.space.info
 		.add({
 			classifyId: ViewGroup.value?.selected?.id,
-			...data
+			...data,
 		})
 		.then((res) => {
-			data.id = res.id;
+			data.id = res.id
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 }
 
 // 上传时
 function onUpload(data: any) {
-	list.value.unshift(data);
+	list.value.unshift(data)
 }
 
 // 请求参数
 const reqParams = {
-	page: 1
-};
+	page: 1,
+}
 
 // 刷新列表
 async function refresh(params?: any) {
 	// 清空选择
-	clear();
+	clear()
 
 	// 合并参数
 	Object.assign(reqParams, {
-		type: props.accept?.split("/")[0].replace("*", "") || undefined,
+		type: props.accept?.split('/')[0].replace('*', '') || undefined,
 		...pagination,
-		...params
-	});
+		...params,
+	})
 
 	// 加载中
 	if (reqParams.page == 1) {
-		loading.value = true;
+		loading.value = true
 	}
 
 	await service.space.info.page(reqParams).then((res) => {
 		// 合并分页
-		Object.assign(pagination, res.pagination);
+		Object.assign(pagination, res.pagination)
 
 		if (reqParams.page == 1) {
-			list.value = [];
+			list.value = []
 		}
 
-		list.value.push(...res.list);
-	});
+		list.value.push(...res.list)
+	})
 
 	// 加载完成
-	loading.value = false;
+	loading.value = false
 }
 
 // 选择
 function select(item: Eps.SpaceInfoEntity) {
-	const index = selection.value.findIndex((e) => e.id === item.id);
+	const index = selection.value.findIndex((e) => e.id === item.id)
 
 	if (index >= 0) {
-		selection.value.splice(index, 1);
+		selection.value.splice(index, 1)
 	} else {
 		if (props.limit == 1) {
-			selection.value = [item];
+			selection.value = [item]
 		} else {
 			if (selection.value.length < props.limit) {
-				selection.value.push(item);
+				selection.value.push(item)
 			}
 		}
 	}
@@ -236,96 +221,96 @@ function select(item: Eps.SpaceInfoEntity) {
 
 // 确认
 function confirm(item: Eps.SpaceInfoEntity) {
-	emit("confirm", [item]);
+	emit('confirm', [item])
 }
 
 // 删除选中
 function remove(item?: Eps.SpaceInfoEntity) {
 	// 已选文件 id
-	const ids = item ? [item.id] : selection.value.map((e) => e.id);
+	const ids = item ? [item.id] : selection.value.map((e) => e.id)
 
-	ElMessageBox.confirm("此操作将删除文件, 是否继续?", "提示", {
-		type: "warning"
+	ElMessageBox.confirm('此操作将删除文件, 是否继续?', '提示', {
+		type: 'warning',
 	})
 		.then(() => {
-			ElMessage.success("删除成功");
+			ElMessage.success('删除成功')
 
 			// 删除文件及选择
 			ids.forEach((id) => {
-				[list.value, selection.value].forEach((list) => {
-					const index = list.findIndex((e) => e.id === id);
-					list.splice(index, 1);
-				});
-			});
+				;[list.value, selection.value].forEach((list) => {
+					const index = list.findIndex((e) => e.id === id)
+					list.splice(index, 1)
+				})
+			})
 
 			// 删除请求
 			service.space.info
 				.delete({
-					ids
+					ids,
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 
 // 预览
 function preview(item: Eps.SpaceInfoEntity) {
-	refs.viewer.open(item, list.value);
+	refs.viewer.open(item, list.value)
 }
 
 // 监听选择
 watch(
 	selection,
 	(val) => {
-		emit("selection-change", val);
+		emit('selection-change', val)
 	},
 	{
-		deep: true
-	}
-);
+		deep: true,
+	},
+)
 
 // 加载更多
 function loadmore() {
 	if (list.value.length && list.value.length < pagination.total) {
 		refresh({
-			page: pagination.page + 1
-		});
+			page: pagination.page + 1,
+		})
 	}
 }
 
 // 拖拽
 function onDragover(e: any) {
-	e.preventDefault();
+	e.preventDefault()
 }
 
 // 放下
 function onDrop(e: any) {
-	e.preventDefault();
+	e.preventDefault()
 
 	e.dataTransfer.files.forEach((f: File, i: number) => {
 		setTimeout(() => {
-			refs.upload.upload(f);
-		}, i * 10);
-	});
+			refs.upload.upload(f)
+		}, i * 10)
+	})
 }
 
-provide("upload-space", {
+provide('upload-space', {
 	selection,
 	refresh,
 	loading,
 	list,
-	preview
-});
+	preview,
+})
 
 defineExpose({
 	selection,
 	open,
 	close,
 	clear,
-	refresh
-});
+	refresh,
+})
 </script>
 
 <style lang="scss">

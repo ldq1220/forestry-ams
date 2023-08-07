@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="c">
-			<el-button type="success" @click="toCopy"> https://cool-js.com 点击复制</el-button>
+			<el-button type="success" @click="toCopy">https://cool-js.com 点击复制</el-button>
 		</div>
 
 		<div class="f">
@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useClipboard } from "@vueuse/core";
-import { ElMessage } from "element-plus";
-const { copy } = useClipboard();
+import { useClipboard } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
+const { copy } = useClipboard()
 
 function toCopy() {
-	copy("https://cool-js.com");
-	ElMessage.success("保存成功");
+	copy('https://cool-js.com')
+	ElMessage.success('保存成功')
 }
 </script>

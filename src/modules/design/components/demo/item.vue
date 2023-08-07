@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts" name="demo-item" setup>
-import { ArrowRight, Plus, Link } from "@element-plus/icons-vue";
+import { ArrowRight, Plus, Link } from '@element-plus/icons-vue'
 
 defineProps({
 	label: String,
@@ -40,10 +40,10 @@ defineProps({
 	required: Boolean,
 	placeholder: {
 		type: String,
-		default: "请输入"
+		default: '请输入',
 	},
-	arrowIcon: Boolean
-});
+	arrowIcon: Boolean,
+})
 </script>
 
 <style lang="scss">
@@ -158,7 +158,7 @@ defineProps({
 	&.is-required {
 		.label {
 			&::before {
-				content: "*";
+				content: '*';
 				color: red;
 				margin-right: 2px;
 			}

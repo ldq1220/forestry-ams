@@ -36,119 +36,116 @@
 </template>
 
 <script lang="ts" name="cloud-func-info" setup>
-import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-import { Status, CodeSnippets } from "../../dict";
-import FuncLogs from "../../components/func-logs.vue";
+import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
+import { useCool } from '/@/cool'
+import { Status, CodeSnippets } from '../../dict'
+import FuncLogs from '../../components/func-logs.vue'
 
-const { service, refs, setRefs, router } = useCool();
+const { service, refs, setRefs, router } = useCool()
 
 // cl-upsert
 const Upsert = useUpsert({
 	props: {
-		labelWidth: "60px"
+		labelWidth: '60px',
 	},
 	items: [
-		{ label: "名称", prop: "name", required: true, component: { name: "el-input" } },
+		{ label: '名称', prop: 'name', required: true, component: { name: 'el-input' } },
 		{
-			label: "内容",
-			prop: "content",
+			label: '内容',
+			prop: 'content',
 			component: {
-				name: "cl-editor-monaco",
+				name: 'cl-editor-monaco',
 				props: {
-					language: "typescript"
+					language: 'typescript',
 				},
-				ref: setRefs("monaco")
+				ref: setRefs('monaco'),
 			},
 			value: CodeSnippets.func,
-			required: true
+			required: true,
 		},
 		{
-			label: "说明",
-			prop: "readme",
+			label: '说明',
+			prop: 'readme',
 			component: {
-				name: "el-input",
+				name: 'el-input',
 				props: {
-					type: "textarea",
-					rows: 3
-				}
-			}
+					type: 'textarea',
+					rows: 3,
+				},
+			},
 		},
 		{
-			label: "状态",
-			prop: "status",
+			label: '状态',
+			prop: 'status',
 			value: 1,
-			component: { name: "el-radio-group", options: Status },
-			required: true
-		}
+			component: { name: 'el-radio-group', options: Status },
+			required: true,
+		},
 	],
 	async onSubmit(data, { next }) {
-		const content = await refs.monaco.formatCode();
+		const content = await refs.monaco.formatCode()
 
 		next({
 			...data,
-			content
-		});
-	}
-});
+			content,
+		})
+	},
+})
 
 // cl-table
 const Table = useTable({
 	columns: [
-		{ type: "selection" },
-		{ label: "名称", prop: "name", minWidth: 160 },
-		{ label: "说明", prop: "readme", minWidth: 200, showOverflowTooltip: true },
+		{ type: 'selection' },
+		{ label: '名称', prop: 'name', minWidth: 160 },
+		{ label: '说明', prop: 'readme', minWidth: 200, showOverflowTooltip: true },
 		{
-			label: "状态",
-			prop: "status",
+			label: '状态',
+			prop: 'status',
 			component: {
-				name: "cl-switch"
+				name: 'cl-switch',
 			},
-			minWidth: 150
+			minWidth: 150,
 		},
-		{ label: "创建时间", prop: "createTime", minWidth: 160, sortable: "desc" },
-		{ label: "更新时间", prop: "updateTime", minWidth: 160, sortable: "custom" },
+		{ label: '创建时间', prop: 'createTime', minWidth: 160, sortable: 'desc' },
+		{ label: '更新时间', prop: 'updateTime', minWidth: 160, sortable: 'custom' },
 		{
-			type: "op",
+			type: 'op',
 			width: 360,
 			buttons: [
-				"edit",
-				"delete",
+				'edit',
+				'delete',
 				{
-					label: "开发",
-					type: "success",
-					hidden: !(
-						service.cloud.func.info._permission.info &&
-						service.cloud.func.info._permission.invoke
-					),
+					label: '开发',
+					type: 'success',
+					hidden: !(service.cloud.func.info._permission.info && service.cloud.func.info._permission.invoke),
 					onClick({ scope }) {
 						router.push({
-							path: "/cloud/func/dev",
+							path: '/cloud/func/dev',
 							query: {
-								id: scope.row.id
-							}
-						});
-					}
+								id: scope.row.id,
+							},
+						})
+					},
 				},
 				{
-					label: "查看日志",
+					label: '查看日志',
 					hidden: !service.cloud.func.log._permission.page,
 					onClick({ scope }) {
-						refs.logs.open(scope.row);
-					}
-				}
-			]
-		}
-	]
-});
+						refs.logs.open(scope.row)
+					},
+				},
+			],
+		},
+	],
+})
 
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.cloud.func.info
+		service: service.cloud.func.info,
 	},
 	(app) => {
-		app.refresh();
-	}
-);
+		app.refresh()
+	},
+)
 </script>

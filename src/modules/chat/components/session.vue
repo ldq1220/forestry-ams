@@ -21,7 +21,7 @@
 					v-for="(item, index) in list"
 					:key="index"
 					:class="{
-						'is-active': item.id == session?.value?.id
+						'is-active': item.id == session?.value?.id,
 					}"
 					@click="toDetail(item)"
 				>
@@ -43,42 +43,38 @@
 					</div>
 				</div>
 
-				<el-empty
-					v-if="list.length == 0"
-					:image-size="100"
-					description="暂无会话"
-				></el-empty>
+				<el-empty v-if="list.length == 0" :image-size="100" description="暂无会话"></el-empty>
 			</el-scrollbar>
 		</div>
 	</div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from "vue";
-import { useChat } from "../hooks";
-import { useStore } from "../store";
-import { Refresh, Plus } from "@element-plus/icons-vue";
-import { Chat } from "../types";
-import { useBrowser } from "/@/cool";
+import { computed, ref } from 'vue'
+import { useChat } from '../hooks'
+import { useStore } from '../store'
+import { Refresh, Plus } from '@element-plus/icons-vue'
+import { Chat } from '../types'
+import { useBrowser } from '/@/cool'
 
-const { browser } = useBrowser();
-const { chat } = useChat();
-const { session, message } = useStore();
+const { browser } = useBrowser()
+const { chat } = useChat()
+const { session, message } = useStore()
 
 // 关键字
-const keyWord = ref("");
+const keyWord = ref('')
 
 // 过滤列表
-const list = computed(() => session?.list.filter((e) => e.nickName?.includes(keyWord.value)) || []);
+const list = computed(() => session?.list.filter((e) => e.nickName?.includes(keyWord.value)) || [])
 
 // 会话详情
 async function toDetail(item: Chat.Session) {
 	if (browser.isMini) {
-		chat.expand(false);
+		chat.expand(false)
 	}
-	session.set(item);
-	await message.get({ page: 1 });
-	chat.scrollToBottom();
+	session.set(item)
+	await message.get({ page: 1 })
+	chat.scrollToBottom()
 }
 </script>
 

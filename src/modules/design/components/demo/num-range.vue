@@ -7,18 +7,18 @@
 </template>
 
 <script lang="ts" setup name="demo-num-range">
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const props = defineProps({
-	modelValue: Array
-});
+	modelValue: Array,
+})
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-const v = ref<any[]>(props.modelValue || []);
+const v = ref<any[]>(props.modelValue || [])
 
 function onChange() {
-	emit("update:modelValue", v.value);
+	emit('update:modelValue', v.value)
 }
 </script>
 

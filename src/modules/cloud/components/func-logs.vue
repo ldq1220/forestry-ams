@@ -21,103 +21,103 @@
 </template>
 
 <script lang="ts" setup>
-import { useCrud, useTable } from "@cool-vue/crud";
-import { nextTick, ref } from "vue";
-import { LogType } from "../dict";
-import { useCool } from "/@/cool";
+import { useCrud, useTable } from '@cool-vue/crud'
+import { nextTick, ref } from 'vue'
+import { LogType } from '../dict'
+import { useCool } from '/@/cool'
 
-const { service } = useCool();
+const { service } = useCool()
 
 // 是否可见
-const visible = ref(false);
+const visible = ref(false)
 
 // 标题
-const title = ref("");
+const title = ref('')
 
 // cl-table
 const Table = useTable({
 	autoHeight: false,
 	columns: [
 		{
-			label: "#",
-			type: "index"
+			label: '#',
+			type: 'index',
 		},
 		{
-			label: "请求",
-			prop: "request",
+			label: '请求',
+			prop: 'request',
 			minWidth: 150,
 			component: {
-				name: "cl-code-json",
+				name: 'cl-code-json',
 				props: {
-					popover: true
-				}
-			}
+					popover: true,
+				},
+			},
 		},
 		{
-			label: "耗时",
-			prop: "time",
+			label: '耗时',
+			prop: 'time',
 			minWidth: 100,
 			formatter(row) {
-				return row.time + "ms";
-			}
+				return row.time + 'ms'
+			},
 		},
 		{
-			label: "结果",
-			prop: "result",
+			label: '结果',
+			prop: 'result',
 			minWidth: 150,
 			component: {
-				name: "cl-code-json",
+				name: 'cl-code-json',
 				props: {
-					popover: true
-				}
-			}
+					popover: true,
+				},
+			},
 		},
 		{
-			label: "类型",
-			prop: "type",
+			label: '类型',
+			prop: 'type',
 			minWidth: 100,
-			dict: LogType
+			dict: LogType,
 		},
 		{
-			label: "异常信息",
-			prop: "error",
+			label: '异常信息',
+			prop: 'error',
 			minWidth: 150,
-			showOverflowTooltip: true
+			showOverflowTooltip: true,
 		},
 		{
-			label: "执行时间",
-			prop: "createTime",
+			label: '执行时间',
+			prop: 'createTime',
 			minWidth: 160,
-			sortable: "desc"
-		}
-	]
-});
+			sortable: 'desc',
+		},
+	],
+})
 
 // cl-crud
 const Crud = useCrud({
-	service: service.cloud.func.log
-});
+	service: service.cloud.func.log,
+})
 
 // 打开
 function open(data: Eps.CloudFuncInfoEntity) {
-	visible.value = true;
-	title.value = `日志列表（${data.name}）`;
+	visible.value = true
+	title.value = `日志列表（${data.name}）`
 
 	nextTick(() => {
 		Crud.value?.refresh({
 			page: 1,
-			infoId: data.id
-		});
-	});
+			infoId: data.id,
+		})
+	})
 }
 
 // 关闭
 function close() {
-	visible.value = false;
+	visible.value = false
 }
 
 defineExpose({
 	open,
-	close
-});
+	close,
+})
 </script>

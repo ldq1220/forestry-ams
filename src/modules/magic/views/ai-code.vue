@@ -10,30 +10,9 @@
 					<div class="label required">CRUD</div>
 
 					<div class="row">
-						<cl-select
-							class="module"
-							placeholder="请选择模块"
-							size="large"
-							v-model="form.module"
-							:options="module.dirs"
-							label-key="name"
-							value-key="name"
-							allow-create
-						/>
-						<el-input
-							class="name"
-							v-model="form.name"
-							placeholder="实体名称，如：收货地址"
-						/>
-						<cl-select
-							class="columns"
-							size="large"
-							multiple
-							allow-create
-							v-model="form.columns"
-							default-first-option
-							placeholder="请填写字段，多个按回车。如：姓名、年龄、状态"
-						/>
+						<cl-select class="module" placeholder="请选择模块" size="large" v-model="form.module" :options="module.dirs" label-key="name" value-key="name" allow-create />
+						<el-input class="name" v-model="form.name" placeholder="实体名称，如：收货地址" />
+						<cl-select class="columns" size="large" multiple allow-create v-model="form.columns" default-first-option placeholder="请填写字段，多个按回车。如：姓名、年龄、状态" />
 					</div>
 
 					<!-- <div class="label">Key</div>
@@ -62,26 +41,13 @@
 
 					<div class="label">其他你想做的事？</div>
 
-					<el-input
-						type="textarea"
-						v-model="form.other"
-						:rows="5"
-						placeholder="如：分页查询时姓名、手机号字段设置成可模糊搜索"
-					/>
+					<el-input type="textarea" v-model="form.other" :rows="5" placeholder="如：分页查询时姓名、手机号字段设置成可模糊搜索" />
 				</el-form>
 			</div>
 
 			<div class="btns">
-				<el-button
-					round
-					size="large"
-					type="primary"
-					:icon="Promotion"
-					:disabled="temp.disabled"
-					:loading="temp.disabled"
-					@click="next"
-				>
-					{{ temp.disabled ? "思考中" : temp.message.length ? "重新生成" : "下一步" }}
+				<el-button round size="large" type="primary" :icon="Promotion" :disabled="temp.disabled" :loading="temp.disabled" @click="next">
+					{{ temp.disabled ? '思考中' : temp.message.length ? '重新生成' : '下一步' }}
 				</el-button>
 
 				<!-- <el-button :icon="VideoPlay" type="success" round size="large" @click="toVideo"
@@ -103,21 +69,10 @@
 						</div>
 
 						<el-button round size="small" @click="copyCode('entity')">Copy</el-button>
-						<el-button round type="success" size="small" @click="createVue()">
-							生成Vue代码
-						</el-button>
+						<el-button round type="success" size="small" @click="createVue()">生成Vue代码</el-button>
 					</div>
 
-					<cl-editor
-						name="cl-editor-monaco"
-						:ref="setRefs('codeEntity')"
-						:options="editor.options"
-						height="auto"
-						autofocus
-						autosize
-						language="typescript"
-						v-model="codes.entity"
-					/>
+					<cl-editor name="cl-editor-monaco" :ref="setRefs('codeEntity')" :options="editor.options" height="auto" autofocus autosize language="typescript" v-model="codes.entity" />
 				</div>
 
 				<div class="item is-controller" v-show="codes.controller">
@@ -128,19 +83,9 @@
 								<loading />
 							</el-icon>
 						</div>
-						<el-button round size="small" @click="copyCode('controller')"
-							>Copy</el-button
-						>
+						<el-button round size="small" @click="copyCode('controller')">Copy</el-button>
 					</div>
-					<cl-editor
-						name="cl-editor-monaco"
-						:ref="setRefs('codeController')"
-						:options="editor.options"
-						height="auto"
-						autosize
-						language="typescript"
-						v-model="codes.controller"
-					/>
+					<cl-editor name="cl-editor-monaco" :ref="setRefs('codeController')" :options="editor.options" height="auto" autosize language="typescript" v-model="codes.controller" />
 				</div>
 
 				<div class="item is-vue" v-show="codes.vue">
@@ -153,23 +98,13 @@
 						</div>
 						<el-button round size="small" @click="copyCode('vue')">Copy</el-button>
 					</div>
-					<cl-editor
-						name="cl-editor-monaco"
-						:ref="setRefs('codeVue')"
-						:options="editor.options"
-						height="auto"
-						autosize
-						language="html"
-						v-model="codes.vue"
-					/>
+					<cl-editor name="cl-editor-monaco" :ref="setRefs('codeVue')" :options="editor.options" height="auto" autosize language="html" v-model="codes.vue" />
 				</div>
 			</div>
 
 			<div class="op" v-show="!temp.disabled && temp.message.length">
-				<el-button :icon="Close" round size="large" @click="reset"> 取消 </el-button>
-				<el-button :icon="Check" round size="large" type="success" @click="createFile">
-					创建文件
-				</el-button>
+				<el-button :icon="Close" round size="large" @click="reset">取消</el-button>
+				<el-button :icon="Check" round size="large" type="success" @click="createFile">创建文件</el-button>
 			</div>
 
 			<div class="bottom"></div>
@@ -181,218 +116,218 @@
 </template>
 
 <script lang="tsx" name="magic-ai-code" setup>
-import { onMounted, reactive, watch } from "vue";
-import { module, useCool, storage } from "/@/cool";
-import { Promotion, Loading, Close, Check, Refresh, VideoPlay } from "@element-plus/icons-vue";
-import { ElLoading, ElMessage, ElMessageBox } from "element-plus";
-import { debounce, isEmpty } from "lodash-es";
-import { useClipboard } from "@vueuse/core";
-import { useMenu, useChatGPT, useScroll } from "../hooks";
-import { useForm } from "@cool-vue/crud";
-import { isDev } from "/@/cool";
-import Text2 from "../components/text.vue";
-import { CodeType } from "../types";
+import { onMounted, reactive, watch } from 'vue'
+import { module, useCool, storage } from '/@/cool'
+import { Promotion, Loading, Close, Check, Refresh, VideoPlay } from '@element-plus/icons-vue'
+import { ElLoading, ElMessage, ElMessageBox } from 'element-plus'
+import { debounce, isEmpty } from 'lodash-es'
+import { useClipboard } from '@vueuse/core'
+import { useMenu, useChatGPT, useScroll } from '../hooks'
+import { useForm } from '@cool-vue/crud'
+import { isDev } from '/@/cool'
+import Text2 from '../components/text.vue'
+import { CodeType } from '../types'
 
-const { service, mitt, refs, setRefs } = useCool();
-const { copy } = useClipboard();
-const menu = useMenu();
-const chatgpt = useChatGPT();
-const scroll = useScroll();
-const Form = useForm();
+const { service, mitt, refs, setRefs } = useCool()
+const { copy } = useClipboard()
+const menu = useMenu()
+const chatgpt = useChatGPT()
+const scroll = useScroll()
+const Form = useForm()
 
 // 编辑器
 const editor = reactive({
 	options: {
-		fontSize: 16
-	}
-});
+		fontSize: 16,
+	},
+})
 
 // 表单
 const form = reactive(
-	storage.get("ai-create.form") || {
-		name: "收货地址",
-		module: "user",
-		other: "",
-		columns: ["用户ID", "联系人", "手机号", "省市区", "地址", "是否默认"]
-	}
-);
+	storage.get('ai-create.form') || {
+		name: '收货地址',
+		module: 'user',
+		other: '',
+		columns: ['用户ID', '联系人', '手机号', '省市区', '地址', '是否默认'],
+	},
+)
 
 // 临时数据
 const temp = reactive({
 	disabled: false,
-	coding: "" as CodeType | "",
+	coding: '' as CodeType | '',
 	message: [] as string[],
-	path: "",
+	path: '',
 	columns: [],
 	api: [
 		{
-			path: "/add",
-			summary: "新增"
+			path: '/add',
+			summary: '新增',
 		},
 		{
-			path: "/info",
-			summary: "单个信息"
+			path: '/info',
+			summary: '单个信息',
 		},
 		{
-			path: "/update",
-			summary: "修改"
+			path: '/update',
+			summary: '修改',
 		},
 		{
-			path: "/delete",
-			summary: "删除"
+			path: '/delete',
+			summary: '删除',
 		},
 		{
-			path: "/page",
-			summary: "分页查询"
+			path: '/page',
+			summary: '分页查询',
 		},
 		{
-			path: "/list",
-			summary: "列表查询"
-		}
-	]
-});
+			path: '/list',
+			summary: '列表查询',
+		},
+	],
+})
 
 // 代码
 const codes = reactive({
-	entity: "",
-	controller: "",
-	vue: ""
-});
+	entity: '',
+	controller: '',
+	vue: '',
+})
 
 // 下一步，生成代码
 function next() {
 	if (!form.module) {
-		return ElMessage.warning("请选择模块");
+		return ElMessage.warning('请选择模块')
 	}
 
 	if (!form.name) {
-		return ElMessage.warning("请填写实体名称");
+		return ElMessage.warning('请填写实体名称')
 	}
 
 	if (isEmpty(form.columns)) {
-		return ElMessage.warning("请填写字段");
+		return ElMessage.warning('请填写字段')
 	}
 
 	function send() {
 		// 重置
-		reset();
+		reset()
 
 		// 禁用
-		temp.disabled = true;
+		temp.disabled = true
 
 		// 发送请求
-		chatgpt.send(form);
+		chatgpt.send(form)
 
-		scroll.start();
+		scroll.start()
 	}
 
 	if (temp.message.length) {
-		ElMessageBox.confirm("此操作将重新生成代码，是否继续？", "提示", {
-			type: "warning"
+		ElMessageBox.confirm('此操作将重新生成代码，是否继续？', '提示', {
+			type: 'warning',
 		})
 			.then(() => {
-				send();
+				send()
 			})
-			.catch(() => null);
+			.catch(() => null)
 	} else {
-		send();
+		send()
 	}
 }
 
 // 重新
 function reset() {
-	temp.disabled = false;
-	temp.message = [];
-	temp.coding = "";
-	codes.entity = "";
-	codes.controller = "";
-	codes.vue = "";
+	temp.disabled = false
+	temp.message = []
+	temp.coding = ''
+	codes.entity = ''
+	codes.controller = ''
+	codes.vue = ''
 }
 
 // 复制代码
 function copyCode(k: CodeType) {
-	copy(codes[k]);
-	ElMessage.success("复制成功");
+	copy(codes[k])
+	ElMessage.success('复制成功')
 }
 
 // 创建文件
 function createFile() {
 	if (!isDev) {
-		return ElMessage.error("只有在开发环境下才有效");
+		return ElMessage.error('只有在开发环境下才有效')
 	}
 
 	Form.value?.open({
-		title: "配置菜单",
-		width: "800px",
+		title: '配置菜单',
+		width: '800px',
 		items: [
 			{
-				prop: "parentId",
-				label: "上级节点",
+				prop: 'parentId',
+				label: '上级节点',
 				component: {
-					name: "cl-menu-select",
+					name: 'cl-menu-select',
 					props: {
-						type: 1
-					}
-				}
+						type: 1,
+					},
+				},
 			},
 			{
-				prop: "keepAlive",
+				prop: 'keepAlive',
 				value: true,
-				label: "路由缓存",
+				label: '路由缓存',
 				component: {
-					name: "el-radio-group",
+					name: 'el-radio-group',
 					options: [
 						{
-							label: "开启",
-							value: true
+							label: '开启',
+							value: true,
 						},
 						{
-							label: "关闭",
-							value: false
-						}
-					]
-				}
+							label: '关闭',
+							value: false,
+						},
+					],
+				},
 			},
 			{
-				prop: "icon",
-				label: "菜单图标",
+				prop: 'icon',
+				label: '菜单图标',
 				component: {
-					name: "cl-menu-icon"
-				}
+					name: 'cl-menu-icon',
+				},
 			},
 			{
-				prop: "orderNum",
-				label: "排序号",
+				prop: 'orderNum',
+				label: '排序号',
 				component: {
-					name: "el-input-number",
+					name: 'el-input-number',
 					props: {
-						placeholder: "请填写排序号",
+						placeholder: '请填写排序号',
 						min: 0,
 						max: 99,
-						"controls-position": "right"
-					}
-				}
-			}
+						'controls-position': 'right',
+					},
+				},
+			},
 		],
 		op: {
-			saveButtonText: "开始创建"
+			saveButtonText: '开始创建',
 		},
 		on: {
 			submit(data, { close, done }) {
 				const loader = ElLoading.service({
-					text: "创建文件中，过程可能会发生页面及服务重启"
-				});
+					text: '创建文件中，过程可能会发生页面及服务重启',
+				})
 
 				// 添加菜单、权限
 				menu.create({
-					router: `${temp.path.replace("/admin", "")}`,
+					router: `${temp.path.replace('/admin', '')}`,
 					api: temp.api,
 					columns: temp.columns,
 					prefix: temp.path,
 					code: codes.vue,
 					module: form.module,
 					name: form.name,
-					...data
+					...data,
 				})
 					.then((create) => {
 						// 创建后端文件
@@ -400,48 +335,48 @@ function createFile() {
 							...form,
 							controller: codes.controller,
 							entity: codes.entity,
-							path: temp.path
-						});
+							path: temp.path,
+						})
 
 						// 每3s检测服务状态
 						const timer = setInterval(() => {
 							service
 								.request({
-									url: "/"
+									url: '/',
 								})
 								.then(() => {
-									ElMessage.success("文件创建成功");
-									clearInterval(timer);
-									loader.close();
-									close();
-									create();
-								});
-						}, 3000);
+									ElMessage.success('文件创建成功')
+									clearInterval(timer)
+									loader.close()
+									close()
+									create()
+								})
+						}, 3000)
 					})
 					.catch(() => {
-						loader.close();
-						done();
-					});
-			}
-		}
-	});
+						loader.close()
+						done()
+					})
+			},
+		},
+	})
 }
 
 // 创建ts
 function createTs() {
 	const arr = temp.message
-		.join("")
-		.split("```")
-		.map((e: string) => e.replace("typescript\n", ""));
+		.join('')
+		.split('```')
+		.map((e: string) => e.replace('typescript\n', ''))
 
 	if (arr[1]) {
-		temp.coding = "entity";
-		codes.entity = arr[1];
+		temp.coding = 'entity'
+		codes.entity = arr[1]
 	}
 
 	if (arr[3]) {
-		temp.coding = "controller";
-		codes.controller = arr[3];
+		temp.coding = 'controller'
+		codes.controller = arr[3]
 	}
 }
 
@@ -449,82 +384,82 @@ function createTs() {
 const createVue = debounce((auto?: boolean) => {
 	async function next() {
 		if (temp.disabled) {
-			return false;
+			return false
 		}
 
 		if (codes.entity) {
-			temp.coding = "vue";
+			temp.coding = 'vue'
 
 			await service.base.sys.menu
 				.parse({
 					entity: codes.entity,
 					controller: codes.controller,
-					module: form.module
+					module: form.module,
 				})
 				.then(async (res) => {
-					temp.path = res.path;
-					temp.columns = res.columns;
+					temp.path = res.path
+					temp.columns = res.columns
 
 					codes.vue = menu.createVue({
-						router: temp.path.replace("/admin", ""),
+						router: temp.path.replace('/admin', ''),
 						prefix: temp.path,
 						api: temp.api,
 						columns: temp.columns,
-						module: form.module
-					});
+						module: form.module,
+					})
 
 					setTimeout(() => {
-						refs.codeVue.formatCode();
-						mitt.emit("view.scrollTo", { el: `.codes .is-vue` });
-					}, 300);
+						refs.codeVue.formatCode()
+						mitt.emit('view.scrollTo', { el: `.codes .is-vue` })
+					}, 300)
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 
-			temp.coding = "";
+			temp.coding = ''
 		}
 	}
 
 	if (auto) {
-		next();
+		next()
 	} else {
-		ElMessageBox.confirm("此操作将会重新生成vue代码，是否继续？", "提示", {
-			type: "warning"
+		ElMessageBox.confirm('此操作将会重新生成vue代码，是否继续？', '提示', {
+			type: 'warning',
 		})
 			.then(() => {
-				next();
+				next()
 			})
-			.catch(() => null);
+			.catch(() => null)
 	}
-}, 300);
+}, 300)
 
 // 视频教程
 function toVideo() {
-	location.href = "";
+	location.href = ''
 }
 
 // 监听表单
 watch(
 	() => form,
 	(val) => {
-		storage.set("ai-create.form", val);
-	}
-);
+		storage.set('ai-create.form', val)
+	},
+)
 
 onMounted(() => {
 	chatgpt.connect({
 		onMessage(content) {
-			temp.message.push(content);
-			createTs();
+			temp.message.push(content)
+			createTs()
 		},
 		onComplete() {
-			temp.disabled = false;
-			scroll.stop();
-			createVue(true);
-		}
-	});
-});
+			temp.disabled = false
+			scroll.stop()
+			createVue(true)
+		},
+	})
+})
 </script>
 
 <style lang="scss" scoped>
@@ -554,7 +489,7 @@ onMounted(() => {
 
 			&.required {
 				&::after {
-					content: "*";
+					content: '*';
 					margin-left: 2px;
 				}
 			}

@@ -18,7 +18,7 @@
 							<div
 								class="w"
 								:style="{
-									backgroundColor: item.color
+									backgroundColor: item.color,
 								}"
 							>
 								<check v-show="item.color == form.theme.color" />
@@ -33,10 +33,11 @@
 					<el-color-picker v-model="form.color" @change="setColor" />
 					<span
 						:style="{
-							marginLeft: '10px'
+							marginLeft: '10px',
 						}"
-						>{{ form.color }}</span
 					>
+						{{ form.color }}
+					</span>
 				</el-form-item>
 
 				<el-form-item label="菜单分组显示">
@@ -44,12 +45,7 @@
 				</el-form-item>
 
 				<el-form-item label="转场动画">
-					<el-switch
-						v-model="form.theme.transition"
-						active-value="slide"
-						inactive-value="none"
-						@change="setTransition"
-					></el-switch>
+					<el-switch v-model="form.theme.transition" active-value="slide" inactive-value="none" @change="setTransition"></el-switch>
 				</el-form-item>
 			</el-form>
 		</div>
@@ -57,66 +53,66 @@
 </template>
 
 <script lang="ts" setup name="cl-theme">
-import { reactive, ref } from "vue";
-import { Check, Moon, Sunny } from "@element-plus/icons-vue";
-import { ElMessage } from "element-plus";
-import { useBase } from "/$/base";
-import { useDark } from "@vueuse/core";
-import { storage } from "/@/cool";
-import { Theme } from "../types";
-import { setTheme, themes } from "../utils";
+import { reactive, ref } from 'vue'
+import { Check, Moon, Sunny } from '@element-plus/icons-vue'
+import { ElMessage } from 'element-plus'
+import { useBase } from '/$/base'
+import { useDark } from '@vueuse/core'
+import { storage } from '/@/cool'
+import { Theme } from '../types'
+import { setTheme, themes } from '../utils'
 
-const { menu } = useBase();
+const { menu } = useBase()
 
 // 是否暗黑模式
-const isDark = ref(useDark());
+const isDark = ref(useDark())
 
 // 当前主题
-const theme = reactive<Theme>(storage.get("theme"));
+const theme = reactive<Theme>(storage.get('theme'))
 
 // 表单
 const form = reactive<{ color: string; theme: Theme }>({
-	color: theme.color || "",
-	theme
-});
+	color: theme.color || '',
+	theme,
+})
 
 // 抽屉
-const visible = ref(false);
+const visible = ref(false)
 
 // 打开
 function open() {
-	visible.value = true;
+	visible.value = true
 }
 
 // 清除暗黑模式
 function clearDark() {
-	isDark.value = false;
+	isDark.value = false
 }
 
 // 设置颜色
 function setColor(color: any) {
-	setTheme({ color });
-	clearDark();
+	setTheme({ color })
+	clearDark()
 }
 
 // 设置推荐
 function setComd(item: any) {
-	Object.assign(form.theme, item);
-	form.color = item.color;
-	setTheme(item);
-	clearDark();
-	ElMessage.success(`切换主题：${item.label}`);
+	Object.assign(form.theme, item)
+	form.color = item.color
+	setTheme(item)
+	clearDark()
+	ElMessage.success(`切换主题：${item.label}`)
 }
 
 // 设置分组
 function setGroup(val: any) {
-	setTheme({ isGroup: val });
-	menu.setMenu();
+	setTheme({ isGroup: val })
+	menu.setMenu()
 }
 
 // 设置转场动画
 function setTransition(val: any) {
-	setTheme({ transition: val });
+	setTheme({ transition: val })
 }
 </script>
 

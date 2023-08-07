@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts" name="auto-menu" setup>
-import { useCool } from "/@/cool";
+import { useCool } from '/@/cool'
 
-const { router, browser } = useCool();
+const { router, browser } = useCool()
 
 function toCode() {
-	router.push("/magic/ai-code");
+	router.push('/magic/ai-code')
 }
 </script>
 

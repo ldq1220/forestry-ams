@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const list = ref(["like", "video", "rank", "menu", "favor"]);
+const list = ref(['like', 'video', 'rank', 'menu', 'favor'])
 </script>
 
 <style lang="scss" scoped>

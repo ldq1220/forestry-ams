@@ -1,19 +1,20 @@
 <template>
 	<a v-for="item in urls" :key="item" class="cl-link" :href="item" :target="target">
-		<el-icon><icon-link /></el-icon>{{ filename(item) }}
+		<el-icon><icon-link /></el-icon>
+		{{ filename(item) }}
 	</a>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
-import { isArray, isString, last } from "lodash-es";
-import { Link } from "@element-plus/icons-vue";
+import { defineComponent, computed } from 'vue'
+import { isArray, isString, last } from 'lodash-es'
+import { Link } from '@element-plus/icons-vue'
 
 export default defineComponent({
-	name: "cl-link",
+	name: 'cl-link',
 
 	components: {
-		"icon-link": Link
+		'icon-link': Link,
 	},
 
 	props: {
@@ -21,39 +22,39 @@ export default defineComponent({
 		href: [String, Array],
 		text: {
 			type: String,
-			default: "查看"
+			default: '查看',
 		},
 		target: {
 			type: String,
-			default: "_blank"
-		}
+			default: '_blank',
+		},
 	},
 
 	setup(props) {
 		const urls = computed(() => {
-			const urls: any = props.modelValue || props.href;
+			const urls: any = props.modelValue || props.href
 
 			if (isArray(urls)) {
-				return urls;
+				return urls
 			}
 
 			if (isString(urls)) {
-				return (urls || "").split(",").filter(Boolean);
+				return (urls || '').split(',').filter(Boolean)
 			}
 
-			return [];
-		});
+			return []
+		})
 
 		function filename(url: string) {
-			return last(url.split("/"));
+			return last(url.split('/'))
 		}
 
 		return {
 			urls,
-			filename
-		};
-	}
-});
+			filename,
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

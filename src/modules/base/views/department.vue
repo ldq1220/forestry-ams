@@ -29,47 +29,47 @@
 </template>
 
 <script lang="ts" name="base-sys-department" setup>
-import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
+import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
+import { useCool } from '/@/cool'
 
-const { service } = useCool();
+const { service } = useCool()
 
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
-		{ prop: "name", label: "部门名称", required: true, component: { name: "el-input" } },
-		{ prop: "parentId", label: "上级部门ID", component: { name: "el-input" } },
+		{ prop: 'name', label: '部门名称', required: true, component: { name: 'el-input' } },
+		{ prop: 'parentId', label: '上级部门ID', component: { name: 'el-input' } },
 		{
-			prop: "orderNum",
-			label: "排序",
-			hook: { bind: ["number"] },
-			component: { name: "el-input-number", props: { min: 0 } },
-			required: true
-		}
-	]
-});
+			prop: 'orderNum',
+			label: '排序',
+			hook: { bind: ['number'] },
+			component: { name: 'el-input-number', props: { min: 0 } },
+			required: true,
+		},
+	],
+})
 
 // cl-table
 const Table = useTable({
 	columns: [
-		{ type: "selection" },
-		{ prop: "id", label: "ID" },
-		{ prop: "name", label: "部门名称" },
-		{ prop: "parentId", label: "上级部门ID" },
-		{ prop: "orderNum", label: "排序" },
-		{ prop: "createTime", label: "创建时间", sortable: "desc", width: 160 },
-		{ prop: "updateTime", label: "更新时间", sortable: "custom", width: 160 },
-		{ type: "op", buttons: ["edit", "delete"] }
-	]
-});
+		{ type: 'selection' },
+		{ prop: 'id', label: 'ID' },
+		{ prop: 'name', label: '部门名称' },
+		{ prop: 'parentId', label: '上级部门ID' },
+		{ prop: 'orderNum', label: '排序' },
+		{ prop: 'createTime', label: '创建时间', sortable: 'desc', width: 160 },
+		{ prop: 'updateTime', label: '更新时间', sortable: 'custom', width: 160 },
+		{ type: 'op', buttons: ['edit', 'delete'] },
+	],
+})
 
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.base.sys.department
+		service: service.base.sys.department,
 	},
 	(app) => {
-		app.refresh();
-	}
-);
+		app.refresh()
+	},
+)
 </script>

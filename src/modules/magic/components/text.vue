@@ -25,14 +25,14 @@
 defineProps({
 	fontSize: {
 		type: String,
-		default: "30px"
+		default: '30px',
 	},
 	color: {
 		type: String,
-		default: "#000000"
+		default: '#000000',
 	},
-	modelValue: String
-});
+	modelValue: String,
+})
 </script>
 
 <style lang="scss" scoped>
@@ -61,7 +61,7 @@ $color: var(--el-text-color-primary);
 	z-index: 4;
 	animation: slash 6s ease-in forwards;
 	&:before {
-		content: "";
+		content: '';
 		display: block;
 		position: absolute;
 		top: 50%;
@@ -74,7 +74,7 @@ $color: var(--el-text-color-primary);
 		opacity: 0.2;
 	}
 	&:after {
-		content: "";
+		content: '';
 		display: block;
 		position: absolute;
 		top: 0;

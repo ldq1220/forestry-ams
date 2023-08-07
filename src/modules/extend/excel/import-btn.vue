@@ -10,15 +10,7 @@
 				</div>
 
 				<div class="inner">
-					<cl-upload
-						drag
-						:limit-size="limitSize"
-						:accept="accept"
-						:disabled="disabled"
-						type="file"
-						:before-upload="onUpload"
-						:size="[220, '100%']"
-					/>
+					<cl-upload drag :limit-size="limitSize" :accept="accept" :disabled="disabled" type="file" :before-upload="onUpload" :size="[220, '100%']" />
 				</div>
 
 				<div class="progress" v-if="progress > 0">
@@ -30,169 +22,168 @@
 </template>
 
 <script lang="ts" setup name="cl-import-btn">
-import { useForm } from "@cool-vue/crud";
-import { ElMessage } from "element-plus";
-import { reactive, ref } from "vue";
-import XLSX from "xlsx";
-import chardet from "chardet";
-import { extname } from "/@/cool/utils";
+import { useForm } from '@cool-vue/crud'
+import { ElMessage } from 'element-plus'
+import { reactive, ref } from 'vue'
+import XLSX from 'xlsx'
+import chardet from 'chardet'
+import { extname } from '/@/cool/utils'
 
 const props = defineProps({
 	onConfig: Function,
 	onSubmit: {
-		type: Function
+		type: Function,
 	},
 	template: {
 		type: String,
-		default: ""
+		default: '',
 	},
 	tips: {
 		type: String,
-		default: "请按照模版填写信息"
+		default: '请按照模版填写信息',
 	},
 	limitSize: {
 		type: Number,
-		default: 10
+		default: 10,
 	},
 	disabled: Boolean,
 	accept: {
 		type: String,
-		default:
-			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/csv"
-	}
-});
+		default: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel,text/csv',
+	},
+})
 
-const emit = defineEmits(["change"]);
+const emit = defineEmits(['change'])
 
-const Form = useForm();
+const Form = useForm()
 
 // 上传信息
 const upload = reactive({
-	filename: "",
-	data: [] as any[]
-});
+	filename: '',
+	data: [] as any[],
+})
 
 // 进度
-const progress = ref(0);
+const progress = ref(0)
 
 // 清空
 function clear() {
-	progress.value = 0;
-	upload.filename = "";
-	upload.data = [];
+	progress.value = 0
+	upload.filename = ''
+	upload.data = []
 }
 
 // 打开
 function open() {
-	clear();
+	clear()
 
 	Form.value?.open({
-		title: "导入",
-		width: "800px",
+		title: '导入',
+		width: '800px',
 		dialog: {
-			"close-on-press-escape": false
+			'close-on-press-escape': false,
 		},
 		items: [
 			...(props.onConfig ? props.onConfig(Form) : []),
 			{
-				label: "",
-				prop: "file",
+				label: '',
+				prop: 'file',
 				props: {
-					labelWidth: "0"
+					labelWidth: '0',
 				},
 				component: {
-					name: "slot-upload"
-				}
-			}
+					name: 'slot-upload',
+				},
+			},
 		],
 		op: {
-			saveButtonText: "提交"
+			saveButtonText: '提交',
 		},
 		on: {
 			submit(data, { done, close }) {
 				if (!upload.filename) {
-					done();
-					return ElMessage.error("请选择文件");
+					done()
+					return ElMessage.error('请选择文件')
 				}
 
 				if (props.onSubmit) {
 					props.onSubmit(
 						{
 							...data,
-							list: upload.data
+							list: upload.data,
 						},
-						{ done, close, setProgress }
-					);
+						{ done, close, setProgress },
+					)
 				} else {
-					console.error("cl-import-btn 未配置 onSubmit");
+					console.error('cl-import-btn 未配置 onSubmit')
 				}
-			}
-		}
-	});
+			},
+		},
+	})
 }
 
 function onUpload(raw: File, _: any, { next }: any) {
-	const reader = new FileReader();
-	const ext = extname(raw.name);
+	const reader = new FileReader()
+	const ext = extname(raw.name)
 
 	reader.onload = (event: any) => {
-		let data = "";
+		let data = ''
 
-		if (ext == "csv") {
-			const detected: any = chardet.detect(new Uint8Array(event.target.result));
-			const decoder = new TextDecoder(detected);
-			data = decoder.decode(event.target.result);
+		if (ext == 'csv') {
+			const detected: any = chardet.detect(new Uint8Array(event.target.result))
+			const decoder = new TextDecoder(detected)
+			data = decoder.decode(event.target.result)
 		} else {
-			data = event.target.result;
+			data = event.target.result
 		}
 
-		const workbook = XLSX.read(data, { type: "binary", raw: ext == "csv" });
+		const workbook = XLSX.read(data, { type: 'binary', raw: ext == 'csv' })
 
-		let json: any[] = [];
+		let json: any[] = []
 		for (const sheet in workbook.Sheets) {
 			if (workbook.Sheets.hasOwnProperty(sheet)) {
-				json = json.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+				json = json.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]))
 			}
 		}
 
-		upload.data = json;
-		upload.filename = raw.name;
+		upload.data = json
+		upload.filename = raw.name
 
-		console.log(upload.filename, upload.data);
+		console.log(upload.filename, upload.data)
 
-		emit("change", json);
-	};
-
-	if (ext == "csv") {
-		reader.readAsArrayBuffer(raw);
-	} else {
-		reader.readAsBinaryString(raw);
+		emit('change', json)
 	}
 
-	next();
+	if (ext == 'csv') {
+		reader.readAsArrayBuffer(raw)
+	} else {
+		reader.readAsBinaryString(raw)
+	}
 
-	return false;
+	next()
+
+	return false
 }
 
 // 下载模版
 function download() {
-	const link = document.createElement("a");
-	link.setAttribute("href", props.template);
-	link.setAttribute("download", "");
-	link.click();
+	const link = document.createElement('a')
+	link.setAttribute('href', props.template)
+	link.setAttribute('download', '')
+	link.click()
 }
 
 // 设置进度值
 function setProgress(val: string) {
-	progress.value = parseInt(val);
+	progress.value = parseInt(val)
 }
 
 defineExpose({
 	open,
 	clear,
 	setProgress,
-	Form
-});
+	Form,
+})
 </script>
 
 <style lang="scss" scoped>

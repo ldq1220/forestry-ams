@@ -2,160 +2,154 @@
 	<el-button type="success" @click="open">快速创建</el-button>
 	<cl-form ref="Form">
 		<template #slot-entity="{ scope }">
-			<el-cascader
-				v-model="scope.entity"
-				filterable
-				separator="."
-				:options="tree"
-				@change="onEntityChange"
-			></el-cascader>
+			<el-cascader v-model="scope.entity" filterable separator="." :options="tree" @change="onEntityChange"></el-cascader>
 		</template>
 	</cl-form>
 </template>
 
 <script lang="ts" name="menu-create" setup>
-import { isEmpty } from "lodash-es";
-import { useCool, module } from "/@/cool";
-import { useForm } from "@cool-vue/crud";
-import { deepPaths } from "/@/cool/utils";
-import { computed, onMounted } from "vue";
-import { useMenu } from "../../hooks";
+import { isEmpty } from 'lodash-es'
+import { useCool, module } from '/@/cool'
+import { useForm } from '@cool-vue/crud'
+import { deepPaths } from '/@/cool/utils'
+import { computed, onMounted } from 'vue'
+import { useMenu } from '../../hooks'
 
-const { service, mitt } = useCool();
-const menu = useMenu();
-const Form = useForm();
+const { service, mitt } = useCool()
+const menu = useMenu()
+const Form = useForm()
 
 // 实体列表
-const list: any[] = [];
+const list: any[] = []
 
 // 实体树形列表
-const tree = computed(() => deepPaths(list.map((e) => e.value)));
+const tree = computed(() => deepPaths(list.map((e) => e.value)))
 
 // 打开
 function open() {
 	Form.value?.open({
-		title: "快速创建",
-		width: "800px",
+		title: '快速创建',
+		width: '800px',
 		items: [
 			{
-				prop: "module",
-				label: "选择模块",
+				prop: 'module',
+				label: '选择模块',
 				span: 10,
 				component: {
-					name: "cl-select",
+					name: 'cl-select',
 					props: {
 						filterable: true,
 						clearable: true,
-						placeholder: "请选择模块",
+						placeholder: '请选择模块',
 						allowCreate: true,
 						defaultFirstOption: true,
-						options: module.dirs
-					}
+						options: module.dirs,
+					},
 				},
-				required: true
+				required: true,
 			},
 			{
-				prop: "entity",
-				label: "数据结构",
+				prop: 'entity',
+				label: '数据结构',
 				span: 14,
 				component: {
-					name: "slot-entity"
+					name: 'slot-entity',
 				},
-				required: true
+				required: true,
 			},
 			{
-				prop: "name",
-				label: "菜单名称",
+				prop: 'name',
+				label: '菜单名称',
 				span: 10,
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						placeholder: "请输入菜单名称"
-					}
+						placeholder: '请输入菜单名称',
+					},
 				},
-				required: true
+				required: true,
 			},
 			{
-				prop: "router",
-				label: "菜单路由",
+				prop: 'router',
+				label: '菜单路由',
 				span: 14,
 				component: {
-					name: "el-input",
+					name: 'el-input',
 					props: {
-						placeholder: "请输入菜单路由，如：/test"
-					}
-				}
+						placeholder: '请输入菜单路由，如：/test',
+					},
+				},
 			},
 			{
-				prop: "parentId",
-				label: "上级节点",
+				prop: 'parentId',
+				label: '上级节点',
 				component: {
-					name: "cl-menu-select",
+					name: 'cl-menu-select',
 					props: {
-						type: 1
-					}
-				}
+						type: 1,
+					},
+				},
 			},
 			{
-				prop: "keepAlive",
+				prop: 'keepAlive',
 				value: true,
-				label: "路由缓存",
+				label: '路由缓存',
 				component: {
-					name: "el-radio-group",
+					name: 'el-radio-group',
 					options: [
 						{
-							label: "开启",
-							value: true
+							label: '开启',
+							value: true,
 						},
 						{
-							label: "关闭",
-							value: false
-						}
-					]
-				}
+							label: '关闭',
+							value: false,
+						},
+					],
+				},
 			},
 			{
-				prop: "icon",
-				label: "菜单图标",
+				prop: 'icon',
+				label: '菜单图标',
 				component: {
-					name: "cl-menu-icon"
-				}
+					name: 'cl-menu-icon',
+				},
 			},
 			{
-				prop: "orderNum",
-				label: "排序号",
+				prop: 'orderNum',
+				label: '排序号',
 				component: {
-					name: "el-input-number",
+					name: 'el-input-number',
 					props: {
-						placeholder: "请填写排序号",
+						placeholder: '请填写排序号',
 						min: 0,
 						max: 99,
-						"controls-position": "right"
-					}
-				}
+						'controls-position': 'right',
+					},
+				},
 			},
 			{
-				prop: "isCreateFile",
-				label: "是否创建文件",
+				prop: 'isCreateFile',
+				label: '是否创建文件',
 				value: 1,
 				component: {
-					name: "el-radio-group",
+					name: 'el-radio-group',
 					options: [
 						{
-							label: "是",
-							value: 1
+							label: '是',
+							value: 1,
 						},
 						{
-							label: "否",
-							value: 0
-						}
-					]
-				}
-			}
+							label: '否',
+							value: 0,
+						},
+					],
+				},
+			},
 		],
 		on: {
 			submit(data, { done, close }) {
-				const { api, prefix, columns } = list.find((e) => e.value == data.entity.join("/"));
+				const { api, prefix, columns } = list.find((e) => e.value == data.entity.join('/'))
 
 				menu.create({
 					...data,
@@ -163,30 +157,30 @@ function open() {
 					module: data.module,
 					prefix,
 					api,
-					columns
+					columns,
 				})
 					.then((create) => {
 						if (data.isCreateFile) {
-							create();
+							create()
 						}
-						mitt.emit("magic.createMenu");
-						close();
+						mitt.emit('magic.createMenu')
+						close()
 					})
 					.catch((err) => {
-						console.error(err);
-						done();
-					});
-			}
-		}
-	});
+						console.error(err)
+						done()
+					})
+			},
+		},
+	})
 }
 
 // 实体切换
 function onEntityChange(arr: string[]) {
-	const item = list.find((e) => e.value == arr.join("/"));
+	const item = list.find((e) => e.value == arr.join('/'))
 
 	if (item) {
-		Form.value?.setForm("router", `/${item.value}`);
+		Form.value?.setForm('router', `/${item.value}`)
 	}
 }
 
@@ -197,11 +191,11 @@ onMounted(() => {
 				if (!isEmpty(e.columns)) {
 					list.push({
 						value: e.prefix.substring(7),
-						...e
-					});
+						...e,
+					})
 				}
-			});
+			})
 		}
-	});
-});
+	})
+})
 </script>

@@ -1,4 +1,5 @@
-import { ModuleConfig, config } from "/@/cool";
+// import { ModuleConfig, config } from "/@/cool";
+import { ModuleConfig } from "/@/cool";
 import VueECharts from "vue-echarts";
 import ElementPlus from "element-plus";
 import "element-plus/theme-chalk/src/index.scss";
@@ -67,7 +68,8 @@ export default (): ModuleConfig => {
 			app.component("v-chart", VueECharts);
 
 			// 设置标题
-			document.title = config.app.name;
+			// document.title = config.app.name;
+			document.title = "后勤资产管理系统";
 		},
 		async onLoad() {
 			const { user, menu, app } = useStore();

@@ -13,38 +13,38 @@
 </template>
 
 <script lang="ts" name="app-views" setup>
-import { computed } from "vue";
-import { useBase } from "/$/base";
-import { useCool } from "/@/cool";
+import { computed } from 'vue'
+import { useBase } from '/$/base'
+import { useCool } from '/@/cool'
 
-const { refs, setRefs, mitt } = useCool();
-const { process, app } = useBase();
+const { refs, setRefs, mitt } = useCool()
+const { process, app } = useBase()
 
 // 缓存列表
 const caches = computed(() => {
 	return process.list
 		.filter((e) => e.meta?.keepAlive)
 		.map((e) => {
-			return e.path.substring(1, e.path.length).replace(/\//g, "-");
-		});
-});
+			return e.path.substring(1, e.path.length).replace(/\//g, '-')
+		})
+})
 
 // 滚动到
 function scrollTo({ el, top }: { el?: string; top?: number }) {
-	const scrollbar = refs.scrollbar.wrapRef;
+	const scrollbar = refs.scrollbar.wrapRef
 
 	if (el) {
-		top = scrollbar.querySelector(el).offsetTop;
+		top = scrollbar.querySelector(el).offsetTop
 	}
 
 	scrollbar.scrollTo({
 		top,
-		behavior: "smooth"
-	});
+		behavior: 'smooth',
+	})
 }
 
 // 滚动事件
-mitt.on("view.scrollTo", scrollTo);
+mitt.on('view.scrollTo', scrollTo)
 </script>
 
 <style lang="scss" scoped>

@@ -23,43 +23,43 @@
 </template>
 
 <script lang="ts" name="my-info" setup>
-import { ElMessage } from "element-plus";
-import { reactive, ref } from "vue";
-import { useBase } from "/$/base";
-import { useCool } from "/@/cool";
-import { cloneDeep } from "lodash-es";
+import { ElMessage } from 'element-plus'
+import { reactive, ref } from 'vue'
+import { useBase } from '/$/base'
+import { useCool } from '/@/cool'
+import { cloneDeep } from 'lodash-es'
 
-const { service } = useCool();
-const { user } = useBase();
+const { service } = useCool()
+const { user } = useBase()
 
 // 表单数据
-const form = reactive<any>(cloneDeep(user.info));
+const form = reactive<any>(cloneDeep(user.info))
 
 // 保存状态
-const loading = ref(false);
+const loading = ref(false)
 
 // 保存
 async function save() {
-	const { headImg, nickName, password } = form;
+	const { headImg, nickName, password } = form
 
-	loading.value = true;
+	loading.value = true
 
 	await service.base.comm
 		.personUpdate({
 			headImg,
 			nickName,
-			password
+			password,
 		})
 		.then(() => {
-			form.password = "";
-			ElMessage.success("修改成功");
-			user.get();
+			form.password = ''
+			ElMessage.success('修改成功')
+			user.get()
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 
-	loading.value = false;
+	loading.value = false
 }
 </script>
 

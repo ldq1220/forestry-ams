@@ -1,11 +1,6 @@
 <template>
 	<div class="a-menu">
-		<el-menu
-			:default-active="active"
-			mode="horizontal"
-			background-color="transparent"
-			@select="select"
-		>
+		<el-menu :default-active="active" mode="horizontal" background-color="transparent" @select="select">
 			<el-menu-item v-for="(item, index) in menu.group" :key="index" :index="`${index}`">
 				<cl-svg v-if="item.icon" :name="item.icon" :size="18" />
 				<span class="a-menu__name">{{ item.name }}</span>
@@ -15,24 +10,24 @@
 </template>
 
 <script lang="ts" name="a-menu" setup>
-import { ref, watch } from "vue";
-import { useBase } from "/$/base";
-import { useCool } from "/@/cool";
-import { Menu } from "../../types";
+import { ref, watch } from 'vue'
+import { useBase } from '/$/base'
+import { useCool } from '/@/cool'
+import { Menu } from '../../types'
 
-const { router, route } = useCool();
-const { menu } = useBase();
+const { router, route } = useCool()
+const { menu } = useBase()
 
 // 选中标识
-const active = ref("");
+const active = ref('')
 
 // 选择导航
 function select(index: any) {
-	menu.setMenu(index);
+	menu.setMenu(index)
 
 	// 获取第一个菜单地址
-	const url = menu.getPath(menu.group[index]);
-	router.push(url);
+	const url = menu.getPath(menu.group[index])
+	router.push(url)
 }
 
 // 刷新
@@ -40,43 +35,43 @@ function refresh() {
 	function deep(e: Menu.Item, i: number) {
 		switch (e.type) {
 			case 0:
-				(e.children || []).forEach((e) => {
-					deep(e, i);
-				});
-				break;
+				;(e.children || []).forEach((e) => {
+					deep(e, i)
+				})
+				break
 			case 1:
 				if (route.path.includes(e.path)) {
-					active.value = String(i);
-					menu.setMenu(i);
+					active.value = String(i)
+					menu.setMenu(i)
 				}
-				break;
+				break
 			case 2:
 			default:
-				break;
+				break
 		}
 	}
 
-	menu.group.forEach(deep);
+	menu.group.forEach(deep)
 }
 
 // 监听分组
 watch(
 	() => menu.group.length,
 	() => {
-		refresh();
+		refresh()
 	},
 	{
-		immediate: true
-	}
-);
+		immediate: true,
+	},
+)
 
 // 监听路由
 watch(
 	() => route.path,
 	() => {
-		refresh();
-	}
-);
+		refresh()
+	},
+)
 </script>
 
 <style lang="scss" scoped>

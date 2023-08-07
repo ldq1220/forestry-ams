@@ -3,7 +3,7 @@
 		class="cl-image"
 		:style="{
 			justifyContent: justify,
-			height: style.h
+			height: style.h,
 		}"
 	>
 		<el-image
@@ -13,7 +13,7 @@
 			:preview-src-list="urls"
 			:style="{
 				height: style.h,
-				width: style.w
+				width: style.w,
 			}"
 			preview-teleported
 		>
@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { isArray, isNumber, isString } from "lodash-es";
-import { PictureFilled } from "@element-plus/icons-vue";
-import { parsePx } from "/@/cool/utils";
+import { computed, defineComponent } from 'vue'
+import { isArray, isNumber, isString } from 'lodash-es'
+import { PictureFilled } from '@element-plus/icons-vue'
+import { parsePx } from '/@/cool/utils'
 
 export default defineComponent({
-	name: "cl-image",
+	name: 'cl-image',
 
 	components: {
-		PictureFilled
+		PictureFilled,
 	},
 
 	props: {
@@ -44,49 +44,49 @@ export default defineComponent({
 		src: [String, Array],
 		size: {
 			type: [Number, Array],
-			default: 100
+			default: 100,
 		},
 		lazy: Boolean,
 		fit: {
 			type: String,
-			default: "cover"
+			default: 'cover',
 		},
 		justify: {
 			type: String,
-			default: "center"
-		}
+			default: 'center',
+		},
 	},
 
 	setup(props) {
 		const urls = computed(() => {
-			const urls: any = props.modelValue || props.src;
+			const urls: any = props.modelValue || props.src
 
 			if (isArray(urls)) {
-				return urls;
+				return urls
 			}
 
 			if (isString(urls)) {
-				return (urls || "").split(",").filter(Boolean);
+				return (urls || '').split(',').filter(Boolean)
 			}
 
-			return [];
-		});
+			return []
+		})
 
 		const style = computed(() => {
-			const [h, w]: any = isNumber(props.size) ? [props.size, props.size] : props.size;
+			const [h, w]: any = isNumber(props.size) ? [props.size, props.size] : props.size
 
 			return {
 				h: parsePx(h),
-				w: parsePx(w)
-			};
-		});
+				w: parsePx(w),
+			}
+		})
 
 		return {
 			urls,
-			style
-		};
-	}
-});
+			style,
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

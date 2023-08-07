@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts" name="demo-editor" setup>
-import { ref } from "vue";
-const v1 = ref("富文本编辑器 cl-editor-wang");
-const v2 = ref("富文本编辑器 cl-editor-quill");
+import { ref } from 'vue'
+const v1 = ref('富文本编辑器 cl-editor-wang')
+const v2 = ref('富文本编辑器 cl-editor-quill')
 const v3 = ref(`// 代码编辑器 cl-editor-monaco
 class User {
     main() {
@@ -29,7 +29,7 @@ class User {
 
 const user = new User();
 user.main();
-`);
+`)
 </script>
 
 <style lang="scss" scoped>

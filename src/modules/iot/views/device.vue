@@ -16,10 +16,10 @@
 				<div
 					class="status"
 					:class="{
-						'is-on': item.status
+						'is-on': item.status,
 					}"
 				>
-					{{ item.status ? "在线" : "离线" }}
+					{{ item.status ? '在线' : '离线' }}
 				</div>
 			</div>
 		</template>
@@ -33,26 +33,18 @@
 							<div
 								class="item"
 								:class="{
-									'is-right': item.type == 0
+									'is-right': item.type == 0,
 								}"
 							>
 								<div class="icon">
-									<cl-avatar
-										:size="36"
-										shape="square"
-										:src="
-											item.type == 0
-												? user.info?.headImg
-												: ViewGroup?.selected?.icon || Icon
-										"
-									/>
+									<cl-avatar :size="36" shape="square" :src="item.type == 0 ? user.info?.headImg : ViewGroup?.selected?.icon || Icon" />
 								</div>
 
 								<div
 									class="det"
 									@contextmenu="
 										(e) => {
-											onContextMenu(e, item);
+											onContextMenu(e, item)
 										}
 									"
 								>
@@ -63,7 +55,7 @@
 									</div>
 
 									<div class="date">
-										{{ dayjs(item.createTime).format("YYYY-MM-DD HH:mm:ss") }}
+										{{ dayjs(item.createTime).format('YYYY-MM-DD HH:mm:ss') }}
 									</div>
 								</div>
 							</div>
@@ -85,7 +77,7 @@
 							resize="none"
 							:autosize="{
 								minRows: 4,
-								maxRows: 10
+								maxRows: 10,
 							}"
 							placeholder="输入内容"
 						/>
@@ -98,135 +90,135 @@
 </template>
 
 <script lang="ts" name="iot-device" setup>
-import { ContextMenu } from "@cool-vue/crud";
-import { useClipboard } from "@vueuse/core";
-import { ElMessage } from "element-plus";
-import { debounce, orderBy } from "lodash-es";
-import { computed, nextTick, onMounted, onUnmounted, ref } from "vue";
-import { useMqtt } from "../hooks";
-import { useBase, useViewGroup } from "/$/base";
-import { useCool } from "/@/cool";
-import dayjs from "dayjs";
-import Icon from "../static/icon/device.png";
+import { ContextMenu } from '@cool-vue/crud'
+import { useClipboard } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
+import { debounce, orderBy } from 'lodash-es'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { useMqtt } from '../hooks'
+import { useBase, useViewGroup } from '/$/base'
+import { useCool } from '/@/cool'
+import dayjs from 'dayjs'
+import Icon from '../static/icon/device.png'
 
-const { service, refs, setRefs, mitt } = useCool();
-const { copy } = useClipboard();
-const { user } = useBase();
-const mqtt = useMqtt();
+const { service, refs, setRefs, mitt } = useCool()
+const { copy } = useClipboard()
+const { user } = useBase()
+const mqtt = useMqtt()
 
 const { ViewGroup } = useViewGroup({
-	label: "设备",
-	title: "消息列表",
+	label: '设备',
+	title: '消息列表',
 	service: service.iot.device,
 	onEdit(item) {
 		return {
-			width: "600px",
+			width: '600px',
 			items: [
 				{
-					label: "设备名称",
-					prop: "name",
+					label: '设备名称',
+					prop: 'name',
 					component: {
-						name: "el-input",
+						name: 'el-input',
 						props: {
 							maxlength: 20,
-							clearable: true
-						}
+							clearable: true,
+						},
 					},
-					required: true
+					required: true,
 				},
 				{
-					label: "设备ID",
-					prop: "uniqueId",
+					label: '设备ID',
+					prop: 'uniqueId',
 					component: {
-						name: "el-input",
+						name: 'el-input',
 						props: {
 							maxlength: 30,
 							clearable: true,
-							disabled: !!item?.id
-						}
+							disabled: !!item?.id,
+						},
 					},
-					required: true
+					required: true,
 				},
 				{
-					label: "设备图标",
-					prop: "icon",
+					label: '设备图标',
+					prop: 'icon',
 					component: {
-						name: "cl-upload"
-					}
-				}
-			]
-		};
+						name: 'cl-upload',
+					},
+				},
+			],
+		}
 	},
 	async onSelect(item) {
-		mqtt.subscribe(item.uniqueId);
+		mqtt.subscribe(item.uniqueId)
 
 		await refresh({
 			page: 1,
-			deviceId: item.id
-		});
+			deviceId: item.id,
+		})
 
-		scrollToBottom();
-	}
-});
+		scrollToBottom()
+	},
+})
 
 // 加载中
-const loading = ref(false);
+const loading = ref(false)
 
 // 输入值
-const value = ref("");
+const value = ref('')
 
 // 消息列表
-const list = ref<Eps.IotMessageEntity>([]);
+const list = ref<Eps.IotMessageEntity>([])
 
 // 设备id
-const uniqueId = computed(() => ViewGroup.value?.selected?.uniqueId);
+const uniqueId = computed(() => ViewGroup.value?.selected?.uniqueId)
 
 // 参数
 const reqParams = {
 	page: 1,
-	size: 20
-};
+	size: 20,
+}
 
 // 是否加载完
-let loaded = false;
+let loaded = false
 
 // 刷新
 async function refresh(params?: any) {
-	loading.value = true;
+	loading.value = true
 
 	Object.assign(reqParams, {
-		order: "createTime",
-		sort: "desc",
-		...params
-	});
+		order: 'createTime',
+		sort: 'desc',
+		...params,
+	})
 
 	await service.iot.message
 		.page(reqParams)
 		.then((res) => {
-			const arr = orderBy(res.list, "createTime");
+			const arr = orderBy(res.list, 'createTime')
 
 			// 保留列表滚动条位置
 			if (reqParams.page == 1) {
-				list.value = arr;
+				list.value = arr
 			} else {
-				const s = refs.scrollbar.wrapRef.querySelector("ul");
-				const h = s.clientHeight;
+				const s = refs.scrollbar.wrapRef.querySelector('ul')
+				const h = s.clientHeight
 
-				list.value.unshift(...arr);
+				list.value.unshift(...arr)
 
 				nextTick(() => {
-					refs.scrollbar.scrollTo(0, s.clientHeight - h);
-				});
+					refs.scrollbar.scrollTo(0, s.clientHeight - h)
+				})
 			}
 
 			// 是否加载完
-			loaded = res.pagination.total <= list.value.length;
+			loaded = res.pagination.total <= list.value.length
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 
-	loading.value = false;
+	loading.value = false
 }
 
 // 滚动到底部
@@ -234,17 +226,17 @@ const scrollToBottom = debounce(() => {
 	nextTick(() => {
 		refs.scrollbar?.wrapRef?.scroll({
 			top: 100000 + Math.random(),
-			behavior: "smooth"
-		});
-	});
-});
+			behavior: 'smooth',
+		})
+	})
+})
 
 // 监听滚动
 function onScroll({ scrollTop }: { scrollTop: number }) {
 	if (scrollTop == 0 && !loaded) {
 		refresh({
-			page: reqParams.page + 1
-		});
+			page: reqParams.page + 1,
+		})
 	}
 }
 
@@ -253,43 +245,43 @@ function send() {
 	service.iot.mqtt
 		.publish({
 			uniqueId: uniqueId.value,
-			data: value.value
+			data: value.value,
 		})
 		.then(() => {
 			append({
 				data: value.value,
-				type: 0
-			});
-			value.value = "";
-		});
+				type: 0,
+			})
+			value.value = ''
+		})
 }
 
 // 追加消息
 function append(data: Eps.IotMessageEntity) {
 	list.value.push({
 		createTime: new Date(),
-		...data
-	});
-	scrollToBottom();
+		...data,
+	})
+	scrollToBottom()
 }
 
 // 右键菜单
 function onContextMenu(e: Event, item: Eps.IotMessageEntity) {
 	ContextMenu.open(e, {
 		hover: {
-			target: "content"
+			target: 'content',
 		},
 		list: [
 			{
-				label: "复制",
+				label: '复制',
 				callback(done) {
-					copy(item.data || "");
-					ElMessage.success("复制成功");
-					done();
-				}
-			}
-		]
-	});
+					copy(item.data || '')
+					ElMessage.success('复制成功')
+					done()
+				},
+			},
+		],
+	})
 }
 
 // 监听消息
@@ -297,19 +289,19 @@ function onMessage({ id, message }: any) {
 	if (uniqueId.value == id) {
 		append({
 			type: 1,
-			data: message
-		});
+			data: message,
+		})
 	}
 }
 
 onMounted(() => {
-	mqtt.connect();
-	mitt.on("iot.message", onMessage);
-});
+	mqtt.connect()
+	mitt.on('iot.message', onMessage)
+})
 
 onUnmounted(() => {
-	mitt.off("iot.message", onMessage);
-});
+	mitt.off('iot.message', onMessage)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -351,7 +343,7 @@ onUnmounted(() => {
 
 		&::before {
 			display: block;
-			content: "";
+			content: '';
 			height: 8px;
 			width: 8px;
 			border-radius: 100%;

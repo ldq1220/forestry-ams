@@ -1,8 +1,8 @@
 <template>
 	<div class="app-slider">
 		<div class="app-slider__logo" @click="toHome">
-			<img src="/logo.png" />
-			<span v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
+			<!-- <span v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span> -->
+			<span>后勤资产管理系统</span>
 		</div>
 
 		<div class="app-slider__container">
@@ -12,15 +12,15 @@
 </template>
 
 <script lang="ts" name="app-slider" setup>
-import { useBase } from "/$/base";
-import { useBrowser } from "/@/cool";
-import BMenu from "./bmenu";
+import { useBase } from '/$/base'
+import { useBrowser } from '/@/cool'
+import BMenu from './bmenu'
 
-const { browser } = useBrowser();
-const { app } = useBase();
+const { browser } = useBrowser()
+const { app } = useBase()
 
 function toHome() {
-	location.href = "https://cool-js.com";
+	location.href = 'https://cool-js.com'
 }
 </script>
 
@@ -29,6 +29,7 @@ function toHome() {
 	height: 100%;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	background-color: #2f3447;
+	// background-color: rgba(0, 21, 41, 1);
 
 	&__logo {
 		display: flex;
@@ -45,7 +46,7 @@ function toHome() {
 		span {
 			color: #fff;
 			font-weight: bold;
-			font-size: 26px;
+			font-size: 20px;
 			margin-left: 10px;
 			white-space: nowrap;
 		}

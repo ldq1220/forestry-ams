@@ -9,17 +9,17 @@
 </template>
 
 <script lang="ts" setup name="demo">
-import ContextMenu from "../components/context-menu.vue";
-import Crud from "../components/crud.vue";
-import Upload from "../components/upload.vue";
-import Editor from "../components/editor.vue";
-import Svg from "../components/svg.vue";
-import Copy from "../components/copy.vue";
-import File from "../components/file.vue";
-import Design from "../components/design.vue";
-import ClForm from "../components/form.vue";
+import ContextMenu from '../components/context-menu.vue'
+import Crud from '../components/crud.vue'
+import Upload from '../components/upload.vue'
+import Editor from '../components/editor.vue'
+import Svg from '../components/svg.vue'
+import Copy from '../components/copy.vue'
+import File from '../components/file.vue'
+import Design from '../components/design.vue'
+import ClForm from '../components/form.vue'
 
-const list = [ContextMenu, ClForm, Crud, Upload, Editor, Svg, Copy, File, Design];
+const list = [ContextMenu, ClForm, Crud, Upload, Editor, Svg, Copy, File, Design]
 </script>
 
 <style lang="scss">
@@ -67,7 +67,7 @@ const list = [ContextMenu, ClForm, Crud, Upload, Editor, Svg, Copy, File, Design
 
 				&:hover {
 					&:after {
-						content: "";
+						content: '';
 						width: 100%;
 						height: 1px;
 						position: absolute;

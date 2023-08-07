@@ -22,7 +22,7 @@
 				class="cl-chat"
 				:class="{
 					'is-mini': browser.isMini,
-					'is-expand': isExpand
+					'is-expand': isExpand,
 				}"
 			>
 				<div class="cl-chat__session">
@@ -50,46 +50,46 @@
 </template>
 
 <script lang="ts" name="cl-chat" setup>
-import { nextTick, provide, ref } from "vue";
-import dayjs from "dayjs";
-import { useCool, config, module, useBrowser } from "/@/cool";
-import { useBase } from "/$/base";
-import { Notebook, ArrowLeft, BellFilled } from "@element-plus/icons-vue";
-import { debounce } from "lodash-es";
+import { nextTick, provide, ref } from 'vue'
+import dayjs from 'dayjs'
+import { useCool, config, module, useBrowser } from '/@/cool'
+import { useBase } from '/$/base'
+import { Notebook, ArrowLeft, BellFilled } from '@element-plus/icons-vue'
+import { debounce } from 'lodash-es'
 // import io from "socket.io-client";
-import { Socket } from "socket.io-client";
-import ChatMessage from "./message.vue";
-import ChatSession from "./session.vue";
-import { Chat } from "../types";
-import { useStore } from "../store";
+import { Socket } from 'socket.io-client'
+import ChatMessage from './message.vue'
+import ChatSession from './session.vue'
+import { Chat } from '../types'
+import { useStore } from '../store'
 
-const { mitt } = useCool();
-const { browser, onScreenChange } = useBrowser();
-
-// 缓存
-const { session, message } = useStore();
+const { mitt } = useCool()
+const { browser, onScreenChange } = useBrowser()
 
 // 缓存
-const { user } = useBase();
+const { session, message } = useStore()
+
+// 缓存
+const { user } = useBase()
 
 // 模块配置
-const { options } = module.get("chat");
+const { options } = module.get('chat')
 
 // 是否可见
-const visible = ref(false);
+const visible = ref(false)
 
 // 是否展开
-const isExpand = ref(true);
+const isExpand = ref(true)
 
 // 未读消息
-const unCount = ref(parseInt(String(Math.random() * 100)));
+const unCount = ref(parseInt(String(Math.random() * 100)))
 
 // Socket
-let socket: Socket;
+let socket: Socket
 
 // 连接
 function connect() {
-	refresh();
+	refresh()
 
 	// if (!socket) {
 	// 	socket = io(config.host + options.path, {
@@ -118,18 +118,18 @@ function connect() {
 
 // 打开
 function open() {
-	visible.value = true;
-	connect();
+	visible.value = true
+	connect()
 }
 
 // 关闭
 function close() {
-	visible.value = false;
+	visible.value = false
 }
 
 // 收起、展开
 function expand(value?: boolean) {
-	isExpand.value = value === undefined ? !isExpand.value : value;
+	isExpand.value = value === undefined ? !isExpand.value : value
 }
 
 // 发送消息
@@ -137,7 +137,7 @@ function send(data: Chat.Message, isAppend?: boolean) {
 	// socket.emit("message", {});
 
 	if (isAppend) {
-		append(data);
+		append(data)
 	}
 }
 
@@ -148,50 +148,50 @@ function append(data: Chat.Message) {
 		toId: session.value?.userId,
 		avatar: user.info?.headImg,
 		nickName: user.info?.nickName,
-		createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
-		...data
-	});
+		createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+		...data,
+	})
 
-	scrollToBottom();
+	scrollToBottom()
 }
 
 // 滚动到底部
 const scrollToBottom = debounce(() => {
 	nextTick(() => {
-		const box = document.querySelector(".cl-chat .chat-message .list");
+		const box = document.querySelector('.cl-chat .chat-message .list')
 		box?.scroll({
 			top: 100000 + Math.random(),
-			behavior: "smooth"
-		});
-	});
-}, 300);
+			behavior: 'smooth',
+		})
+	})
+}, 300)
 
 // 刷新
 async function refresh() {
-	await session.get();
-	await message.get();
-	scrollToBottom();
+	await session.get()
+	await message.get()
+	scrollToBottom()
 }
 
-provide("chat", {
+provide('chat', {
 	get socket() {
-		return socket;
+		return socket
 	},
 	send,
 	append,
 	expand,
-	scrollToBottom
-});
+	scrollToBottom,
+})
 
 // 监听屏幕变化
 onScreenChange(() => {
-	isExpand.value = browser.isMini ? false : true;
-});
+	isExpand.value = browser.isMini ? false : true
+})
 
 defineExpose({
 	open,
-	close
-});
+	close,
+})
 </script>
 
 <style lang="scss">

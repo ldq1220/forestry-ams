@@ -52,14 +52,14 @@
 </template>
 
 <script lang="ts" name="home" setup>
-import CategoryRatio from "./components/category-ratio.vue";
-import CountSales from "./components/count-sales.vue";
-import CountViews from "./components/count-views.vue";
-import CountPaid from "./components/count-paid.vue";
-import CountEffect from "./components/count-effect.vue";
-import TabChart from "./components/tab-chart.vue";
-import SalesRank from "./components/sales-rank.vue";
-import HotSearch from "./components/hot-search.vue";
+import CategoryRatio from './components/category-ratio.vue'
+import CountSales from './components/count-sales.vue'
+import CountViews from './components/count-views.vue'
+import CountPaid from './components/count-paid.vue'
+import CountEffect from './components/count-effect.vue'
+import TabChart from './components/tab-chart.vue'
+import SalesRank from './components/sales-rank.vue'
+import HotSearch from './components/hot-search.vue'
 </script>
 
 <style lang="scss">

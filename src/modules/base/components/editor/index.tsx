@@ -1,27 +1,27 @@
-import { defineComponent, h, resolveComponent, ref, reactive, watch } from "vue";
-import { isComponent } from "/@/cool/utils";
+import { defineComponent, h, resolveComponent, ref, reactive, watch } from 'vue'
+import { isComponent } from '/@/cool/utils'
 
 export default defineComponent({
-	name: "cl-editor",
+	name: 'cl-editor',
 
 	props: {
 		name: {
 			type: String,
-			required: true
-		}
+			required: true,
+		},
 	},
 
 	setup(props, { slots, expose }) {
-		const Editor = ref();
-		const ex = reactive({});
+		const Editor = ref()
+		const ex = reactive({})
 
 		watch(Editor, (v) => {
 			if (v) {
-				Object.assign(ex, v);
+				Object.assign(ex, v)
 			}
-		});
+		})
 
-		expose(ex);
+		expose(ex)
 
 		return () => {
 			return isComponent(props.name) ? (
@@ -30,13 +30,13 @@ export default defineComponent({
 					resolveComponent(props.name),
 					{
 						...props,
-						ref: Editor
+						ref: Editor,
 					},
-					slots
+					slots,
 				)
 			) : (
 				<el-input type="textarea" rows={4} placeholder="请输入" {...props} />
-			);
-		};
-	}
-});
+			)
+		}
+	},
+})

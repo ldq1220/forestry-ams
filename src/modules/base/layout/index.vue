@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts" name="app-layout" setup>
-import Topbar from "./components/topbar.vue";
-import Slider from "./components/slider.vue";
-import process from "./components/process.vue";
-import Views from "./components/views.vue";
-import { useBase } from "/$/base";
+import Topbar from './components/topbar.vue'
+import Slider from './components/slider.vue'
+import process from './components/process.vue'
+import Views from './components/views.vue'
+import { useBase } from '/$/base'
 
-const { app } = useBase();
+const { app } = useBase()
 </script>
 
 <style lang="scss" scoped>
@@ -61,8 +61,7 @@ const { app } = useBase();
 			position: absolute;
 			left: 0;
 			z-index: 9999;
-			transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
-				box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+			transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1), box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
 		}
 
 		.app-layout__right {

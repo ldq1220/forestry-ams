@@ -25,89 +25,89 @@
 </template>
 
 <script lang="ts" setup>
-import { useCrud, useTable } from "@cool-vue/crud";
-import { nextTick, reactive, ref } from "vue";
-import { useCool } from "/@/cool";
+import { useCrud, useTable } from '@cool-vue/crud'
+import { nextTick, reactive, ref } from 'vue'
+import { useCool } from '/@/cool'
 
-const { service } = useCool();
+const { service } = useCool()
 
 // 是否可见
-const visible = ref(false);
+const visible = ref(false)
 
 // 标题
-const title = ref("");
+const title = ref('')
 
 // 选项
 const options = reactive({
 	status: [
 		{
-			label: "成功",
+			label: '成功',
 			value: 1,
-			type: "success"
+			type: 'success',
 		},
 		{
-			label: "失败",
+			label: '失败',
 			value: 0,
-			type: "danger"
-		}
-	]
-});
+			type: 'danger',
+		},
+	],
+})
 
 // cl-table
 const Table = useTable({
 	autoHeight: false,
 	columns: [
 		{
-			label: "#",
-			type: "index"
+			label: '#',
+			type: 'index',
 		},
 		{
-			label: "描述",
-			prop: "detail",
+			label: '描述',
+			prop: 'detail',
 			showOverflowTooltip: true,
-			minWidth: 200
+			minWidth: 200,
 		},
 		{
-			label: "执行状态",
-			prop: "status",
+			label: '执行状态',
+			prop: 'status',
 			minWidth: 120,
-			dict: options.status
+			dict: options.status,
 		},
 		{
-			label: "执行时间",
-			prop: "createTime",
-			minWidth: 160
-		}
-	]
-});
+			label: '执行时间',
+			prop: 'createTime',
+			minWidth: 160,
+		},
+	],
+})
 
 // cl-crud
 const Crud = useCrud({
 	service: service.task.info,
 	dict: {
 		api: {
-			page: "log"
-		}
-	}
-});
+			page: 'log',
+		},
+	},
+})
 
 // 打开
 function open(data: Eps.TaskInfoEntity) {
-	visible.value = true;
-	title.value = `日志列表（${data.name}）`;
+	visible.value = true
+	title.value = `日志列表（${data.name}）`
 
 	nextTick(() => {
-		Crud.value?.refresh({ id: data.id, page: 1 });
-	});
+		Crud.value?.refresh({ id: data.id, page: 1 })
+	})
 }
 
 // 关闭
 function close() {
-	visible.value = false;
+	visible.value = false
 }
 
 defineExpose({
 	open,
-	close
-});
+	close,
+})
 </script>

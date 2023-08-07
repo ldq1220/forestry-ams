@@ -11,51 +11,51 @@
 
 	<viewer v-else>
 		<template #op>
-			<slot name="op"> </slot>
+			<slot name="op"></slot>
 		</template>
 	</viewer>
 </template>
 
 <script lang="tsx" name="cl-code-json" setup>
-import { useClipboard } from "@vueuse/core";
-import { ElMessage } from "element-plus";
-import { isObject, isString } from "lodash-es";
-import { computed, defineComponent } from "vue";
+import { useClipboard } from '@vueuse/core'
+import { ElMessage } from 'element-plus'
+import { isObject, isString } from 'lodash-es'
+import { computed, defineComponent } from 'vue'
 
 const props = defineProps({
 	modelValue: [String, Object],
 	popover: Boolean,
 	height: {
 		type: [Number, String],
-		default: "100%"
+		default: '100%',
 	},
 	maxHeight: {
 		type: [Number, String],
-		default: 300
-	}
-});
+		default: 300,
+	},
+})
 
-const { copy } = useClipboard();
+const { copy } = useClipboard()
 
 // 文本
 const text = computed(() => {
-	const v = props.modelValue;
+	const v = props.modelValue
 
 	if (isString(v)) {
-		return v;
+		return v
 	} else if (isObject(v)) {
-		return JSON.stringify(v, null, 4);
+		return JSON.stringify(v, null, 4)
 	} else {
-		return "";
+		return ''
 	}
-});
+})
 
 // 视图
 const viewer = defineComponent({
 	setup(_, { slots }) {
 		function toCopy() {
-			copy(text.value);
-			ElMessage.success("复制成功");
+			copy(text.value)
+			ElMessage.success('复制成功')
 		}
 
 		return () => {
@@ -69,20 +69,16 @@ const viewer = defineComponent({
 						{slots.op && slots.op()}
 					</div>
 
-					<el-scrollbar
-						class="scrollbar"
-						max-height={props.maxHeight}
-						height={props.height}
-					>
+					<el-scrollbar class="scrollbar" max-height={props.maxHeight} height={props.height}>
 						<pre>
 							<code>{text.value}</code>
 						</pre>
 					</el-scrollbar>
 				</div>
-			);
-		};
-	}
-});
+			)
+		}
+	},
+})
 </script>
 
 <style lang="scss">

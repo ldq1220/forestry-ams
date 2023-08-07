@@ -35,94 +35,94 @@
 </template>
 
 <script lang="ts" setup>
-import { useCrud, useForm, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
+import { useCrud, useForm, useTable, useUpsert } from '@cool-vue/crud'
+import { useCool } from '/@/cool'
 
-const { refs, setRefs } = useCool();
+const { refs, setRefs } = useCool()
 
 // cl-upsert
 const Upsert = useUpsert({
 	items: [
 		{
-			label: "姓名",
-			prop: "name",
+			label: '姓名',
+			prop: 'name',
 			component: {
-				name: "el-input"
-			}
+				name: 'el-input',
+			},
 		},
 		{
-			label: "创建时间",
-			prop: "createTime",
+			label: '创建时间',
+			prop: 'createTime',
 			component: {
-				name: "el-date-picker"
-			}
-		}
-	]
-});
+				name: 'el-date-picker',
+			},
+		},
+	],
+})
 
 // cl-table
 const Table = useTable({
 	autoHeight: false,
 	columns: [
 		{
-			type: "selection"
+			type: 'selection',
 		},
 		{
-			label: "姓名",
-			prop: "name"
+			label: '姓名',
+			prop: 'name',
 		},
 		{
-			label: "创建时间",
-			prop: "createTime"
+			label: '创建时间',
+			prop: 'createTime',
 		},
 		{
-			type: "op"
-		}
-	]
-});
+			type: 'op',
+		},
+	],
+})
 
 // cl-crud
 const Crud = useCrud(
 	{
-		service: "test"
+		service: 'test',
 	},
 	(app) => {
-		app.refresh();
-	}
-);
+		app.refresh()
+	},
+)
 
-const Form = useForm();
+const Form = useForm()
 
 function open() {
 	Form.value?.open({
-		title: "自定义表单",
+		title: '自定义表单',
 		props: {
-			labelPosition: "top"
+			labelPosition: 'top',
 		},
 		items: [
 			{
-				label: "获取 ref，打开后聚焦",
-				prop: "name",
+				label: '获取 ref，打开后聚焦',
+				prop: 'name',
 				component: {
-					name: "el-input",
-					ref: setRefs("name"),
+					name: 'el-input',
+					ref: setRefs('name'),
 					props: {
-						placeholder: "请填写昵称"
-					}
-				}
+						placeholder: '请填写昵称',
+					},
+				},
 			},
 			{
-				label: "内嵌 cl-crud",
+				label: '内嵌 cl-crud',
 				component: {
-					name: "slot-crud"
-				}
-			}
+					name: 'slot-crud',
+				},
+			},
 		],
 		on: {
 			open() {
-				refs.name.focus();
-			}
-		}
-	});
+				refs.name.focus()
+			},
+		},
+	})
 }
 </script>

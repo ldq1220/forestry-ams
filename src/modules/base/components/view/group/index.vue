@@ -15,10 +15,7 @@
 							</el-tooltip>
 
 							<el-tooltip content="添加">
-								<el-icon
-									@click="edit()"
-									v-permission="config.service.permission.add"
-								>
+								<el-icon @click="edit()" v-permission="config.service.permission.add">
 									<plus />
 								</el-icon>
 							</el-tooltip>
@@ -26,46 +23,29 @@
 
 						<div class="list" v-loading="loading">
 							<el-scrollbar>
-								<ul
-									v-infinite-scroll="onMore"
-									:infinite-scroll-immediate="false"
-									:infinite-scroll-disabled="loaded"
-								>
+								<ul v-infinite-scroll="onMore" :infinite-scroll-immediate="false" :infinite-scroll-disabled="loaded">
 									<li
 										v-for="(item, index) in list"
 										:key="index"
 										@click="select(item)"
 										@contextmenu="
 											(e) => {
-												onContextMenu(e, item);
+												onContextMenu(e, item)
 											}
 										"
 									>
-										<slot
-											name="item"
-											:item="item"
-											:selected="selected"
-											:index="index"
-										>
+										<slot name="item" :item="item" :selected="selected" :index="index">
 											<div
 												class="item"
 												:class="{
-													'is-active': selected?.id == item.id
+													'is-active': selected?.id == item.id,
 												}"
 											>
-												<slot
-													name="item-name"
-													:item="item"
-													:selected="selected"
-													:index="index"
-												>
+												<slot name="item-name" :item="item" :selected="selected" :index="index">
 													<span>{{ item.name }}</span>
 												</slot>
 
-												<el-icon
-													class="arrow-right"
-													v-show="selected?.id == item.id"
-												>
+												<el-icon class="arrow-right" v-show="selected?.id == item.id">
 													<arrow-right-bold />
 												</el-icon>
 											</div>
@@ -96,9 +76,7 @@
 					</div>
 
 					<slot name="title" :selected="selected">
-						<span class="title">
-							{{ config.title }}（{{ selected?.name || "未选择" }}）
-						</span>
+						<span class="title">{{ config.title }}（{{ selected?.name || '未选择' }}）</span>
 					</slot>
 				</div>
 
@@ -115,224 +93,218 @@
 </template>
 
 <script lang="ts" name="cl-view-group" setup>
-import { inject, nextTick, onMounted, reactive, ref, useSlots } from "vue";
-import {
-	ArrowLeft,
-	ArrowRight,
-	ArrowRightBold,
-	Refresh as IconRefresh,
-	Plus
-} from "@element-plus/icons-vue";
-import { useBrowser } from "/@/cool";
-import { ContextMenu, useForm, setFocus } from "@cool-vue/crud";
-import { ElMessage, ElMessageBox } from "element-plus";
-import { ClViewGroup } from "./hook";
-import { isEmpty } from "lodash-es";
+import { inject, nextTick, onMounted, reactive, ref, useSlots } from 'vue'
+import { ArrowLeft, ArrowRight, ArrowRightBold, Refresh as IconRefresh, Plus } from '@element-plus/icons-vue'
+import { useBrowser } from '/@/cool'
+import { ContextMenu, useForm, setFocus } from '@cool-vue/crud'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ClViewGroup } from './hook'
+import { isEmpty } from 'lodash-es'
 
-const { browser, onScreenChange } = useBrowser();
-const slots = useSlots();
-const Form = useForm();
+const { browser, onScreenChange } = useBrowser()
+const slots = useSlots()
+const Form = useForm()
 
 // 配置
 const config = reactive(
 	Object.assign(
 		{
-			label: "组",
-			title: "列表",
-			leftWidth: "300px",
-			service: {}
+			label: '组',
+			title: '列表',
+			leftWidth: '300px',
+			service: {},
 		},
-		inject("useViewGroup__options")
-	)
-) as ClViewGroup.Options;
+		inject('useViewGroup__options'),
+	),
+) as ClViewGroup.Options
 
 // 左侧内容是否自定义
-const isCustom = !!slots.left;
+const isCustom = !!slots.left
 
 if (isEmpty(config.service) && !isCustom) {
-	console.error("[cl-view-group] 参数 service 不能为空");
+	console.error('[cl-view-group] 参数 service 不能为空')
 }
 
 // 加载中
-const loading = ref(false);
+const loading = ref(false)
 
 // 列表
-const list = ref<ClViewGroup.Item[]>([]);
+const list = ref<ClViewGroup.Item[]>([])
 
 // 是否展开
-const isExpand = ref(true);
+const isExpand = ref(true)
 
 // 选中值
-const selected = ref<ClViewGroup.Item>();
+const selected = ref<ClViewGroup.Item>()
 
 // 收起、展开
 function expand(value?: boolean) {
-	isExpand.value = value === undefined ? !isExpand.value : value;
+	isExpand.value = value === undefined ? !isExpand.value : value
 }
 
 // 设置选中值
 function select(data?: ClViewGroup.Item) {
 	if (!data) {
-		data = list.value[0];
+		data = list.value[0]
 	}
 
-	selected.value = data;
+	selected.value = data
 
 	nextTick(() => {
 		if (data) {
 			if (browser.isMini) {
-				expand(false);
+				expand(false)
 			}
 
 			if (config.onSelect) {
-				config.onSelect(data);
+				config.onSelect(data)
 			}
 		}
-	});
+	})
 }
 
 // 编辑
 function edit(item?: ClViewGroup.Item) {
 	Form.value?.open(
 		{
-			title: (item ? "编辑" : "添加") + config.label,
+			title: (item ? '编辑' : '添加') + config.label,
 			form: {
-				...item
+				...item,
 			},
 			on: {
 				submit(data, { close, done }) {
-					config.service[item ? "update" : "add"](data)
+					config.service[item ? 'update' : 'add'](data)
 						.then(() => {
-							ElMessage.success("保存成功");
+							ElMessage.success('保存成功')
 
 							if (item) {
-								Object.assign(item, data);
+								Object.assign(item, data)
 							} else {
-								refresh();
+								refresh()
 							}
 
-							close();
+							close()
 						})
 						.catch((err) => {
-							ElMessage.error(err.message);
-							done();
-						});
-				}
+							ElMessage.error(err.message)
+							done()
+						})
+				},
 			},
-			...config.onEdit?.(item)
+			...config.onEdit?.(item),
 		},
-		[setFocus()]
-	);
+		[setFocus()],
+	)
 }
 
 // 删除
 function remove(item: ClViewGroup.Item) {
-	ElMessageBox.confirm("此操作将会删除选择的数据，是否继续？", "提示", {
-		type: "warning"
+	ElMessageBox.confirm('此操作将会删除选择的数据，是否继续？', '提示', {
+		type: 'warning',
 	})
 		.then(() => {
 			config.service
 				.delete({
-					ids: [item.id]
+					ids: [item.id],
 				})
 				.then(async () => {
-					ElMessage.success("删除成功");
+					ElMessage.success('删除成功')
 
 					// 刷新列表
-					await refresh();
+					await refresh()
 
 					// 删除当前
 					if (selected.value?.id == item.id) {
-						select();
+						select()
 					}
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-				});
+					ElMessage.error(err.message)
+				})
 		})
-		.catch(() => null);
+		.catch(() => null)
 }
 
 // 请求参数
 const reqParams = {
-	order: "createTime",
-	sort: "asc",
+	order: 'createTime',
+	sort: 'asc',
 	page: 1,
-	size: 20
-};
+	size: 20,
+}
 
 // 是否加载完
-const loaded = ref(false);
+const loaded = ref(false)
 
 // 刷新
 async function refresh(params?: any) {
-	Object.assign(reqParams, params);
+	Object.assign(reqParams, params)
 
-	loading.value = true;
+	loading.value = true
 
 	await config.service
 		.page(reqParams)
 		.then((res) => {
-			const arr = config.onData?.(res.list) || res.list;
+			const arr = config.onData?.(res.list) || res.list
 
 			if (reqParams.page == 1) {
-				list.value = arr;
+				list.value = arr
 			} else {
-				list.value.push(...arr);
+				list.value.push(...arr)
 			}
 
 			if (!selected.value) {
-				select(list.value[0]);
+				select(list.value[0])
 			}
 
-			loaded.value = res.pagination.total <= list.value.length;
+			loaded.value = res.pagination.total <= list.value.length
 		})
 		.catch((err) => {
-			ElMessage.error(err.message);
-		});
+			ElMessage.error(err.message)
+		})
 
-	loading.value = false;
+	loading.value = false
 }
 
 // 加载更多
 function onMore() {
 	refresh({
-		page: reqParams.page + 1
-	});
+		page: reqParams.page + 1,
+	})
 }
 
 // 右键菜单
 function onContextMenu(e: any, item: ClViewGroup.Item) {
 	ContextMenu.open(e, {
 		hover: {
-			target: "item"
+			target: 'item',
 		},
 		list: [
 			{
-				label: "编辑",
+				label: '编辑',
 				hidden: !config.service._permission.update,
 				callback(done) {
-					done();
-					edit(item);
-				}
+					done()
+					edit(item)
+				},
 			},
 			{
-				label: "删除",
+				label: '删除',
 				hidden: !config.service._permission.delete,
 				callback(done) {
-					done();
-					remove(item);
-				}
-			}
+					done()
+					remove(item)
+				},
+			},
 		],
-		...(config.onContextMenu && config.onContextMenu(item))
-	});
+		...(config.onContextMenu && config.onContextMenu(item)),
+	})
 }
 
 // 监听屏幕变化
 onScreenChange(() => {
-	expand(!browser.isMini);
-});
+	expand(!browser.isMini)
+})
 
 defineExpose({
 	selected,
@@ -341,14 +313,14 @@ defineExpose({
 	select,
 	browser,
 	edit,
-	remove
-});
+	remove,
+})
 
 onMounted(() => {
 	if (!isCustom) {
-		refresh();
+		refresh()
 	}
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -356,7 +328,7 @@ onMounted(() => {
 	height: 100%;
 	width: 100%;
 
-	$left-width: v-bind("config.leftWidth");
+	$left-width: v-bind('config.leftWidth');
 	$bg: var(--el-bg-color);
 
 	&__wrap {
@@ -464,7 +436,7 @@ onMounted(() => {
 
 					&::after {
 						display: block;
-						content: "";
+						content: '';
 						height: 1px;
 					}
 				}

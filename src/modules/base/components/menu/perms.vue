@@ -1,78 +1,68 @@
 <template>
 	<div class="cl-menu-perms">
-		<el-cascader
-			v-model="value"
-			separator=":"
-			clearable
-			filterable
-			collapse-tags
-			collapse-tags-tooltip
-			:options="data"
-			:props="{ multiple: true }"
-			@change="onChange"
-		/>
+		<el-cascader v-model="value" separator=":" clearable filterable collapse-tags collapse-tags-tooltip :options="data" :props="{ multiple: true }" @change="onChange" />
 	</div>
 </template>
 
 <script lang="ts" name="cl-menu-perms" setup>
-import { onMounted, ref, watch } from "vue";
-import { useCool } from "/@/cool";
-import { deepPaths } from "/@/cool/utils";
+import { onMounted, ref, watch } from 'vue'
+import { useCool } from '/@/cool'
+import { deepPaths } from '/@/cool/utils'
 
 const props = defineProps({
 	modelValue: {
 		type: String,
-		default: ""
-	}
-});
+		default: '',
+	},
+})
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-const { service } = useCool();
+const { service } = useCool()
 
 // 绑定值
-const value = ref<string[][]>([]);
+const value = ref<string[][]>([])
 
 // 权限列表
-const data = ref<any[]>([]);
+const data = ref<any[]>([])
 
 // 监听改变
 function onChange(arr: string[][]) {
-	emit("update:modelValue", arr.map((e) => e.join(":")).join(","));
+	emit('update:modelValue', arr.map((e) => e.join(':')).join(','))
 }
 
 // 监听值
 watch(
 	() => props.modelValue,
 	(val) => {
-		value.value = val ? val.split(",").map((e) => e.split(":")) : [];
+		value.value = val ? val.split(',').map((e) => e.split(':')) : []
 	},
 	{
-		immediate: true
-	}
-);
+		immediate: true,
+	},
+)
 
 onMounted(() => {
-	const list: any[] = [];
+	const list: any[] = []
 
 	function deep(s: any) {
-		if (typeof s == "object") {
+		if (typeof s == 'object') {
 			for (const i in s) {
-				const { permission } = s[i];
+				const { permission } = s[i]
 
 				if (permission) {
-					list.push(...Object.values(permission));
+					list.push(...Object.values(permission))
 				} else {
-					deep(s[i]);
+					deep(s[i])
 				}
 			}
 		}
 	}
 
-	deep(service);
+	deep(service)
 
-	data.value = deepPaths(list, ":");
-});
+	data.value = deepPaths(list, ':')
+})
 </script>
 
 <style lang="scss" scoped>

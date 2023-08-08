@@ -174,6 +174,65 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface ImmaterialAssetsFieldEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 字段ID
+		 */
+		fieldId?: string;
+		/**
+		 * 字段名称
+		 */
+		fieldName?: string;
+		/**
+		 * 排序号
+		 */
+		sortOrder?: number;
+		/**
+		 * 支持搜索
+		 */
+		searchEnable?: number;
+		/**
+		 * 数据类型
+		 */
+		dataType?: string;
+		/**
+		 * 是否使用
+		 */
+		inUse?: number;
+		/**
+		 * 保留小数位数
+		 */
+		decimalPlaces?: number;
+		/**
+		 * 选项
+		 */
+		options?: string;
+		/**
+		 * 关联表(选项)查询方法
+		 */
+		joinTableMethod?: string;
+		/**
+		 * 关联字段
+		 */
+		joinField?: string;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface BaseSysDepartmentEntity {
 		/**
 		 * ID
@@ -1232,6 +1291,10 @@ declare namespace Eps {
 
 	interface AssetsDepartment {
 		/**
+		 * 树形表数据
+		 */
+		getTreeData(data?: any): Promise<any>;
+		/**
 		 * 删除
 		 */
 		delete(data?: any): Promise<any>;
@@ -1263,6 +1326,7 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getTreeData: string;
 			delete: string;
 			update: string;
 			info: string;
@@ -1274,6 +1338,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getTreeData: boolean;
 			delete: boolean;
 			update: boolean;
 			info: boolean;
@@ -1462,6 +1527,63 @@ declare namespace Eps {
 			info: boolean;
 			list: boolean;
 			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsImmaterialImmaterialAssetsFieldController {
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<ImmaterialAssetsFieldEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<ImmaterialAssetsFieldEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsFieldEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			info: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
 			add: boolean;
 		};
 		/**
@@ -2927,6 +3049,9 @@ declare namespace Eps {
 			employee: AssetsEmployee;
 			fixed: { assetsFixedField: AssetsFixedAssetsFixedField };
 			goodsSupplier: AssetsGoodsSupplier;
+			immaterial: {
+				ImmaterialAssetsFieldController: AssetsImmaterialImmaterialAssetsFieldController;
+			};
 		};
 		base: {
 			comm: BaseComm;

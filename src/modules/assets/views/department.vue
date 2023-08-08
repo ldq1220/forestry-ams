@@ -29,6 +29,7 @@
 <script lang="ts" name="assets-department" setup>
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
+import { deepTree } from '/@/cool/utils'
 
 const { service } = useCool()
 
@@ -47,9 +48,30 @@ const Upsert = useUpsert({
 		{
 			prop: 'parentId',
 			label: '上级部门',
-			component: { name: 'el-input' },
+			component: {
+				name: 'el-select',
+				options: [],
+				props: {
+					multiple: false,
+					'multiple-limit': 3,
+				},
+			},
 		},
 	],
+	// 获取部门列表
+	async onOpen() {
+		service.assets.department.list().then((res) => {
+			Upsert.value?.setOptions(
+				'parentId',
+				res.map((e) => {
+					return {
+						label: e.name || '',
+						value: e.id,
+					}
+				}),
+			)
+		})
+	},
 })
 
 // cl-table
@@ -61,10 +83,6 @@ const Table = useTable({
 	columns: [
 		{
 			type: 'selection',
-		},
-		{
-			prop: 'id',
-			label: 'ID',
 		},
 		{
 			prop: 'name',
@@ -90,6 +108,14 @@ const Table = useTable({
 const Crud = useCrud(
 	{
 		service: service.assets.department,
+		onRefresh(_, { render }) {
+			service.assets.department.list().then((list) => {
+				list.map((e: any) => {
+					e.permList = e.perms ? e.perms.split(',') : []
+				})
+				render(deepTree(list))
+			})
+		},
 	},
 	(app) => {
 		app.refresh()

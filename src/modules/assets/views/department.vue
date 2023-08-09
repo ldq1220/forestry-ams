@@ -57,9 +57,10 @@ const Upsert = useUpsert({
 			},
 		},
 	],
-	async onOpen(data) {
+	async onOpened(data) {
 		// 更新树形结构默认展开列的 控制变量
 		middle.treeExpandedKeys = data.parentId
+		middle.disabledId = data.id
 	},
 })
 

@@ -1,5 +1,5 @@
 <template>
-	<el-tree-select v-model="value" node-key="value" :data="TreeData" :render-after-expand="false" show-checkbox check-strictly :default-expanded-keys="expandedKeys" />
+	<el-tree-select v-model="value" node-key="value" :data="treeData" :render-after-expand="false" show-checkbox check-strictly :default-expanded-keys="expandedKeys" />
 </template>
 
 <script setup lang="ts" name="departmentTree">
@@ -11,21 +11,34 @@ const { service } = useCool()
 const middle = useMiddle()
 
 const value = ref()
-const TreeData = ref()
+const treeData = ref()
 const expandedKeys: any = ref([])
-
-// 获取部门树
-const getTreeData = () => {
-	service.assets.department.getTreeData().then((res) => {
-		TreeData.value = res
-	})
-	// 由于组件挂载要 先与 打开编辑弹窗 故做延迟处理
-	setTimeout(() => {
-		expandedKeys.value[0] = middle.treeExpandedKeys
-	}, 300)
-}
 
 onBeforeMount(() => {
 	getTreeData()
 })
+
+// 获取部门树
+const getTreeData = () => {
+	service.assets.department.getTreeData().then((res) => {
+		treeData.value = res
+	})
+	// 由于组件挂载要 先与 打开编辑弹窗 故做延迟处理
+	setTimeout(() => {
+		expandedKeys.value[0] = middle.treeExpandedKeys
+
+		disabledTreeItem(middle.disabledId, treeData.value)
+	}, 300)
+}
+
+const disabledTreeItem = (id: string, data: any) => {
+	data.forEach((item: { value: string; disabled: boolean; children: any }) => {
+		if (item.children && item.children.length > 0) {
+			disabledTreeItem(id, item.children)
+		}
+		if (item.value == id) {
+			item.disabled = true
+		}
+	})
+}
 </script>

@@ -15,6 +15,19 @@
 						<el-input :placeholder="scope.row.fieldName"></el-input>
 					</span>
 				</template>
+
+				<!-- 展开信息 -->
+				<template #column-id="{ scope }">
+					<div style="padding: 10px 200px" v-if="scope.row.dataType == 'options'">
+						<el-form :model="form" :inline="true" class="demo-form-inline">
+							<el-form-item label="名称">
+								<el-input v-model="form.name" placeholder="请输入选项名称" clearable />
+							</el-form-item>
+						</el-form>
+					</div>
+					<div v-else style="text-align: center">类型：{{ FixedAssetsOptions.type(scope.row.dataType) }}</div>
+				</template>
+
 				<template #column-inUse="{ scope }">
 					<el-checkbox v-model="scope.inUse" :checked="scope.row.inUse === 1" @change="changeinUse(scope.row.id, scope.row.inUse)"></el-checkbox>
 				</template>
@@ -35,8 +48,14 @@
 import { useTable, useCrud } from '@cool-vue/crud'
 import { service } from '/@/cool'
 import useFixedAssetsOptions from '/$/base/store/FixedAssetsOptionsDict'
+import { reactive } from 'vue'
 
 const FixedAssetsOptions = useFixedAssetsOptions()
+
+const form = reactive({
+	name: '',
+	value: '',
+})
 
 // cl-crud
 const Crud = useCrud(
@@ -64,6 +83,7 @@ const Table: any = useTable({
 			label: '序号',
 			width: 100,
 		},
+
 		{
 			prop: 'fieldName',
 			label: '字段名称',
@@ -77,6 +97,12 @@ const Table: any = useTable({
 			prop: 'searchEnable',
 			label: '支持搜索',
 			width: 140,
+		},
+		// 展开列
+		{
+			label: '#',
+			type: 'expand',
+			prop: 'id',
 		},
 		{
 			prop: 'dataType',

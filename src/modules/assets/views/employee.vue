@@ -31,8 +31,11 @@
 <script lang="ts" name="assets-employee" setup>
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
+import departmentTree from '../components/departmentTree.vue'
+import useMiddle from '/$/base/store/middle'
 
 const { service } = useCool()
+const middle = useMiddle()
 
 // cl-upsert
 const Upsert = useUpsert({
@@ -67,28 +70,27 @@ const Upsert = useUpsert({
 			prop: 'deptId',
 			label: '所属部门',
 			component: {
-				name: 'el-select',
-				options: [],
-				props: {
-					multiple: false,
-					'multiple-limit': 3,
-				},
+				vm: departmentTree,
 			},
 		},
 	],
-	// 获取部门列表
-	async onOpen() {
-		service.assets.department.list().then((res) => {
-			Upsert.value?.setOptions(
-				'deptId',
-				res.map((e) => {
-					return {
-						label: e.name || '',
-						value: e.id,
-					}
-				}),
-			)
-		})
+	// // 获取部门列表
+	// async onOpen() {
+	// 	service.assets.department.list().then((res) => {
+	// 		Upsert.value?.setOptions(
+	// 			'deptId',
+	// 			res.map((e) => {
+	// 				return {
+	// 					label: e.name || '',
+	// 					value: e.id,
+	// 				}
+	// 			}),
+	// 		)
+	// 	})
+	// },
+	async onOpened(data: any) {
+		// 更新树形结构默认展开列的 控制变量
+		middle.treeExpandedKeys = data.deptId
 	},
 })
 
@@ -105,6 +107,10 @@ const Table = useTable({
 		{
 			prop: 'name',
 			label: '姓名',
+		},
+		{
+			prop: 'deptId',
+			label: 'deptId',
 		},
 		{
 			prop: 'gender',

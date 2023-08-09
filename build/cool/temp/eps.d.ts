@@ -139,6 +139,37 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface FieldSelectOptionEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 字段ID
+		 */
+		fieldId?: string;
+		/**
+		 * 选项值
+		 */
+		optionText?: string;
+		/**
+		 * 上级ID
+		 */
+		parentId?: number;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface GoodsSupplierEntity {
 		/**
 		 * ID
@@ -1470,6 +1501,69 @@ declare namespace Eps {
 			page: boolean;
 			update: boolean;
 			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsFixedFieldSelectOptionController {
+		/**
+		 * 树形表数据
+		 */
+		getTreeData(data?: any): Promise<any>;
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<FieldSelectOptionEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<FieldSelectOptionEntity[]>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FieldSelectOptionEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getTreeData: string;
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getTreeData: boolean;
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
 			add: boolean;
 		};
 		/**
@@ -3047,10 +3141,13 @@ declare namespace Eps {
 			assetsCategory: AssetsAssetsCategory;
 			department: AssetsDepartment;
 			employee: AssetsEmployee;
-			fixed: { assetsFixedField: AssetsFixedAssetsFixedField };
+			fixed: {
+				assetsFixedField: AssetsFixedAssetsFixedField;
+				fieldSelectOptionController: AssetsFixedFieldSelectOptionController;
+			};
 			goodsSupplier: AssetsGoodsSupplier;
 			immaterial: {
-				ImmaterialAssetsFieldController: AssetsImmaterialImmaterialAssetsFieldController;
+				immaterialAssetsFieldController: AssetsImmaterialImmaterialAssetsFieldController;
 			};
 		};
 		base: {

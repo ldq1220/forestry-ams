@@ -30,8 +30,12 @@
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
 import { deepTree } from '/@/cool/utils'
+import useMiddle from '/@/modules/base/store/middle'
+
+import departmentTree from '../components/departmentTree.vue'
 
 const { service } = useCool()
+const middle = useMiddle()
 
 // cl-upsert
 const Upsert = useUpsert({
@@ -49,28 +53,13 @@ const Upsert = useUpsert({
 			prop: 'parentId',
 			label: '上级部门',
 			component: {
-				name: 'el-select',
-				options: [],
-				props: {
-					multiple: false,
-					'multiple-limit': 3,
-				},
+				vm: departmentTree,
 			},
 		},
 	],
-	// 获取部门列表
-	async onOpen() {
-		service.assets.department.list().then((res) => {
-			Upsert.value?.setOptions(
-				'parentId',
-				res.map((e) => {
-					return {
-						label: e.name || '',
-						value: e.id,
-					}
-				}),
-			)
-		})
+	async onOpen(data) {
+		// 更新树形结构默认展开列的 控制变量
+		middle.treeExpandedKeys = data.parentId
 	},
 })
 
@@ -89,7 +78,7 @@ const Table = useTable({
 			label: '部门名称',
 		},
 		{
-			prop: 'parentId',
+			prop: 'parentName',
 			label: '上级部门',
 		},
 		{

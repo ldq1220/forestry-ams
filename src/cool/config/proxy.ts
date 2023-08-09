@@ -1,17 +1,22 @@
 export const proxy = {
-	"/dev/": {
-		target: "http://127.0.0.1:8001",
+	'/dev/': {
+		target: 'http://127.0.0.1:8001',
 		changeOrigin: true,
-		rewrite: (path: string) => path.replace(/^\/dev/, "")
+		rewrite: (path: string) => path.replace(/^\/dev/, ''),
 	},
-	"/haolong/": {
-		target: "http://192.168.11.73:8001",
+	'/haolong/': {
+		target: 'http://192.168.11.73:8001',
 		changeOrigin: true,
-		rewrite: (path: string) => path.replace(/^\/haolong/, "")
+		rewrite: (path: string) => path.replace(/^\/haolong/, ''),
 	},
-	"/prod/": {
-		target: "https://show.cool-admin.com",
+	'/haolongtow/': {
+		target: 'http://192.168.11.230:8001/',
 		changeOrigin: true,
-		rewrite: (path: string) => path.replace(/^\/prod/, "/api")
-	}
-};
+		rewrite: (path: string) => path.replace(/^\/haolongtow/, ''),
+	},
+	'/prod/': {
+		target: 'https://show.cool-admin.com',
+		changeOrigin: true,
+		rewrite: (path: string) => path.replace(/^\/prod/, '/api'),
+	},
+}

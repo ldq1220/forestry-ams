@@ -1,6 +1,8 @@
 <template>
 	<cl-crud ref="Crud">
 		<cl-row>
+			<!-- 刷新按钮 -->
+			<cl-refresh-btn />
 			<!-- 新增按钮 -->
 			<cl-add-btn />
 			<!-- 删除按钮 -->

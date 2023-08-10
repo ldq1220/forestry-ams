@@ -9,6 +9,10 @@ declare namespace Eps {
 		 */
 		categoryName?: string;
 		/**
+		 * 上级ID
+		 */
+		parentId?: number;
+		/**
 		 * 创建时间
 		 */
 		createTime?: Date;
@@ -1265,6 +1269,10 @@ declare namespace Eps {
 
 	interface AssetsAssetsCategory {
 		/**
+		 * 树形表数据
+		 */
+		getTreeData(data?: any): Promise<any>;
+		/**
 		 * 删除
 		 */
 		delete(data?: any): Promise<any>;
@@ -1296,6 +1304,7 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getTreeData: string;
 			delete: string;
 			update: string;
 			info: string;
@@ -1307,6 +1316,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getTreeData: boolean;
 			delete: boolean;
 			update: boolean;
 			info: boolean;
@@ -1631,6 +1641,14 @@ declare namespace Eps {
 
 	interface AssetsImmaterialImmaterialAssetsFieldController {
 		/**
+		 * 无形资产表配置 保存
+		 */
+		saveAssetsFixedFieldSet(data?: any): Promise<any>;
+		/**
+		 * 字段类型
+		 */
+		getAllDataType(data?: any): Promise<any>;
+		/**
 		 * 单个信息
 		 */
 		info(data?: any): Promise<ImmaterialAssetsFieldEntity>;
@@ -1662,6 +1680,8 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			saveAssetsFixedFieldSet: string;
+			getAllDataType: string;
 			info: string;
 			list: string;
 			page: string;
@@ -1673,6 +1693,8 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			saveAssetsFixedFieldSet: boolean;
+			getAllDataType: boolean;
 			info: boolean;
 			list: boolean;
 			page: boolean;

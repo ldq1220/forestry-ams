@@ -26,18 +26,34 @@ const getTreeData = () => {
 	// 由于组件挂载要 先与 打开编辑弹窗 故做延迟处理
 	setTimeout(() => {
 		expandedKeys.value[0] = middle.treeExpandedKeys
-
 		disabledTreeItem(middle.disabledId, treeData.value)
-	}, 300)
+	}, 500)
 }
 
+// 禁用节点
 const disabledTreeItem = (id: string, data: any) => {
 	data.forEach((item: { value: string; disabled: boolean; children: any }) => {
+		if (item.value == id) {
+			// 如果 这个有子节点 则禁用全部子节点
+			if (item.children) {
+				item.disabled = true
+				disabledAllChilden(item.children) // 禁用节点所有子节点
+			} else {
+				item.disabled = true
+			}
+		}
 		if (item.children && item.children.length > 0) {
 			disabledTreeItem(id, item.children)
 		}
-		if (item.value == id) {
-			item.disabled = true
+	})
+}
+
+// 禁用节点所有子节点
+const disabledAllChilden = (data: any[]) => {
+	data.forEach((item) => {
+		item.disabled = true
+		if (item.children && item.children.length > 0) {
+			disabledAllChilden(item.children)
 		}
 	})
 }

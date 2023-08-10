@@ -84,6 +84,381 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface AssetsFixedEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 所属单位
+		 */
+		field1?: string;
+		/**
+		 * 资产分类
+		 */
+		field2?: string;
+		/**
+		 * 资产编号
+		 */
+		field3?: string;
+		/**
+		 * 项目代码
+		 */
+		field4?: string;
+		/**
+		 * 取得日期
+		 */
+		field5?: string;
+		/**
+		 * 投入使用日期
+		 */
+		field6?: string;
+		/**
+		 * 配置批准单位
+		 */
+		field7?: string;
+		/**
+		 * 价值类型
+		 */
+		field8?: string;
+		/**
+		 * 资产原值（元）
+		 */
+		field9?: string;
+		/**
+		 * 财政拨款（元）
+		 */
+		field10?: string;
+		/**
+		 * 非财政拨款（元）
+		 */
+		field11?: string;
+		/**
+		 * 资产状态
+		 */
+		field12?: string;
+		/**
+		 * 使用责任主体
+		 */
+		field13?: string;
+		/**
+		 * 使用人
+		 */
+		field14?: string;
+		/**
+		 * 管理人
+		 */
+		field15?: string;
+		/**
+		 * 是否共享共用
+		 */
+		field16?: string;
+		/**
+		 * 产权是否清晰
+		 */
+		field17?: string;
+		/**
+		 * 权属证明
+		 */
+		field18?: string;
+		/**
+		 * 使用权类型
+		 */
+		field19?: string;
+		/**
+		 * 独用面积
+		 */
+		field20?: string;
+		/**
+		 * 分摊面积
+		 */
+		field21?: string;
+		/**
+		 * 会计凭证号
+		 */
+		field22?: string;
+		/**
+		 * 数量
+		 */
+		field23?: string;
+		/**
+		 * 上次计提日期
+		 */
+		field24?: string;
+		/**
+		 * 发票号
+		 */
+		field25?: string;
+		/**
+		 * 是否分级运维管理
+		 */
+		field26?: string;
+		/**
+		 * 收储单位
+		 */
+		field27?: string;
+		/**
+		 * 属地交通运输主管部门联系电话
+		 */
+		field28?: string;
+		/**
+		 * 管护单位联系电话
+		 */
+		field29?: string;
+		/**
+		 * 数量计量单位
+		 */
+		field30?: string;
+		/**
+		 * 折旧/摊销状态
+		 */
+		field31?: string;
+		/**
+		 * 存放地点
+		 */
+		field32?: string;
+		/**
+		 * 公路性质
+		 */
+		field33?: string;
+		/**
+		 * 收费年限
+		 */
+		field34?: string;
+		/**
+		 * 剩余收费年限
+		 */
+		field35?: string;
+		/**
+		 * 开工日期
+		 */
+		field36?: string;
+		/**
+		 * 累计折旧/摊销（元）
+		 */
+		field37?: string;
+		/**
+		 * 收费权质押情况
+		 */
+		field38?: string;
+		/**
+		 * 供应商
+		 */
+		field39?: string;
+		/**
+		 * 入账日期
+		 */
+		field40?: string;
+		/**
+		 * 资产分类
+		 */
+		field41?: string;
+		/**
+		 * 新国标资产分类
+		 */
+		field42?: string;
+		/**
+		 * 采购组织形式
+		 */
+		field43?: string;
+		/**
+		 * 财务经办人
+		 */
+		field44?: string;
+		/**
+		 * 备注
+		 */
+		field45?: string;
+		/**
+		 * 使用部门
+		 */
+		field46?: string;
+		/**
+		 * 单位会计科目
+		 */
+		field47?: string;
+		/**
+		 * 净值
+		 */
+		field48?: string;
+		/**
+		 * 管理部门
+		 */
+		field49?: string;
+		/**
+		 * 行业分类代码
+		 */
+		field50?: string;
+		/**
+		 * 账套
+		 */
+		field51?: string;
+		/**
+		 * 国标2010资产分类
+		 */
+		field52?: string;
+		/**
+		 * 预计使用到期日
+		 */
+		field53?: string;
+		/**
+		 * 是否机构划转划入
+		 */
+		field54?: string;
+		/**
+		 * 入库日期
+		 */
+		field55?: string;
+		/**
+		 * 行业使用方向
+		 */
+		field56?: string;
+		/**
+		 * 月折旧额（元）
+		 */
+		field57?: string;
+		/**
+		 * 计提结束日期
+		 */
+		field58?: string;
+		/**
+		 * 首次计提日期
+		 */
+		field59?: string;
+		/**
+		 * 折旧（摊销）方法
+		 */
+		field60?: string;
+		/**
+		 * 残值率(%)
+		 */
+		field61?: string;
+		/**
+		 * 机身编码
+		 */
+		field62?: string;
+		/**
+		 * 折旧（摊销）年限
+		 */
+		field63?: string;
+		/**
+		 * 折旧年限
+		 */
+		field64?: string;
+		/**
+		 * 登记日期
+		 */
+		field65?: string;
+		/**
+		 * 条形码(打印)
+		 */
+		field66?: string;
+		/**
+		 * 是否折旧结束
+		 */
+		field67?: string;
+		/**
+		 * 报增单号
+		 */
+		field68?: string;
+		/**
+		 * 报账单号
+		 */
+		field69?: string;
+		/**
+		 * 终止收费时间
+		 */
+		field70?: string;
+		/**
+		 * 登记人
+		 */
+		field71?: string;
+		/**
+		 * 预算名称
+		 */
+		field72?: string;
+		/**
+		 * 资产用途
+		 */
+		field73?: string;
+		/**
+		 * 取得方式
+		 */
+		field74?: string;
+		/**
+		 * 预算编码
+		 */
+		field75?: string;
+		/**
+		 * 销帐日期
+		 */
+		field76?: string;
+		/**
+		 * 保管人
+		 */
+		field77?: string;
+		/**
+		 * 规格型号
+		 */
+		field78?: string;
+		/**
+		 * 入账形式
+		 */
+		field79?: string;
+		/**
+		 * 备用整数字段1
+		 */
+		field001?: string;
+		/**
+		 * 备用整数字段2
+		 */
+		field002?: string;
+		/**
+		 * 备用文本字段3
+		 */
+		field003?: string;
+		/**
+		 * 备用文本字段4
+		 */
+		field004?: string;
+		/**
+		 * 备用下拉字段1
+		 */
+		field005?: string;
+		/**
+		 * 备用下拉字段2
+		 */
+		field007?: string;
+		/**
+		 * 备用数值字段5
+		 */
+		field008?: string;
+		/**
+		 * 备用整数字段3
+		 */
+		field009?: string;
+		/**
+		 * 备用数值字段4
+		 */
+		field010?: string;
+		/**
+		 * 备用数值字段3
+		 */
+		field011?: string;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface AssetsFixedFieldEntity {
 		/**
 		 * ID
@@ -1450,11 +1825,72 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsFixedAssetsFixedController {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<AssetsFixedEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<AssetsFixedEntity[]>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			list: string;
+			page: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsFixedAssetsFixedField {
 		/**
 		 * 固定资产表配置 保存
 		 */
 		saveAssetsFixedFieldSet(data?: any): Promise<any>;
+		/**
+		 * 查询固定资产表的设置字段
+		 */
+		getFixedAssetsFields(data?: any): Promise<any>;
 		/**
 		 * 字段类型
 		 */
@@ -1492,6 +1928,7 @@ declare namespace Eps {
 		 */
 		permission: {
 			saveAssetsFixedFieldSet: string;
+			getFixedAssetsFields: string;
 			getAllDataType: string;
 			info: string;
 			list: string;
@@ -1505,6 +1942,7 @@ declare namespace Eps {
 		 */
 		_permission: {
 			saveAssetsFixedFieldSet: boolean;
+			getFixedAssetsFields: boolean;
 			getAllDataType: boolean;
 			info: boolean;
 			list: boolean;
@@ -1643,7 +2081,7 @@ declare namespace Eps {
 		/**
 		 * 无形资产表配置 保存
 		 */
-		saveAssetsFixedFieldSet(data?: any): Promise<any>;
+		saveImmaterialAssetsFieldSet(data?: any): Promise<any>;
 		/**
 		 * 字段类型
 		 */
@@ -1680,7 +2118,7 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
-			saveAssetsFixedFieldSet: string;
+			saveImmaterialAssetsFieldSet: string;
 			getAllDataType: string;
 			info: string;
 			list: string;
@@ -1693,7 +2131,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
-			saveAssetsFixedFieldSet: boolean;
+			saveImmaterialAssetsFieldSet: boolean;
 			getAllDataType: boolean;
 			info: boolean;
 			list: boolean;
@@ -3164,6 +3602,7 @@ declare namespace Eps {
 			department: AssetsDepartment;
 			employee: AssetsEmployee;
 			fixed: {
+				assetsFixedController: AssetsFixedAssetsFixedController;
 				assetsFixedField: AssetsFixedAssetsFixedField;
 				fieldSelectOptionController: AssetsFixedFieldSelectOptionController;
 			};

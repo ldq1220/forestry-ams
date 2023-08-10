@@ -3,7 +3,7 @@
 		<div class="fixed_assets_options_box">
 			<!-- 固定资产 -->
 			<div class="fixed_assets_options">
-				<h2>固定资产表配置</h2>
+				<h2>无形资产表配置</h2>
 			</div>
 		</div>
 		<cl-row>
@@ -149,7 +149,7 @@ const remove = (node: any, data: { id: any }) => {
 
 // 保存配置
 const handleSave = () => {
-	service.assets.fixed.assetsFixedField.saveAssetsFixedFieldSet({ fmData: Table._value.data }).then(() => {
+	service.assets.immaterial.immaterialAssetsFieldController.saveImmaterialAssetsFieldSet({ fmData: Table._value.data }).then(() => {
 		ElMessage.success('保存成功')
 		refresh()
 	})
@@ -158,7 +158,7 @@ const handleSave = () => {
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.assets.fixed.assetsFixedField,
+		service: service.assets.immaterial.immaterialAssetsFieldController,
 		dict: {
 			api: {
 				page: 'list',

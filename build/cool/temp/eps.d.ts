@@ -26,6 +26,65 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
+	interface ConsumableAssetsFieldEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 字段ID
+		 */
+		fieldId?: string;
+		/**
+		 * 字段名称
+		 */
+		fieldName?: string;
+		/**
+		 * 排序号
+		 */
+		sortOrder?: number;
+		/**
+		 * 支持搜索
+		 */
+		searchEnable?: number;
+		/**
+		 * 数据类型
+		 */
+		dataType?: string;
+		/**
+		 * 是否使用
+		 */
+		inUse?: number;
+		/**
+		 * 保留小数位数
+		 */
+		decimalPlaces?: number;
+		/**
+		 * 选项
+		 */
+		options?: string;
+		/**
+		 * 关联表(选项)查询方法
+		 */
+		joinTableMethod?: string;
+		/**
+		 * 关联字段
+		 */
+		joinField?: string;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
 	interface DepartmentEntity {
 		/**
 		 * ID
@@ -84,7 +143,66 @@ declare namespace Eps {
 		[key: string]: any;
 	}
 
-	interface AssetsFixedEntity {
+	interface AssetsFixedFieldEntity {
+		/**
+		 * ID
+		 */
+		id?: number;
+		/**
+		 * 字段ID
+		 */
+		fieldId?: string;
+		/**
+		 * 字段名称
+		 */
+		fieldName?: string;
+		/**
+		 * 排序号
+		 */
+		sortOrder?: number;
+		/**
+		 * 支持搜索
+		 */
+		searchEnable?: number;
+		/**
+		 * 数据类型
+		 */
+		dataType?: string;
+		/**
+		 * 是否使用
+		 */
+		inUse?: number;
+		/**
+		 * 保留小数位数
+		 */
+		decimalPlaces?: number;
+		/**
+		 * 选项
+		 */
+		options?: string;
+		/**
+		 * 关联表(选项)查询方法
+		 */
+		joinTableMethod?: string;
+		/**
+		 * 关联字段
+		 */
+		joinField?: string;
+		/**
+		 * 创建时间
+		 */
+		createTime?: Date;
+		/**
+		 * 更新时间
+		 */
+		updateTime?: Date;
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface AssetsFixedGoodsEntity {
 		/**
 		 * ID
 		 */
@@ -250,7 +368,7 @@ declare namespace Eps {
 		 */
 		field40?: string;
 		/**
-		 * 资产分类
+		 * 资产名称
 		 */
 		field41?: string;
 		/**
@@ -408,102 +526,115 @@ declare namespace Eps {
 		/**
 		 * 备用整数字段1
 		 */
-		field001?: string;
+		field80?: string;
 		/**
 		 * 备用整数字段2
 		 */
-		field002?: string;
+		field81?: string;
 		/**
 		 * 备用文本字段3
 		 */
-		field003?: string;
+		field82?: string;
 		/**
 		 * 备用文本字段4
 		 */
-		field004?: string;
+		field83?: string;
 		/**
 		 * 备用下拉字段1
 		 */
-		field005?: string;
+		field84?: string;
 		/**
 		 * 备用下拉字段2
 		 */
-		field007?: string;
+		field85?: string;
 		/**
 		 * 备用数值字段5
 		 */
-		field008?: string;
-		/**
-		 * 备用整数字段3
-		 */
-		field009?: string;
-		/**
-		 * 备用数值字段4
-		 */
-		field010?: string;
+		field86?: string;
 		/**
 		 * 备用数值字段3
 		 */
-		field011?: string;
+		field87?: string;
 		/**
-		 * 创建时间
+		 * 备用数值字段4
 		 */
-		createTime?: Date;
+		field88?: string;
 		/**
-		 * 更新时间
+		 * 备用数值字段2
 		 */
-		updateTime?: Date;
+		field89?: string;
 		/**
-		 * 任意键值
+		 * 备用文本字段1
 		 */
-		[key: string]: any;
-	}
-
-	interface AssetsFixedFieldEntity {
+		field90?: string;
 		/**
-		 * ID
+		 * 备用文本字段2
 		 */
-		id?: number;
+		field91?: string;
 		/**
-		 * 字段ID
+		 * 备用文本字段5
 		 */
-		fieldId?: string;
+		field92?: string;
 		/**
-		 * 字段名称
+		 * 备用文本字段6
 		 */
-		fieldName?: string;
+		field93?: string;
 		/**
-		 * 排序号
+		 * 备用文本字段7
+		 */
+		field94?: string;
+		/**
+		 * 备用文本字段8
+		 */
+		field95?: string;
+		/**
+		 * 备用文本字段9
+		 */
+		field96?: string;
+		/**
+		 * 备用文本字段10
+		 */
+		field97?: string;
+		/**
+		 * 备用文本字段11
+		 */
+		field98?: string;
+		/**
+		 * 备用文本字段12
+		 */
+		field99?: string;
+		/**
+		 * 备用整数字段3
+		 */
+		field100?: string;
+		/**
+		 * 备用整数字段4
+		 */
+		field101?: string;
+		/**
+		 * 备用整数字段5
+		 */
+		field102?: string;
+		/**
+		 * 备用数值字段1
+		 */
+		field103?: string;
+		/**
+		 * 备用下拉字段3
+		 */
+		field104?: string;
+		/**
+		 * 管理编号
+		 */
+		customNo?: string;
+		/**
+		 * 系统编号
+		 */
+		sysNo?: string;
+		/**
+		 * 排序
 		 */
 		sortOrder?: number;
-		/**
-		 * 支持搜索
-		 */
-		searchEnable?: number;
-		/**
-		 * 数据类型
-		 */
-		dataType?: string;
-		/**
-		 * 是否使用
-		 */
-		inUse?: number;
-		/**
-		 * 保留小数位数
-		 */
-		decimalPlaces?: number;
-		/**
-		 * 选项
-		 */
-		options?: string;
-		/**
-		 * 关联表(选项)查询方法
-		 */
-		joinTableMethod?: string;
-		/**
-		 * 关联字段
-		 */
-		joinField?: string;
 		/**
 		 * 创建时间
 		 */
@@ -1705,6 +1836,75 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsConsumableConsumableAssetsFieldController {
+		/**
+		 * 易耗品表配置 保存
+		 */
+		saveConsumableAssetsFieldSet(data?: any): Promise<any>;
+		/**
+		 * 字段类型
+		 */
+		getAllDataType(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<ConsumableAssetsFieldEntity>;
+		/**
+		 * 列表查询
+		 */
+		list(data?: any): Promise<ConsumableAssetsFieldEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsFieldEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			saveConsumableAssetsFieldSet: string;
+			getAllDataType: string;
+			info: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			saveConsumableAssetsFieldSet: boolean;
+			getAllDataType: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsDepartment {
 		/**
 		 * 树形表数据
@@ -1825,63 +2025,6 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
-	interface AssetsFixedAssetsFixedController {
-		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<AssetsFixedEntity>;
-		/**
-		 * 列表查询
-		 */
-		list(data?: any): Promise<AssetsFixedEntity[]>;
-		/**
-		 * 分页查询
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number };
-			list: AssetsFixedEntity[];
-			[key: string]: any;
-		}>;
-		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			delete: string;
-			update: string;
-			info: string;
-			list: string;
-			page: string;
-			add: string;
-		};
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			delete: boolean;
-			update: boolean;
-			info: boolean;
-			list: boolean;
-			page: boolean;
-			add: boolean;
-		};
-		/**
-		 * 请求
-		 */
-		request: Service["request"];
-	}
-
 	interface AssetsFixedAssetsFixedField {
 		/**
 		 * 固定资产表配置 保存
@@ -1950,6 +2093,69 @@ declare namespace Eps {
 			update: boolean;
 			delete: boolean;
 			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsFixedAssetsFixedGoodsController {
+		/**
+		 * 财厅数据导入
+		 */
+		import(data?: any): Promise<any>;
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * 单个信息
+		 */
+		info(data?: any): Promise<AssetsFixedGoodsEntity>;
+		/**
+		 * 分页查询
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<AssetsFixedGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			import: string;
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			import: boolean;
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
 		};
 		/**
 		 * 请求
@@ -3599,11 +3805,14 @@ declare namespace Eps {
 		test: Test;
 		assets: {
 			assetsCategory: AssetsAssetsCategory;
+			consumable: {
+				consumableAssetsFieldController: AssetsConsumableConsumableAssetsFieldController;
+			};
 			department: AssetsDepartment;
 			employee: AssetsEmployee;
 			fixed: {
-				assetsFixedController: AssetsFixedAssetsFixedController;
 				assetsFixedField: AssetsFixedAssetsFixedField;
+				assetsFixedGoodsController: AssetsFixedAssetsFixedGoodsController;
 				fieldSelectOptionController: AssetsFixedFieldSelectOptionController;
 			};
 			goodsSupplier: AssetsGoodsSupplier;

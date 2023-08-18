@@ -28,11 +28,13 @@
 	</cl-crud>
 </template>
 
-<script lang="ts" name="assets-employee" setup>
+<script lang="ts" name="assets-department" setup>
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
-import departmentTree from '../components/departmentTree.vue'
-import useMiddle from '/$/base/store/middle'
+import { deepTree } from '/@/cool/utils'
+import useMiddle from '/@/modules/base/store/middle'
+
+import departmentTree from './components/departmentTree.vue'
 
 const { service } = useCool()
 const middle = useMiddle()
@@ -45,53 +47,22 @@ const Upsert = useUpsert({
 	items: [
 		{
 			prop: 'name',
-			label: '姓名',
+			label: '部门名称',
 			required: true,
 			component: { name: 'el-input' },
 		},
 		{
-			prop: 'gender',
-			label: '性别',
-			component: {
-				name: 'el-radio-group',
-				options: [
-					{
-						label: '男',
-						value: 1,
-					},
-					{
-						label: '女',
-						value: 0,
-					},
-				],
-			},
-		},
-		{
-			prop: 'deptId',
-			label: '所属部门',
+			prop: 'parentId',
+			label: '上级部门',
 			component: {
 				vm: departmentTree,
 			},
 		},
 	],
-	// // 获取部门列表
-	// async onOpen() {
-	// 	service.assets.department.list().then((res) => {
-	// 		Upsert.value?.setOptions(
-	// 			'deptId',
-	// 			res.map((e) => {
-	// 				return {
-	// 					label: e.name || '',
-	// 					value: e.id,
-	// 				}
-	// 			}),
-	// 		)
-	// 	})
-	// },
-	async onOpened(data: any) {
+	async onOpened(data) {
 		// 更新树形结构默认展开列的 控制变量
-		middle.treeExpandedKeys = data.deptId
-		middle.disabledId = undefined
+		middle.treeExpandedKeys = data.parentId
+		middle.disabledId = data.id
 	},
 })
 
@@ -107,37 +78,16 @@ const Table = useTable({
 		},
 		{
 			prop: 'name',
-			label: '姓名',
+			label: '部门名称',
 		},
 		{
-			prop: 'deptId',
-			label: 'deptId',
-		},
-		{
-			prop: 'gender',
-			label: '性别',
-			dict: [
-				{
-					label: '男',
-					value: 1,
-					type: 'success',
-				},
-				{
-					label: '女',
-					value: 0,
-					type: 'danger',
-				},
-			],
-		},
-		{
-			prop: 'deptName',
-			label: '所属部门',
-			width: 160,
+			prop: 'parentName',
+			label: '上级部门',
 		},
 		{
 			prop: 'createTime',
-			label: '创建日期',
-			width: 160,
+			label: '创建时间',
+			sortable: 'desc',
 		},
 		{
 			type: 'op',
@@ -149,7 +99,15 @@ const Table = useTable({
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.assets.employee,
+		service: service.assets.department,
+		onRefresh(_, { render }) {
+			service.assets.department.list().then((list) => {
+				list.map((e: any) => {
+					e.permList = e.perms ? e.perms.split(',') : []
+				})
+				render(deepTree(list))
+			})
+		},
 	},
 	(app) => {
 		app.refresh()

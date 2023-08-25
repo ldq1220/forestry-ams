@@ -3,7 +3,7 @@
 		<div class="fixed_assets_options_box">
 			<!-- 固定资产 -->
 			<div class="fixed_assets_options">
-				<h2>固定资产表配置</h2>
+				<h2>易耗品表配置</h2>
 			</div>
 		</div>
 		<cl-row>
@@ -56,18 +56,10 @@
 					<el-checkbox v-model="scope.inUse" :checked="scope.row.inUse === 1" @change="changeinUse(scope.row.id, scope.row.inUse)"></el-checkbox>
 				</template>
 				<template #column-searchEnable="{ scope }">
-					<el-checkbox
-						v-model="scope.searchEnable"
-						:checked="scope.row.searchEnable === 1"
-						:disabled="scope.row.dataType === 'date'"
-						@change="changeinSearchEnable(scope.row.id, scope.row.searchEnable)"
-					></el-checkbox>
+					<el-checkbox v-model="scope.searchEnable" :checked="scope.row.searchEnable === 1" @change="changeinSearchEnable(scope.row.id, scope.row.searchEnable)"></el-checkbox>
 				</template>
 				<template #column-dataType="{ scope }">
 					{{ FixedAssetsOptions.type(scope.row.dataType) }}
-				</template>
-				<template #column-belongTab="{ scope }">
-					{{ filterMessageType(scope.row.belongTab) }}
 				</template>
 			</cl-table>
 		</cl-row>
@@ -83,7 +75,6 @@ import { service } from '/@/cool'
 import useFixedAssetsOptions from '/$/base/store/FixedAssetsOptionsDict'
 import { reactive } from 'vue'
 import { ElMessage } from 'element-plus'
-import { filterMessageType } from '/@/modules/base/utils/filterValue'
 
 const FixedAssetsOptions = useFixedAssetsOptions()
 
@@ -97,18 +88,17 @@ const form = reactive({
 	},
 })
 
-// // 点击是否使用单选框
+// 点击是否使用单选框
 const changeinUse = (id: number, inUse: number) => {
-	console.log(Table._value.data)
 	if (inUse === 1) {
 		// 取消使用
 		Table._value.data.forEach((item: { id: number; inUse: number }) => {
-			if (item.id === id) item.inUse = 0
+			if (item.id === id) return (item.inUse = 0)
 		})
 	} else {
 		// 使用
 		Table._value.data.forEach((item: { id: number; inUse: number }) => {
-			if (item.id === id) item.inUse = 1
+			if (item.id === id) return (item.inUse = 1)
 		})
 	}
 }
@@ -159,9 +149,8 @@ const remove = (node: any, data: { id: any }) => {
 
 // 保存配置
 const handleSave = () => {
-	service.assets.fixed.assetsFixedField.saveAssetsFixedFieldSet({ fmData: Table._value.data }).then(() => {
+	service.assets.consumable.consumableAssetsFieldController.saveConsumableAssetsFieldSet({ fmData: Table._value.data }).then(() => {
 		ElMessage.success('保存成功')
-		// console.log(Table._value.data)
 		refresh()
 	})
 }
@@ -169,7 +158,7 @@ const handleSave = () => {
 // cl-crud
 const Crud = useCrud(
 	{
-		service: service.assets.fixed.assetsFixedField,
+		service: service.assets.consumable.consumableAssetsFieldController,
 		dict: {
 			api: {
 				page: 'list',
@@ -183,7 +172,7 @@ const Crud = useCrud(
 // cl-table
 const Table: any = useTable({
 	defaultSort: {
-		prop: 'sortOrder',
+		prop: 'id',
 		order: 'ascending',
 	},
 	columns: [
@@ -192,11 +181,7 @@ const Table: any = useTable({
 			label: '序号',
 			width: 100,
 		},
-		// {
-		// 	prop: 'id',
-		// 	label: 'ID',
-		// 	width: 100,
-		// },
+
 		{
 			prop: 'fieldName',
 			label: '字段名称',
@@ -208,7 +193,7 @@ const Table: any = useTable({
 		},
 		{
 			prop: 'searchEnable',
-			label: '支持高级搜索',
+			label: '支持搜索',
 			width: 140,
 		},
 		// 展开列
@@ -220,10 +205,6 @@ const Table: any = useTable({
 		{
 			prop: 'dataType',
 			label: '类型',
-		},
-		{
-			prop: 'belongTab',
-			label: '信息',
 		},
 		// {
 		// 	prop: 'options',

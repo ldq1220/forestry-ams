@@ -4,46 +4,51 @@
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
 			<!-- 新增按钮 -->
-			<cl-add-btn />
+			<!-- <cl-add-btn /> -->
 			<!-- 删除按钮 -->
 			<!-- <cl-multi-delete-btn /> -->
 			<!-- 自定义列 -->
 			<cl-column-custom :columns="custom" name="assetsFixedGoods" />
-			<!-- <cl-column-custom :columns="Table?.columns" /> -->
+			<!-- 批量修改 -->
+			<el-button type="primary" size="default" @click="handleBatchUpdate" v-permission="service.assets.pushStorageDoc.pushStorageDocController.permission.batchUpdateInfo">批量修改</el-button>
 
 			<cl-flex1 />
 
 			<div class="date_picker">
 				<span style="font-size: 12px; margin-right: 10px">入库日期</span>
-				<el-date-picker
-					v-model="putStorageTime"
-					type="daterange"
-					range-separator="至"
-					start-placeholder="开始日期"
-					end-placeholder="结束日期"
-					style="width: 240px"
-					@change="handlePutStorageTime"
-				/>
+				<el-date-picker v-model="putStorageTime" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width: 240px" />
 			</div>
 
 			<!-- 资产状态筛选 -->
 			<cl-filter label="资产状态">
 				<!-- 配置props，选择后会自动过滤列表 -->
-				<!-- <cl-select :options="options.status" prop="field14" /> -->
-				<cl-select :options="options.status" prop="field14" />
+				<cl-select style="width: 120px" :options="options.status" prop="field12" />
 			</cl-filter>
 
 			<!-- 关键字搜索 -->
-			<cl-search-key placeholder="请输入资产名名称" field="field41" />
+			<cl-search-key placeholder="搜索资产名称" />
 
-			<!-- <cl-flex1 /> -->
 			<!-- 高级搜索按钮 -->
 			<cl-adv-btn />
 		</cl-row>
 
 		<cl-row>
 			<!-- 数据表格 -->
-			<cl-table ref="Table"></cl-table>
+			<cl-table ref="Table" @selection-change="selectionChange">
+				<!-- 资产编号 -->
+				<template #column-customNo="{ scope }">
+					{{ scope.row.customNo }}
+					<el-tooltip content="复制资产编号" placement="top" effect="dark">
+						<span class="customNo_copy_icon" @click="copy_customNo(scope.row.customNo)">
+							<el-icon><copy-document /></el-icon>
+						</span>
+					</el-tooltip>
+				</template>
+				<!-- 入库日期 -->
+				<template #column-field55="{ scope }">
+					{{ scope.row.field55?.slice(0, 10) }}
+				</template>
+			</cl-table>
 		</cl-row>
 
 		<cl-row>
@@ -52,12 +57,59 @@
 			<cl-pagination />
 		</cl-row>
 
+		<!-- 批量修改对话框 -->
+		<batchUpdateDialog :visiable="visiable" dataType="固定资产" :selectionChangeData="selectionChangeData" @closeDialog="closeDialog" />
+
 		<!-- 新增、编辑 -->
-		<cl-upsert ref="Upsert" />
+		<cl-upsert ref="Upsert">
+			<template #slot-op-btns="{ scope }">
+				<el-button type="primary" @click="addRow(scope)" :icon="Plus">添加</el-button>
+				<el-button type="danger" @click="deleteRow(scope)" :icon="Delete">删除</el-button>
+			</template>
+			<template #slot-accessory-list="{ scope }">
+				<el-table :data="scope.accessoryList" :stripe="true" style="width: 100%" @select="accessoryDataSelect" @select-all="accessoryDataSelect">
+					<el-table-column type="selection" width="40" />
+					<el-table-column type="index" />
+					<el-table-column prop="name" label="配件名称" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.name" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="sku" label="规格型号" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.sku" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="cnt" label="数量" header-align="center" width="120">
+						<template #default="scope2">
+							<el-input-number v-model="scope2.row.cnt" placeholder="请填写" :min="1" :precision="0" class="full-width" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="buyDate" label="购置日期" header-align="center">
+						<template #default="scope2">
+							<el-date-picker v-model="scope2.row.buyDate" type="date" placeholder="请选择" format="YYYY-MM-DD" value-format="YYYY-MM-DD" style="width: 100%" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="price" label="原值(元)" header-align="center">
+						<template #default="scope2">
+							<el-input-number :precision="2" v-model="scope2.row.price" placeholder="请填写" class="full-width" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="manufacturer" label="生产厂商" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.manufacturer" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<template #empty>
+						<el-empty />
+					</template>
+				</el-table>
+			</template>
+		</cl-upsert>
 
 		<!-- 详情对话框 -->
 		<div class="info_dialog">
-			<cl-dialog v-model="infoDialog" title="固定资产详情" width="800" center>
+			<cl-dialog v-model="infoDialog" title="固定资产详情" width="950" center draggable>
 				<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
 					<el-tab-pane label="基础信息" name="basics">
 						<div class="info_dialog_content">
@@ -99,6 +151,44 @@
 							</div>
 						</div>
 					</el-tab-pane>
+					<el-tab-pane label="附属附件" name="accessoryList">
+						<el-table :data="fixedAssetsInfo.accessoryList" :stripe="true" style="width: 100%">
+							<el-table-column type="index" width="40" />
+							<el-table-column prop="name" label="配件名称" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.name ? scope.row.name : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="sku" label="规格型号" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.sku ? scope.row.sku : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="cnt" label="数量" width="130" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.cnt ? scope.row.cnt : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="buyDate" label="购置日期" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.buyDate ? scope.row.buyDate : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="price" label="原值(元)" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.price ? scope.row.price : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="manufacturer" label="生产厂商" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.manufacturer ? scope.row.manufacturer : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<template #empty>
+								<el-empty />
+							</template>
+						</el-table>
+					</el-tab-pane>
 				</el-tabs>
 				<template #footer>
 					<span class="dialog_footer">
@@ -108,124 +198,8 @@
 			</cl-dialog>
 		</div>
 
-		<!-- 领用对话框 -->
-		<div class="receive">
-			<cl-dialog title="领用" v-model="receiveVisible" class="receive">
-				<div class="receive_box">
-					<div class="info_dialog_content">
-						<div class="content_item">
-							<div class="item_label">编号</div>
-							<div class="item_content">{{ receiveData.info.field3 }}</div>
-						</div>
-					</div>
-					<div class="info_dialog_content">
-						<div class="content_item">
-							<div class="item_label">资产名称</div>
-							<div class="item_content">{{ receiveData.info.field41 }}</div>
-						</div>
-					</div>
-					<div class="info_dialog_content" style="margin-bottom: 10px">
-						<div class="content_item">
-							<div class="item_label">规划型号</div>
-							<div class="item_content">{{ receiveData.info.field78 }}</div>
-						</div>
-					</div>
-
-					<el-form :inline="true" :model="receiveData.form" class="demo-form-inline" :rules="receiveData.rules" ref="receiveDom">
-						<el-form-item label="领用人" prop="personName">
-							<!-- <el-input v-model="receiveData.form.personName" placeholder="请输入领用人" clearable /> -->
-							<el-autocomplete v-model="receiveData.form.personName" :fetch-suggestions="querySearch" clearable class="inline-input w-50" placeholder="请输入领用人" />
-						</el-form-item>
-						<el-form-item label="领用部门" prop="deptName">
-							<el-tree-select
-								v-model="receiveData.form.deptName"
-								:data="receiveData.form.departmentOptions"
-								check-strictly
-								:render-after-expand="false"
-								show-checkbox
-								check-on-click-node
-								clearable
-							/>
-						</el-form-item>
-						<el-form-item label="存放地点">
-							<el-input v-model="receiveData.form.storagePlace" placeholder="请输入存放地点" clearable />
-						</el-form-item>
-						<el-form-item label="领用日期" prop="getDate">
-							<el-date-picker v-model="receiveData.form.getDate" type="date" placeholder="领用日期" />
-						</el-form-item>
-						<el-form-item label="预计归还日期">
-							<el-date-picker v-model="receiveData.form.dueReturnDate" type="date" placeholder="预计归还日期" />
-						</el-form-item>
-						<el-form-item label="领用原因">
-							<el-input v-model="receiveData.form.getReason" placeholder="请输入领用原因" clearable />
-						</el-form-item>
-					</el-form>
-				</div>
-				<template #footer>
-					<span class="dialog_footer">
-						<el-button @click="receiveVisible = false">取消</el-button>
-						<el-button type="primary" @click="handleReceiveSave">确定</el-button>
-					</span>
-				</template>
-			</cl-dialog>
-		</div>
-
-		<!-- 报废对话框 -->
-		<div class="scrap">
-			<cl-dialog title="报废" v-model="scrapVisible" class="scrap">
-				<div class="scrap_box">
-					<div class="info_dialog_content">
-						<div class="content_item">
-							<div class="item_label">编号</div>
-							<div class="item_content">{{ scrapData.info.field3 }}</div>
-						</div>
-					</div>
-					<div class="info_dialog_content">
-						<div class="content_item">
-							<div class="item_label">资产名称</div>
-							<div class="item_content">{{ scrapData.info.field41 }}</div>
-						</div>
-					</div>
-					<div class="info_dialog_content" style="margin-bottom: 10px">
-						<div class="content_item">
-							<div class="item_label">规划型号</div>
-							<div class="item_content">{{ scrapData.info.field78 }}</div>
-						</div>
-					</div>
-
-					<el-form :inline="true" :model="scrapData.form" class="demo-form-inline" :rules="scrapData.rules" ref="scrapDom">
-						<el-form-item label="报废负责人" prop="personName">
-							<!-- <el-input v-model="scrapData.form.personName" placeholder="请输入报废负责人" /> -->
-							<el-autocomplete v-model="scrapData.form.personName" :fetch-suggestions="querySearch" clearable class="inline-input w-50" placeholder="请输入报废负责人" />
-						</el-form-item>
-
-						<el-form-item label="处置方式" prop="dealType">
-							<el-select v-model="scrapData.form.dealType" placeholder="请选的处置方式" clearable>
-								<el-option label="回收" value="回收" />
-								<el-option label="销毁" value="销毁" />
-								<el-option label="捐赠" value="捐赠" />
-							</el-select>
-						</el-form-item>
-
-						<el-form-item label="报废原因" prop="discardReason">
-							<el-input v-model="scrapData.form.discardReason" placeholder="请输入报废原因" clearable />
-						</el-form-item>
-						<el-form-item label="报废日期" prop="discardDate">
-							<el-date-picker v-model="scrapData.form.discardDate" type="date" placeholder="报废日期" />
-						</el-form-item>
-					</el-form>
-				</div>
-				<template #footer>
-					<span class="dialog_footer">
-						<el-button @click="scrapVisible = false">取消</el-button>
-						<el-button type="primary" @click="handleScrapSave">确定</el-button>
-					</span>
-				</template>
-			</cl-dialog>
-		</div>
-
 		<!-- 打印对话框 -->
-		<div class="print">
+		<!-- <div class="print">
 			<cl-dialog v-model="printVisible" title="打印设置" width="700px" class="print" :close-on-click-modal="false">
 				<div class="print_box" v-show="printInfo.labelArr.length == 0">
 					<h3>广东省林业调查规划院</h3>
@@ -268,13 +242,12 @@
 							<el-button @click="printVisible = false">取消</el-button>
 							<el-button type="success" @click="handlePrintSave" v-show="printInfo.labelArr.length == 0">保存</el-button>
 							<el-button type="success" @click="handlePrintUpdate" v-show="printInfo.labelArr.length != 0">修改</el-button>
-							<!-- <el-button type="primary">保存&打印</el-button> -->
 							<el-button type="primary" v-show="printInfo.labelArr.length != 0">打印</el-button>
 						</div>
 					</div>
 				</template>
 			</cl-dialog>
-		</div>
+		</div> -->
 
 		<!-- 高级搜索 -->
 		<cl-adv-search ref="AdvSearch">
@@ -285,18 +258,37 @@
 	</cl-crud>
 </template>
 
-<script lang="ts" name="fixedAssetsList" setup>
+<script lang="ts" name="fixedAssetsInventory" setup>
 import { useCrud, useTable, useUpsert, useAdvSearch } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { ElMessage, type TabsPaneContext } from 'element-plus'
+import useDepartmentOptions from '/@/modules/base/store/departmentOptions'
+import useEmployeeList from '/@/modules/base/store/employeeList'
+import useGoodsSupplier from '/@/modules/base/store/goodsSupplier'
+import useAssetsCategory from '/@/modules/base/store/assetsCategory'
+import batchUpdateDialog from '../../components/batchUpdateDialog.vue'
 import dayjs from 'dayjs'
-// import { ElMessage } from 'element-plus'
-// import advSearchOrUpdateTree from './commponents/advSearchOrUpdateTree.vue'
-import useAdvSearchStore from '/@/modules/base/store/advSearch'
+import { ElMessage } from 'element-plus'
+import { CopyDocument, Plus, Delete } from '@element-plus/icons-vue'
+import useClipboard from 'vue-clipboard3'
+
+const { toClipboard } = useClipboard()
+const departmentOptionsStore = useDepartmentOptions()
+const employeeListStore = useEmployeeList()
+const goodsSupplierStore = useGoodsSupplier()
+const assetsCategoryStore = useAssetsCategory()
 
 const { service } = useCool()
-const advSearchStore = useAdvSearchStore()
+
+onMounted(() => {
+	addOptionsNode() //新加的字段查询方法
+	getColumns() // 获取表格显示字段
+
+	// 监听自定义列的变化
+	watch(custom, () => {
+		Table.value.columns = custom.value
+	})
+})
 
 const custom = ref() // 自定义列 数据
 const fixedAssetsInfo: any = reactive({
@@ -305,17 +297,43 @@ const fixedAssetsInfo: any = reactive({
 	useData: [],
 	incomeData: [],
 	otherData: [],
+	accessoryList: [],
 })
 const activeName = ref('basics')
 const infoDialog = ref(false)
 const searchEnable: any = ref([]) // 高级搜索数据
 const putStorageTime: any = ref([]) // 入库日期
+
+// 复制资产编号
+const copy_customNo = async (copyText: string) => {
+	try {
+		await toClipboard(copyText)
+		ElMessage.success('复制成功')
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+// 批量修改
+const visiable = ref(false)
+const selectionChangeData = ref([])
+const handleBatchUpdate = () => {
+	selectionChangeData.value.length === 0 ? ElMessage.info('请选择批量修改项') : (visiable.value = true)
+}
+const closeDialog = () => {
+	visiable.value = false
+	refresh()
+}
+const selectionChange = (row: any) => {
+	selectionChangeData.value = row
+}
+
 // 资产状态
 const options = reactive({
 	status: [
 		{
-			label: '闲置',
-			value: '闲置',
+			label: '库存',
+			value: '库存',
 		},
 		{
 			label: '待处置',
@@ -328,163 +346,11 @@ const options = reactive({
 	],
 })
 
-const receiveVisible = ref(false) // 领用对话框
-const receiveDom = ref()
-const receiveData: any = reactive({
-	form: {
-		goodsId: undefined,
-		personName: undefined,
-		deptName: undefined,
-		storagePlace: undefined,
-		getDate: new Date(),
-		dueReturnDate: new Date(),
-		getReason: undefined,
-		departmentOptions: [],
-		props: {
-			label: 'name',
-			value: 'id',
-			children: 'children',
-		},
-	},
-	info: {},
-	rules: {
-		personName: [{ required: true, message: '请输入领用人', trigger: 'change' }],
-		deptName: [{ required: true, message: '请选择领用部门', trigger: 'blur' }],
-		getDate: [{ required: true, message: '请选择领用日期', trigger: 'blur' }],
-	},
-})
-
-const scrapVisible = ref(false) // 报废对话框
-const scrapDom = ref()
-const scrapData: any = reactive({
-	form: {
-		goodsId: undefined,
-		personName: undefined,
-		dealType: undefined,
-		discardReason: undefined,
-		discardDate: new Date(),
-	},
-	info: {},
-	rules: {
-		personName: [{ required: true, message: '请输入报废负责人', trigger: 'change' }],
-		dealType: [{ required: true, message: '请选择处置方式', trigger: 'blur' }],
-		discardDate: [{ required: true, message: '请选择报废日期', trigger: 'blur' }],
-	},
-})
-// 自动补全输入框
-const createFilter = (queryString: string) => {
-	return (restaurant: any) => {
-		return restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
-	}
-}
-const restaurants: any = ref([])
-const querySearch = (queryString: string, cb: any) => {
-	const results = queryString ? restaurants.value.filter(createFilter(queryString)) : restaurants.value
-	cb(results)
-}
-
-const printVisible = ref(false) // 打印对话框
-//打印标签设置下拉框，需要用到的数据
-const printInfo = ref()
-const printOptionsInfo: any = reactive({
-	id: '',
-	qrCodeFilePath: '',
-	labelArr: [],
-})
-const printData = reactive({
-	labelArr: [
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-		{
-			title: '',
-			fieldId: '',
-		},
-	],
-})
-// 选择打印内容
-const handleChangePrintContent = (fieldName: any, index: any) => {
-	printData.labelArr[index].title = fieldName
-}
-// 保存打印配置
-const handlePrintSave = () => {
-	service.assets.label.assetsGoodsLabelController
-		.addGoodsLabel({
-			goodsId: printInfo.value.id + '',
-			labelArr: printData.labelArr,
-		})
-		.then(() => {
-			// 查询固定资产标物品签信息（标签详情）
-			service.assets.fixed.assetsFixedGoodsController.getLabelUseableData({ id: printInfo.value.id }).then((res) => {
-				printInfo.value.labelArr = res.labelArr
-				// 如果已经配置过打印设置
-				if (res.labelArr.length > 0) {
-					// 查询固定资产标物品签信息（标签详情）
-					service.assets.label.assetsGoodsLabelController.getGoodsLabel({ goodsId: printInfo.value.id }).then((res) => {
-						Object.assign(printOptionsInfo, res)
-						ElMessage.success('保存成功')
-					})
-				}
-			})
-		})
-}
-// 修改打印设置
-const handlePrintUpdate = () => {
-	printInfo.value.labelArr = []
-	console.log(printOptionsInfo.labelArr)
-
-	printData.labelArr = printOptionsInfo.labelArr.map((item: { label: any; fieldId: any }) => {
-		return {
-			title: item.label,
-			fieldId: item.fieldId,
-		}
-	})
-}
-
-onMounted(() => {
-	addOptionsNode() //新加的字段查询方法
-	getColumns() // 获取表格显示字段
-	// getFixedStatusOption() // 获取资产状态列表
-	// getUpsertOptions() // 配置入库、编辑form
-	getDepartmentList() // 获取部门列表
-	getEmployeeList() // 获取员工列表
-
-	// 监听自定义列的变化
-	watch(custom, () => {
-		Table.value.columns = custom.value
-	})
-})
-
 // 新加的字段查询方法
 const addOptionsNode = () => {
 	service.assets.fixed.fieldCookieDataController?.getFixedAssetsNewCustomFields().then((res) => {
-		let assetsFixedGoods = JSON.parse(localStorage.getItem('column-custom__assetsFixedGoods') as string)
-		if (res.length > 0 && assetsFixedGoods.length > 0) {
+		let assetsFixedGoods = JSON.parse(localStorage.getItem('column_custom_assetsFixedGoods') as string) || []
+		if (res.length > 0 || assetsFixedGoods.length > 0) {
 			let lebelArr: any = []
 			assetsFixedGoods.forEach((item: { label: any }) => {
 				lebelArr.push(item.label)
@@ -495,21 +361,55 @@ const addOptionsNode = () => {
 				}
 			})
 
-			localStorage.setItem('column-custom__assetsFixedGoods', JSON.stringify(assetsFixedGoods))
-			// console.log(assetsFixedGoods)
+			localStorage.setItem('column_custom_assetsFixedGoods', JSON.stringify(assetsFixedGoods))
 		}
 	})
+}
+
+// 列设定一些宽度
+const addStyle = (obj: any, item: any) => {
+	if (item.fieldName === '所属单位') {
+		obj.width = 250
+		obj.headerAlign = 'center'
+		obj.align = 'left'
+	} else if (item.fieldName === '资产分类') {
+		obj.width = 250
+		obj.headerAlign = 'center'
+		obj.align = 'left'
+	} else if (item.fieldName === '财厅编号') {
+		obj.width = 200
+		obj.headerAlign = 'center'
+		obj.align = 'center'
+	} else if (item.fieldName === '资产名称') {
+		obj.width = 200
+		obj.headerAlign = 'center'
+		obj.align = 'center'
+	} else {
+		obj.width = 150
+	}
 }
 
 // 获取表格显示字段 && 高级搜索 && 编辑form表单
 const getColumns = () => {
 	service.assets.fixed.assetsFixedGoodsController.getTableFields().then((res) => {
 		// 表格配置项
-		res.forEach((item: { fieldId: any; fieldName: any; searchEnable: number }) => {
-			const obj = {
+		res.forEach((item: { fieldId: string; fieldName: any; dataType: string; searchEnable: number }) => {
+			const obj: any = {
 				prop: item.fieldId,
 				label: item.fieldName,
 				hidden: false,
+			}
+			addStyle(obj, item)
+			if (item.fieldId === 'customNo') {
+				obj.width = 180
+			}
+			if (['date', 'number', 'integer'].includes(item.dataType)) {
+				obj.sortable = 'asc'
+			}
+			if (item.dataType === 'date') {
+				obj.formatter = (row: any) => {
+					return row[item.fieldId] ? dayjs(row[item.fieldId]).format('YYYY-MM-DD') : ''
+				}
 			}
 			Table.value.columns.push(obj)
 
@@ -524,7 +424,7 @@ const getColumns = () => {
 		if (Table.value.columns.length > 0) {
 			Table.value.columns.push({
 				type: 'op',
-				width: 300,
+				width: 250,
 				// @ts-ignore
 				buttons({ scope }) {
 					return [
@@ -533,93 +433,14 @@ const getColumns = () => {
 							label: '详情',
 							type: 'primary',
 							onClick() {
-								// ElMessage.success(scope.row + '正常')
-								service.assets.fixed.assetsFixedGoodsController.getById({ id: scope.row.id }).then((res) => {
-									Object.assign(receiveData.info, res.data)
+								service.assets.pushStorageDoc.pushStorageDocController.getFixedGoodsInfoById({ id: scope.row.id }).then((res) => {
+									Object.assign(fixedAssetsInfo, res)
 								})
 
 								infoDialog.value = true
 							},
 						},
-						{
-							label: '打印',
-							type: 'primary',
-							onClick() {
-								printData.labelArr = [
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-									{
-										title: '',
-										fieldId: '',
-									},
-								]
-								service.assets.fixed.assetsFixedGoodsController.getLabelUseableData({ id: scope.row.id }).then((res) => {
-									printInfo.value = res
-									printInfo.value.id = scope.row.id
-									printVisible.value = true
-
-									// 如果已经配置过打印设置
-									if (res.labelArr.length > 0) {
-										// 查询固定资产标物品签信息（标签详情）
-										service.assets.label.assetsGoodsLabelController.getGoodsLabel({ goodsId: scope.row.id }).then((res) => {
-											Object.assign(printOptionsInfo, res)
-											printOptionsInfo.id = scope.row.id
-										})
-									}
-								})
-							},
-						},
-						{
-							label: '领用',
-							type: 'success',
-							hidden: scope.row.field12 !== '闲置',
-							onClick() {
-								receiveVisible.value = true
-								// ElMessage.success(scope.row + '正常')
-								service.assets.fixed.assetsFixedGoodsController.info({ id: scope.row.id }).then((res) => {
-									receiveData.form.goodsId = res.id
-									Object.assign(receiveData.info, res)
-								})
-							},
-						},
-						{
-							label: '报废',
-							type: 'danger',
-							hidden: scope.row.field12 !== '待报废',
-							onClick() {
-								scrapVisible.value = true
-								service.assets.fixed.assetsFixedGoodsController.info({ id: scope.row.id }).then((res) => {
-									scrapData.form.goodsId = res.id
-									Object.assign(scrapData.info, res)
-								})
-							},
-						},
+						'delete',
 					]
 				},
 			})
@@ -632,15 +453,6 @@ const getColumns = () => {
 				AdvSearchOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
-					// component: {
-					// 	vm: advSearchOrUpdateTree,
-					// 	props: {
-					// 		treeData: item.optionList,
-					// 		fieldId: item.fieldId,
-					// 		page: 'fixedAssetsListAdvSearchAdvSearch',
-					// 		type: 'adeSearch',
-					// 	},
-					// },
 					component: {
 						name: 'el-tree-select',
 						props: {
@@ -658,12 +470,84 @@ const getColumns = () => {
 						},
 					},
 				})
-			} else if (item.searchEnable === 1 && ['text', 'number', 'interger', 'joinTable'].includes(item.dataType)) {
+			} else if (item.searchEnable === 1 && ['text', 'number', 'integer'].includes(item.dataType)) {
 				AdvSearchOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
 					component: {
 						name: 'el-input',
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('employee')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-autocomplete',
+						props: {
+							placeholder: `请输入${item.fieldName}`,
+							'fetch-suggestions': employeeListStore.employeeList,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('department')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: departmentOptionsStore.departmentOptions,
+							clearable: true,
+							filterable: true,
+							'check-strictly': true,
+							'render-after-expand': false,
+							'show-checkbox': true,
+							'check-on-click-node': true,
+							'default-expand-all': true,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('goodsSupplier')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: goodsSupplierStore.goodsSupplier,
+							props: {
+								label: 'supplierName',
+								value: 'supplierName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('assetsCategory')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: assetsCategoryStore.assetsCategory,
+							props: {
+								label: 'categoryName',
+								value: 'categoryName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
 					},
 				})
 			}
@@ -676,6 +560,7 @@ const getColumns = () => {
 					label: item.fieldName,
 					prop: item.fieldId,
 					group: item.belongTab,
+					hidden: item.fieldName === '使用部门',
 					component: {
 						name: 'el-tree-select',
 						props: {
@@ -692,14 +577,111 @@ const getColumns = () => {
 							'check-strictly': true,
 						},
 					},
+					props: {
+						labelWidth: '125',
+					},
 				})
-			} else if (['text', 'number', 'interger', 'joinTable'].includes(item.dataType)) {
+			} else if (['text', 'number', 'integer'].includes(item.dataType)) {
 				clUpsertOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
 					group: item.belongTab,
 					component: {
 						name: 'el-input',
+						props: {
+							disabled: item.fieldName === '资产编号',
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('employee')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-autocomplete',
+						props: {
+							placeholder: `请输入${item.fieldName}`,
+							'fetch-suggestions': employeeListStore.employeeList,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('department')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: departmentOptionsStore.departmentOptions,
+							clearable: true,
+							filterable: true,
+							'check-strictly': true,
+							'render-after-expand': false,
+							'show-checkbox': true,
+							'check-on-click-node': true,
+							'default-expand-all': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('goodsSupplier')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: goodsSupplierStore.goodsSupplier,
+							props: {
+								label: 'supplierName',
+								value: 'supplierName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('assetsCategory')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: assetsCategoryStore.assetsCategory,
+							props: {
+								label: 'categoryName',
+								value: 'categoryName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
 					},
 				})
 			} else if (item.dataType === 'date') {
@@ -715,60 +697,12 @@ const getColumns = () => {
 							'value-format': 'YYYY-MM-DD',
 						},
 					},
+					props: {
+						labelWidth: '125',
+					},
 				})
 			}
 		})
-	})
-}
-
-// 获取 员工
-const getEmployeeList = () => {
-	service.assets.employee.list().then((res) => {
-		console.log(res)
-		res.forEach((item) => {
-			restaurants.value.push({ value: item.name })
-		})
-	})
-}
-
-// 领用对话框确定
-const handleReceiveSave = async () => {
-	await receiveDom.value.validate()
-	// eslint-disable-next-line
-	const { departmentOptions, props, ...reqData } = receiveData.form
-	service.assets.fixed.assetsFixedGoodsGetController.add(reqData).then(() => {
-		ElMessage.success('领用成功')
-		receiveVisible.value = false
-		Object.assign(receiveData.form, {
-			goodsId: undefined,
-			personName: undefined,
-			deptName: undefined,
-			storagePlace: undefined,
-			getDate: new Date(),
-			dueReturnDate: new Date(),
-			getReason: undefined,
-			departmentOptions: [],
-		})
-
-		refresh()
-	})
-}
-
-// 报废对话框确定
-const handleScrapSave = async () => {
-	await scrapDom.value.validate()
-	service.assets.fixed.fixedAssetsGoodsDiscardController.add(scrapData.form).then(() => {
-		ElMessage.success('报废成功')
-		scrapVisible.value = false
-		Object.assign(scrapData.form, {
-			goodsId: undefined,
-			personName: undefined,
-			dealType: undefined,
-			discardReason: undefined,
-			discardDate: new Date(),
-		})
-
-		refresh()
 	})
 }
 
@@ -800,7 +734,31 @@ const clUpsertOptions: any = reactive({
 						label: '其他信息',
 						value: 'otherData',
 					},
+					{
+						label: '附属配件',
+						value: 'accessoryData',
+					},
 				],
+			},
+		},
+		{
+			group: 'accessoryData',
+			props: {
+				labelWidth: '0 !important',
+			},
+			prop: 'op-btns',
+			component: {
+				name: 'slot-op-btns',
+			},
+		},
+		{
+			group: 'accessoryData',
+			props: {
+				labelWidth: '0 !important',
+			},
+			prop: 'accessory',
+			component: {
+				name: 'slot-accessory-list',
 			},
 		},
 	],
@@ -809,34 +767,29 @@ const clUpsertOptions: any = reactive({
 const Upsert = useUpsert({
 	...clUpsertOptions,
 
+	dialog: {
+		width: 950,
+		draggable: true,
+	},
+
 	// 详情钩子
-	// onInfo(data, { next, done }) {
-	// 继续请求 info 接口，可以带其他自定义参数
-	// next({
-	// 	id: data.id,
-	//	status: 1
-	// });
-
-	// 使用其他接口
-	// service.demo.goods.info({ id: data.id }).then((res) => {
-	// 	done(res);
-	// });
-	// console.log(data, custom.value)
-
-	// 直接取列表的数据返回
-	// done(data)
-	// },
+	onInfo(data, { done }) {
+		// 使用其他接口
+		service.assets.pushStorageDoc.pushStorageDocController.getFixedGoodsInfo({ id: data.id }).then((res) => {
+			done(res)
+		})
+	},
 })
 
 // cl-table
 const Table: any = useTable({
 	columns: [
-		// {
-		// 	prop: 'field1',
-		// 	label: '所属单位',
-		// 	// hidden: false,
-		// 	orderNum: 0,
-		// },
+		{
+			type: 'selection',
+		},
+		{
+			type: 'index',
+		},
 	],
 })
 
@@ -844,12 +797,15 @@ const Table: any = useTable({
 const Crud = useCrud(
 	{
 		service: service.assets.fixed.assetsFixedGoodsController,
+		onDelete(selection, { next }) {
+			// 删除时
+			next({
+				id: selection[0]['id'],
+			})
+		},
 		async onRefresh(params, { next, render }) {
 			// 带上其他查询参数（分页查询）
-			// console.log(putStorageTime.value, putStorageTime.value.length > 0)
-			console.log(advSearchStore.searchData.fixedAssetsListAdvSearch)
-
-			if (putStorageTime.value.length > 0) {
+			if (putStorageTime.value != null && putStorageTime.value.length > 0) {
 				params['startCreateTime'] = dayjs(putStorageTime.value[0]).format('YYYY-MM-DD') // 入库日期（开始）
 				params['endCreateTime'] = dayjs(putStorageTime.value[1]).format('YYYY-MM-DD') // 入库日期（结束）
 			} else {
@@ -857,12 +813,12 @@ const Crud = useCrud(
 				params['endCreateTime'] = undefined // 入库日期（结束）
 			}
 
-			params['status'] = params['field14'] // 资产状态
+			// params['status'] = params['field14'] // 资产状态
 			// params['field3'] = '000024' // 资产状态
 
 			// 高级搜索
 			// eslint-disable-next-line
-			const { page, size, startCreateTime, endCreateTime, status, field14, ...req } = params // 解构
+			const { page, size, startCreateTime, endCreateTime, status, keyWord, ...req } = params // 解构
 
 			params['moreSearch'] = {
 				// field41: params['field41'], // 资产名称
@@ -870,15 +826,11 @@ const Crud = useCrud(
 				// field3: '000024',
 				...req,
 			}
-			if (advSearchStore.searchData.fixedAssetsListAdvSearch) {
-				for (const key in advSearchStore.searchData.fixedAssetsListAdvSearch) {
-					params['moreSearch'][key] = advSearchStore.searchData.fixedAssetsListAdvSearch[key]
-				}
-			}
 
-			console.log(params, req)
+			// 在点击列排序的时候，这个moreSearch里面会加了一个排序的sort、order在里面，这会让后端SQL直接报错，如果有这两个东西在里面，得去掉这两个
+			if (params['moreSearch'] != null && params['moreSearch'].sort != null) delete params['moreSearch'].sort
+			if (params['moreSearch'] != null && params['moreSearch'].order != null) delete params['moreSearch'].order
 
-			// console.log(params)
 			const { list } = await next(params)
 			// 渲染数据
 			render(list)
@@ -886,6 +838,11 @@ const Crud = useCrud(
 		dict: {
 			api: {
 				page: 'getInventoryByPage',
+				list: 'queryAll',
+				add: 'addFixedGoodsInfo',
+				update: 'updateFixedGoodsInfo',
+				delete: 'deleteFixedGoodsInfo',
+				info: 'getFixedGoodsInfo',
 			},
 			label: {
 				add: '入库',
@@ -902,16 +859,6 @@ function refresh(params?: any) {
 	Crud.value?.refresh(params)
 }
 
-// 入库日期搜素
-const handlePutStorageTime = () => {
-	if (putStorageTime.value == null) {
-		putStorageTime.value = []
-		refresh()
-	} else {
-		refresh()
-	}
-}
-
 // 高级搜索
 const AdvSearchOptions: any = reactive({
 	items: [],
@@ -920,50 +867,40 @@ const AdvSearchOptions: any = reactive({
 const AdvSearch = useAdvSearch(AdvSearchOptions)
 
 // 详情tab切换
-const handleClick = (tab: TabsPaneContext, event: Event) => {
+const handleClick = (tab: any, event: Event) => {
 	console.log(tab, event)
 }
 
-// 获取部门列表
-const getDepartmentList = async () => {
-	service.assets.department.list().then((res) => {
-		receiveData.form.departmentOptions = formatTreeData(transformData(res))
-	})
+// 添加行
+let idCheckArr: any[] = []
+const addRow = (scope: any) => {
+	let id = new Date().getTime()
+	if (idCheckArr.includes(id)) id += 1000
+	idCheckArr.push(id)
+	scope['accessoryList'].push({ id: id, name: '', cnt: 1, sku: '', buyDate: dayjs(new Date()).format('YYYY-MM-DD'), price: '0.00', manufacturer: '' })
 }
-// 改写部门数据列表方法 改写成树形结构数据
-const transformData = (data: any[]) => {
-	const map = {}
-	const result: any[] = []
-
-	// 将每个对象按照 id 存储到 map 中
-	data.forEach((item) => {
-		map[item.id] = { ...item, children: [] }
-	})
-
-	// 遍历每个对象，将其添加到对应的父对象的 children 数组中
-	data.forEach((item) => {
-		if (item.parentId && map[item.parentId]) {
-			map[item.parentId].children.push(map[item.id])
-		} else {
-			result.push(map[item.id])
+// 附属配件 表格选择事件
+let accessoryDataSelections: any[] = []
+const accessoryDataSelect = (selections: any[]) => {
+	accessoryDataSelections = []
+	if (selections != null && selections.length > 0) {
+		for (let i = 0; i < selections.length; i++) {
+			accessoryDataSelections.push(selections[i].id)
 		}
-	})
-
-	return result
+	}
 }
-// 树形结构再次重写 格式 [ label: name, value : name :children: children]
-const formatTreeData = (treeData: any) => {
-	return treeData.map((node: { name: any; children: string | any[] }) => {
-		const newNode = {
-			label: node.name,
-			value: node.name,
-			children: [],
+// 删除行
+const deleteRow = (scope: any) => {
+	if (accessoryDataSelections != null && accessoryDataSelections.length > 0 && scope['accessoryList'] != null && scope['accessoryList'].length > 0) {
+		for (let i = 0; i < accessoryDataSelections.length; i++) {
+			for (let k = 0; k < scope['accessoryList'].length; k++) {
+				if (scope['accessoryList'][k]['id'] == accessoryDataSelections[i]) {
+					scope['accessoryList'].splice(k, 1)
+					break
+				}
+			}
 		}
-		if (node.children && node.children.length > 0) {
-			newNode.children = formatTreeData(node.children)
-		}
-		return newNode
-	})
+	}
 }
 </script>
 
@@ -994,11 +931,10 @@ const formatTreeData = (treeData: any) => {
 	text-align: right;
 }
 
-.el-form-item__label {
-	min-width: 125px !important;
+.el-form-item .el-form-item__label {
+	// min-width: 125px !important;
 	// width: auto !important;
-}
-.el-form-item__label {
+	min-width: unset !important;
 	justify-content: left;
 }
 
@@ -1013,20 +949,17 @@ const formatTreeData = (treeData: any) => {
 	.el-input {
 		width: 220px !important;
 	}
-	.el-form-item__label {
-		min-width: 110px !important;
-	}
-}
-
-// 打印
-.print {
-	.el-dialog__body {
-		padding: 20px 40px !important;
-	}
 }
 </style>
 
 <style scoped lang="scss">
+// 复制
+.customNo_copy_icon {
+	cursor: pointer;
+}
+.customNo_copy_icon:hover {
+	color: var(--el-color-primary);
+}
 // 详情
 .info_dialog_content {
 	display: flex;
@@ -1036,7 +969,8 @@ const formatTreeData = (treeData: any) => {
 		display: flex;
 		margin: 16px 0;
 		.item_label {
-			min-width: 110px;
+			min-width: 100px;
+			margin-right: 20px;
 		}
 		.item_content {
 			color: rgba(166, 166, 166, 1);
@@ -1059,53 +993,8 @@ const formatTreeData = (treeData: any) => {
 		}
 	}
 }
-// 打印
-.print {
-	.print_box {
-		// width: 600px;
-		padding: 20px;
-		border: 1px solid rgba(128, 128, 128, 1);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		margin: 0;
-		img {
-			margin: 20px 0;
-			display: block;
-			width: 100px;
-			height: 100px;
-		}
-		.form_box {
-			display: flex;
-			justify-content: space-between;
-			flex-wrap: wrap;
-			.form_item {
-				width: 46%;
-				margin-bottom: 20px;
-				// padding-right: 14px;
-				display: flex;
-				.inprt_input {
-					margin-right: 12px;
-					width: 130px !important;
-					font-size: 12px;
-				}
-				.el-select {
-					flex-grow: 1;
-				}
-			}
-		}
 
-		// .form_item:nth-child(n) {
-		// 	margin-right: 14px;
-		// }
-	}
-	.dialog_footer {
-		display: flex;
-		justify-content: space-between;
-		.print_status {
-			font-size: 12px;
-			color: rgba(80, 80, 80, 1);
-		}
-	}
+.full-width {
+	width: 100%;
 }
 </style>

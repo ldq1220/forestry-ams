@@ -9,13 +9,13 @@ export const proxy = {
 		changeOrigin: true,
 		rewrite: (path: string) => path.replace(/^\/haolong/, ''),
 	},
-	'/haolongtow/': {
-		target: 'http://192.168.11.230:8001/',
+	'/local/': {
+		target: 'http://192.168.11.73:8003/',
 		changeOrigin: true,
-		rewrite: (path: string) => path.replace(/^\/haolongtow/, ''),
+		rewrite: (path: string) => path.replace(/^\/local/, ''),
 	},
 	'/prod/': {
-		target: 'https://show.cool-admin.com',
+		target: 'https://linye.yingxiaoli.com',
 		changeOrigin: true,
 		rewrite: (path: string) => path.replace(/^\/prod/, '/api'),
 	},

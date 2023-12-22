@@ -3,9 +3,9 @@
 		<div class="title">基本信息</div>
 
 		<el-form label-width="100px" :model="form" :disabled="loading">
-			<el-form-item label="头像">
+			<!-- <el-form-item label="头像">
 				<cl-upload is-space v-model="form.headImg" />
-			</el-form-item>
+			</el-form-item> -->
 
 			<el-form-item label="昵称">
 				<el-input v-model="form.nickName" placeholder="请填写昵称" />

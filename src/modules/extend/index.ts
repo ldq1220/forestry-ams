@@ -1,1 +1,1 @@
-export * from "./editor/monaco/declare";
+export * from './editor/monaco/declare'

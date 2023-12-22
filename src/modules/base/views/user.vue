@@ -36,6 +36,9 @@ const { service } = useCool()
 
 // cl-upsert
 const Upsert = useUpsert({
+	dialog: {
+		draggable: true,
+	},
 	items: [
 		{ prop: 'departmentId', label: '部门ID', component: { name: 'el-input' } },
 		{ prop: 'name', label: '姓名', component: { name: 'el-input' } },

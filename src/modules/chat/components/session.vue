@@ -1,7 +1,7 @@
 <template>
 	<div class="chat-session">
 		<div class="head">
-			<el-input v-model="keyWord" placeholder="关键字搜索" clearable></el-input>
+			<el-input v-model="keyWord" placeholder="关键字搜索"></el-input>
 
 			<ul class="tools">
 				<li>

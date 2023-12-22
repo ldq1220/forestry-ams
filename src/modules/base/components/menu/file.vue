@@ -1,6 +1,6 @@
 <template>
 	<div class="cl-menu-file">
-		<el-cascader v-model="value" :options="data" clearable @change="onChange" />
+		<el-cascader v-model="value" :options="data" @change="onChange" />
 	</div>
 </template>
 

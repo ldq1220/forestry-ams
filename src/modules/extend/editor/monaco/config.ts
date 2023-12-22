@@ -1,6 +1,6 @@
-import { languages } from "monaco-editor";
+import { languages } from 'monaco-editor'
 
-languages.typescript.typescriptDefaults.setEagerModelSync(true);
+languages.typescript.typescriptDefaults.setEagerModelSync(true)
 
 languages.typescript.typescriptDefaults.setCompilerOptions({
 	target: languages.typescript.ScriptTarget.ES2016,
@@ -10,10 +10,10 @@ languages.typescript.typescriptDefaults.setCompilerOptions({
 	experimentalDecorators: true,
 	noEmit: true,
 	allowJs: false,
-	typeRoots: ["node_modules/@types"]
-});
+	typeRoots: ['node_modules/@types'],
+})
 
 languages.typescript.typescriptDefaults.setDiagnosticsOptions({
 	noSemanticValidation: true,
-	noSyntaxValidation: true
-});
+	noSyntaxValidation: true,
+})

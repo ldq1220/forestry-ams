@@ -1,34 +1,34 @@
-import { languages } from "monaco-editor";
-import prettier from "prettier/standalone";
-import parserHtml from "prettier/parser-html";
-import parserTypescript from "prettier/parser-typescript";
-import parserPostcss from "prettier/parser-postcss";
+import { languages } from 'monaco-editor'
+import prettier from 'prettier/standalone'
+import parserHtml from 'prettier/parser-html'
+import parserTypescript from 'prettier/parser-typescript'
+import parserPostcss from 'prettier/parser-postcss'
 
 const options: { [key: string]: { parser: string; plugins: any[] } } = {
 	html: {
-		parser: "html",
-		plugins: [parserHtml, parserTypescript, parserPostcss]
+		parser: 'html',
+		plugins: [parserHtml, parserTypescript, parserPostcss],
 	},
 	typescript: {
-		parser: "typescript",
-		plugins: [parserTypescript]
+		parser: 'typescript',
+		plugins: [parserTypescript],
 	},
 	css: {
-		parser: "css",
-		plugins: [parserPostcss]
+		parser: 'css',
+		plugins: [parserPostcss],
 	},
 	scss: {
-		parser: "scss",
-		plugins: [parserPostcss]
-	}
-};
+		parser: 'scss',
+		plugins: [parserPostcss],
+	},
+}
 
 export function useFormat() {
 	function register() {
 		for (const i in options) {
 			languages.registerDocumentFormattingEditProvider(i, {
 				provideDocumentFormattingEdits(model) {
-					let text = model.getValue();
+					let text = model.getValue()
 
 					try {
 						text = prettier.format(text, {
@@ -39,24 +39,24 @@ export function useFormat() {
 							tabWidth: 2,
 							useTabs: false,
 							singleQuote: true,
-							trailingComma: "none"
-						});
+							trailingComma: 'none',
+						})
 					} catch (e) {
-						console.error("代码格式化失败", e);
+						console.error('代码格式化失败', e)
 					}
 
 					return [
 						{
 							range: model.getFullModelRange(),
-							text
-						}
-					];
-				}
-			});
+							text,
+						},
+					]
+				},
+			})
 		}
 	}
 
 	return {
-		register
-	};
+		register,
+	}
 }

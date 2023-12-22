@@ -112,7 +112,6 @@ const Table = useTable({
 			sortable: 'desc',
 			width: 120,
 			formatter: function (_row, _column, cellValue) {
-				// console.log(row, column, cellValue, index);
 				if (cellValue && cellValue.indexOf(' ') != -1) return cellValue.split(' ')[0]
 				return cellValue ? cellValue : ''
 			},
@@ -123,7 +122,6 @@ const Table = useTable({
 			sortable: 'desc',
 			width: 120,
 			formatter: function (_row, _column, cellValue) {
-				// console.log(row, column, cellValue, index);
 				if (cellValue && cellValue.indexOf(' ') != -1) return cellValue.split(' ')[0]
 				return cellValue ? cellValue : ''
 			},

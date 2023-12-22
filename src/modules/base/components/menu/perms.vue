@@ -1,6 +1,6 @@
 <template>
 	<div class="cl-menu-perms">
-		<el-cascader v-model="value" separator=":" clearable filterable collapse-tags collapse-tags-tooltip :options="data" :props="{ multiple: true }" @change="onChange" />
+		<el-cascader v-model="value" separator=":" filterable collapse-tags collapse-tags-tooltip :options="data" :props="{ multiple: true }" @change="onChange" />
 	</div>
 </template>
 

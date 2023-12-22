@@ -5,10 +5,10 @@
 			<span>后退</span>
 		</div>
 
-		<div class="app-process__icon" :class="{ active: route.path == '/' }" @click="router.push('/')">
+		<!-- <div class="app-process__icon" :class="{ active: route.path == '/' }" @click="router.push('/')">
 			<el-icon><home-filled /></el-icon>
-			<span>首页</span>
-		</div>
+			<span>数据看板</span>
+		</div> -->
 
 		<el-scrollbar :ref="setRefs('scroller')" class="app-process__scroller">
 			<div

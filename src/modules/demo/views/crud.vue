@@ -244,7 +244,6 @@ const Upsert = useUpsert({
 			},
 		},
 	],
-
 	// 插件
 	plugins: [
 		// 自动聚焦

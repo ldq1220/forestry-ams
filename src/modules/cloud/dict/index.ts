@@ -1,27 +1,27 @@
 export const Status = [
 	{
-		label: "启用",
+		label: '启用',
 		value: 1,
-		type: "success"
+		type: 'success',
 	},
 	{
-		label: "禁用",
+		label: '禁用',
 		value: 0,
-		type: "danger"
-	}
-];
+		type: 'danger',
+	},
+]
 
 export const LogType = [
 	{
-		label: "成功",
+		label: '成功',
 		value: 1,
-		type: "success"
+		type: 'success',
 	},
 	{
-		label: "失败",
+		label: '失败',
 		value: 0,
-		type: "danger"
-	}
-];
+		type: 'danger',
+	},
+]
 
-export * from "./code";
+export * from './code'

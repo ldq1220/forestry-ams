@@ -1,48 +1,48 @@
-import * as mqtt from "mqtt/dist/mqtt.min";
-import { Client } from "mqtt";
-import { useCool, hmr } from "/@/cool";
+import * as mqtt from 'mqtt/dist/mqtt.min'
+import { Client } from 'mqtt'
+import { useCool, hmr } from '/@/cool'
 
-let client: Client | null;
+let client: Client | null
 
 export function useMqtt() {
-	const { mitt } = useCool();
+	const { mitt } = useCool()
 
 	function send(id: string, text: string) {
-		client?.publish(id, text);
+		client?.publish(id, text)
 	}
 
 	function subscribe(id: string) {
-		console.log("[iot] mqtt subscribe", id);
+		console.log('[iot] mqtt subscribe', id)
 
 		client?.subscribe(`${id}@admin`, function (err) {
 			if (err) {
-				console.error(err);
+				console.error(err)
 			}
-		});
+		})
 	}
 
 	function connect() {
-		client = mqtt.connect("ws://127.0.0.1:8083");
+		client = mqtt.connect('ws://127.0.0.1:8083')
 
-		if (!hmr.getData("iotMqttEventLock")) {
-			hmr.setData("iotMqttEventLock", true);
+		if (!hmr.getData('iotMqttEventLock')) {
+			hmr.setData('iotMqttEventLock', true)
 
 			if (client) {
-				client.on("connect", function () {
-					console.log("[iot] mqtt connect");
-				});
+				client.on('connect', function () {
+					console.log('[iot] mqtt connect')
+				})
 
-				client.on("message", function (topic, message) {
-					mitt.emit("iot.message", {
-						id: topic.split("@")[0],
-						message: message.toString()
-					});
-				});
+				client.on('message', function (topic, message) {
+					mitt.emit('iot.message', {
+						id: topic.split('@')[0],
+						message: message.toString(),
+					})
+				})
 
-				client.on("error", function (err) {
-					console.error(err);
-					client?.reconnect();
-				});
+				client.on('error', function (err) {
+					console.error(err)
+					client?.reconnect()
+				})
 			}
 		}
 	}
@@ -51,6 +51,6 @@ export function useMqtt() {
 		client,
 		connect,
 		subscribe,
-		send
-	};
+		send,
+	}
 }

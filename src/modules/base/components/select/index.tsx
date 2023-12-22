@@ -56,7 +56,7 @@ export default defineComponent({
 
 		return () => {
 			return (
-				<el-select v-model={value.value} clearable filterable onChange={onChange}>
+				<el-select v-model={value.value} filterable onChange={onChange}>
 					{list.value?.map((e) => {
 						return isObject(e) ? <el-option {...e} label={e[props.labelKey]} value={e[props.valueKey]} /> : <el-option label={e} value={e} />
 					})}

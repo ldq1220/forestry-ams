@@ -4,3 +4,6 @@ dist
 dist-ssr
 *.local
 pnpm-lock.yaml
+yarn.lock
+build/cool/temp/eps.d.ts
+build/cool/temp/eps.d.ts

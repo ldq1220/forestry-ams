@@ -1,137 +1,132 @@
-import { ElMessage } from "element-plus";
-import { last } from "lodash-es";
-import { MenuData } from "../types";
-import { createComponent, toCodeString } from "../utils";
-import { service } from "/@/cool";
+import { ElMessage } from 'element-plus'
+import { last } from 'lodash-es'
+import { MenuData } from '../types'
+import { createComponent, toCodeString } from '../utils'
+import { service } from '/@/cool'
 
 export function useCode() {
 	// 生成vue代码
-	function createVue({ router = "", columns = [], prefix = "", api = [], module }: MenuData) {
+	function createVue({ router = '', columns = [], prefix = '', api = [], module }: MenuData) {
 		// 新增、编辑
 		const upsert = {
-			items: [] as DeepPartial<ClForm.Item>[]
-		};
+			items: [] as DeepPartial<ClForm.Item>[],
+		}
 
 		// 表格
 		const table = {
-			columns: [] as DeepPartial<ClTable.Column>[]
-		};
+			columns: [] as DeepPartial<ClTable.Column>[],
+		}
 
 		// 遍历
 		columns.forEach((e) => {
 			// 组件
-			const { item, column, isHidden } = createComponent(e, columns);
+			const { item, column, isHidden } = createComponent(e, columns)
 
 			// 过滤隐藏
 			if (isHidden) {
-				return false;
+				return false
 			}
 
 			// 验证规则
 			if (!e.nullable) {
-				item.required = true;
+				item.required = true
 			}
 
 			// 忽略部分字段
-			if (
-				!["createTime", "updateTime", "id", "endTime", "endDate"].includes(item.prop || "")
-			) {
+			if (!['createTime', 'updateTime', 'id', 'endTime', 'endDate'].includes(item.prop || '')) {
 				if (!item.component) {
 					item.component = {
-						name: "el-input"
-					};
+						name: 'el-input',
+					}
 				}
 
 				// 添加表单项
-				upsert.items.push(item);
+				upsert.items.push(item)
 			}
 
 			// 时间范围处理
-			if (["startTime", "startDate"].includes(item.prop)) {
-				const key = item.prop.replace("start", "");
+			if (['startTime', 'startDate'].includes(item.prop)) {
+				const key = item.prop.replace('start', '')
 
-				if (columns.find((e) => e.propertyName == "end" + key)) {
-					item.prop = key.toLocaleLowerCase();
-					const isTime = item.prop == "time";
-					item.label = isTime ? "时间范围" : "日期范围";
-					item.hook = "datetimeRange";
+				if (columns.find((e) => e.propertyName == 'end' + key)) {
+					item.prop = key.toLocaleLowerCase()
+					const isTime = item.prop == 'time'
+					item.label = isTime ? '时间范围' : '日期范围'
+					item.hook = 'datetimeRange'
 					item.component = {
-						name: "el-date-picker",
+						name: 'el-date-picker',
 						props: {
-							type: isTime ? "datetimerange" : "daterange",
-							valueFormat: isTime ? "YYYY-MM-DD HH:mm:ss" : "YYYY-MM-DD 00:00:00",
-							defaultTime: [
-								new Date(2000, 1, 1, 0, 0, 0),
-								new Date(2000, 1, 1, 23, 59, 59)
-							]
-						}
-					};
+							type: isTime ? 'datetimerange' : 'daterange',
+							valueFormat: isTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD 00:00:00',
+							defaultTime: [new Date(2000, 1, 1, 0, 0, 0), new Date(2000, 1, 1, 23, 59, 59)],
+						},
+					}
 				}
 			}
 
 			// 编辑器处理
-			if (item.component?.name?.includes("cl-editor-")) {
-				table.columns.push(column);
+			if (item.component?.name?.includes('cl-editor-')) {
+				table.columns.push(column)
 				column.component = {
-					name: "cl-editor-preview",
+					name: 'cl-editor-preview',
 					props: {
-						name: last(item.component?.name.split("-"))
-					}
-				};
+						name: last(item.component?.name.split('-')),
+					},
+				}
 			}
 
 			// 添加表格列
-			table.columns.push(column);
-		});
+			table.columns.push(column)
+		})
 
 		// 请求服务
-		const service = prefix.replace("/admin", "service").split("/");
+		const service = prefix.replace('/admin', 'service').split('/')
 
 		if (!service.includes(module)) {
-			service.splice(1, 0, module);
+			service.splice(1, 0, module)
 		}
 
 		// 请求地址
-		const paths = api.map((e) => e.path);
+		const paths = api.map((e) => e.path)
 
 		// 权限
 		const perms = {
-			add: paths.includes("/add"),
-			del: paths.includes("/delete"),
-			update: paths.includes("/info") && paths.includes("/update"),
-			page: paths.includes("/page"),
-			upsert: true
-		};
-		perms.upsert = perms.add || perms.update;
+			add: paths.includes('/add'),
+			del: paths.includes('/delete'),
+			update: paths.includes('/info') && paths.includes('/update'),
+			page: paths.includes('/page'),
+			upsert: true,
+		}
+		perms.upsert = perms.add || perms.update
 
 		// 是否有操作栏
 		if (perms.del || perms.upsert) {
-			const buttons: ClTable.OpButton = [];
+			const buttons: ClTable.OpButton = []
 
 			if (perms.upsert) {
-				buttons.push("edit");
+				buttons.push('edit')
 			}
 
 			if (perms.del) {
-				buttons.push("delete");
+				buttons.push('delete')
 			}
 
 			table.columns.push({
-				type: "op",
-				buttons
-			});
+				type: 'op',
+				buttons,
+			})
 		}
 
 		// 是否多选、序号
 		if (perms.del) {
 			table.columns.unshift({
-				type: "selection"
-			});
+				type: 'selection',
+			})
 		} else {
 			table.columns.unshift({
-				label: "#",
-				type: "index"
-			});
+				label: '#',
+				type: 'index',
+			})
 		}
 
 		// 代码模板
@@ -140,8 +135,8 @@ export function useCode() {
                 <cl-row>
                     <!-- 刷新按钮 -->
                     <cl-refresh-btn />
-                    ${perms.add ? "<!-- 新增按钮 -->\n<cl-add-btn />" : ""}
-                    ${perms.del ? "<!-- 删除按钮 -->\n<cl-multi-delete-btn />" : ""}
+                    ${perms.add ? '<!-- 新增按钮 -->\n<cl-add-btn />' : ''}
+                    ${perms.del ? '<!-- 删除按钮 -->\n<cl-multi-delete-btn />' : ''}
                     <cl-flex1 />
                     <!-- 关键字搜索 -->
                     <cl-search-key />
@@ -163,7 +158,7 @@ export function useCode() {
             </cl-crud>
         </template>
         
-        <script lang="ts" name="${router.replace(/^\//, "").replace(/\//g, "-")}" setup>
+        <script lang="ts" name="${router.replace(/^\//, '').replace(/\//g, '-')}" setup>
         import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
         import { useCool } from "/@/cool";
         
@@ -178,28 +173,28 @@ export function useCode() {
         // cl-crud
         const Crud = useCrud(
             {
-                service: ${service.join(".")}
+                service: ${service.join('.')}
             },
             (app) => {
                 app.refresh();
             }
         );
-        </script>`;
+        </script>`
 	}
 
 	return {
-		createVue
-	};
+		createVue,
+	}
 }
 
 export function useMenu() {
-	const { createVue } = useCode();
+	const { createVue } = useCode()
 
 	// 创建菜单、权限、文件
 	function create(data: MenuData): Promise<() => void> {
 		return new Promise((resolve, reject) => {
 			// 视图文件路径
-			data.viewPath = `modules/${data.module}/views/${last(data.router?.split("/"))}.vue`;
+			data.viewPath = `modules/${data.module}/views/${last(data.router?.split('/'))}.vue`
 
 			// 添加菜单
 			service.base.sys.menu
@@ -210,7 +205,7 @@ export function useMenu() {
 					...data,
 					api: undefined,
 					code: undefined,
-					columns: undefined
+					columns: undefined,
 				})
 				.then((res) => {
 					// 权限列表
@@ -219,53 +214,49 @@ export function useMenu() {
 							type: 2,
 							parentId: res.id,
 							name: e.summary || e.path,
-							perms: [e.path]
-						};
+							perms: [e.path],
+						}
 
-						if (e.path == "/update") {
-							if (data.api?.find((a) => a.path == "/info")) {
-								d.perms.push("/info");
+						if (e.path == '/update') {
+							if (data.api?.find((a) => a.path == '/info')) {
+								d.perms.push('/info')
 							}
 						}
 
 						return {
 							...d,
-							perms: d.perms
-								.map((e) =>
-									(data.prefix?.replace("/admin/", "") + e).replace(/\//g, ":")
-								)
-								.join(",")
-						};
-					});
+							perms: d.perms.map((e) => (data.prefix?.replace('/admin/', '') + e).replace(/\//g, ':')).join(','),
+						}
+					})
 
 					// 批量插入权限
 					service.base.sys.menu.add(perms).then(() => {
 						resolve(() => {
 							service
 								.request({
-									url: "/__cool_createMenu",
-									method: "POST",
+									url: '/__cool_createMenu',
+									method: 'POST',
 									proxy: false,
 									data: {
 										code: createVue(data),
-										...data
-									}
+										...data,
+									},
 								})
 								.then(() => {
-									location.reload();
-								});
-						});
-					});
+									location.reload()
+								})
+						})
+					})
 				})
 				.catch((err) => {
-					ElMessage.error(err.message);
-					reject();
-				});
-		});
+					ElMessage.error(err.message)
+					reject()
+				})
+		})
 	}
 
 	return {
 		create,
-		createVue
-	};
+		createVue,
+	}
 }

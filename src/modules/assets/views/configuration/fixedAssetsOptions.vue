@@ -17,7 +17,7 @@
 				<template #column-fieldName="{ scope }">
 					<span v-if="scope.row.customField !== 1">{{ scope.row.fieldName }}</span>
 					<span v-else>
-						<el-input :placeholder="scope.row.fieldName"></el-input>
+						<el-input v-model="scope.row.fieldName" :placeholder="scope.row.placeholder"></el-input>
 					</span>
 				</template>
 
@@ -26,13 +26,13 @@
 					<div style="padding: 10px 40px" v-if="scope.row.dataType == 'options'">
 						<el-form :model="form" :inline="true" class="demo-form-inline options_message">
 							<el-form-item label="名称">
-								<el-input v-model="form.name" placeholder="请输入选项名称" />
+								<el-input v-model="scope.row.newOptionText" placeholder="请输入选项名称" />
 							</el-form-item>
 							<el-form-item label="上级名称">
 								<el-tree-select v-model="form.parentId" node-key="id" :props="form.options" :data="scope.row.optionList" check-strictly :render-after-expand="false" show-checkbox />
 							</el-form-item>
 							<el-form-item>
-								<el-button type="primary" @click="addOptionsNode(scope.row.id)">添加</el-button>
+								<el-button type="primary" @click="addOptionsNode(scope.row.id, scope.row.newOptionText)" :disabled="scope.row.newOptionText === ''">添加</el-button>
 							</el-form-item>
 						</el-form>
 
@@ -67,7 +67,13 @@
 					{{ FixedAssetsOptions.type(scope.row.dataType) }}
 				</template>
 				<template #column-belongTab="{ scope }">
-					{{ filterMessageType(scope.row.belongTab) }}
+					<el-select v-model="scope.row.belongTab" class="m-2" :placeholder="filterMessageType(scope.row.belongTab)" style="width: 50%">
+						<el-option label="基础信息" value="基础信息" />
+						<el-option label="价值信息" value="价值信息" />
+						<el-option label="使用信息" value="使用信息" />
+						<el-option label="入账信息" value="入账信息" />
+						<el-option label="其他信息" value="其他信息" />
+					</el-select>
 				</template>
 			</cl-table>
 		</cl-row>
@@ -129,11 +135,11 @@ const changeinSearchEnable = (id: number, searchEnable: number) => {
 }
 
 // 添加下拉选选项框 节点
-const addOptionsNode = (id: any) => {
+const addOptionsNode = (id: any, newOptionText: string) => {
 	service.assets.fixed.fieldSelectOptionController
 		.add({
 			fieldId: id,
-			optionText: form.name,
+			optionText: newOptionText,
 			parentId: form.parentId,
 		})
 		.then(() => {

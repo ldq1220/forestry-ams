@@ -90,30 +90,6 @@ let socket: Socket
 // 连接
 function connect() {
 	refresh()
-
-	// if (!socket) {
-	// 	socket = io(config.host + options.path, {
-	// 		auth: {
-	// 			token: user.token
-	// 		}
-	// 	});
-
-	// 	socket.on("connect", () => {
-	// 		console.log(`connect ${user.info?.nickName}`);
-
-	// 		// 监听消息
-	// 		socket.on("message", (msg) => {
-	// 			console.log(msg);
-	// 			mitt("chat-message", msg);
-	// 		});
-
-	// 		refresh();
-	// 	});
-
-	// 	socket.on("disconnect", (err) => {
-	// 		console.error(err);
-	// 	});
-	// }
 }
 
 // 打开

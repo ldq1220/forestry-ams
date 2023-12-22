@@ -1,26 +1,6 @@
 declare namespace Eps {
 	interface AssetsCategoryEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 类别名称
-		 */
-		categoryName?: string;
-		/**
-		 * 上级ID
-		 */
-		parentId?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
@@ -28,57 +8,26 @@ declare namespace Eps {
 
 	interface ConsumableAssetsFieldEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsGoodsEntity {
 		/**
-		 * 字段ID
+		 * 任意键值
 		 */
-		fieldId?: string;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsGoodsGetEntity {
 		/**
-		 * 字段名称
+		 * 任意键值
 		 */
-		fieldName?: string;
-		/**
-		 * 排序号
-		 */
-		sortOrder?: number;
-		/**
-		 * 支持搜索
-		 */
-		searchEnable?: number;
-		/**
-		 * 数据类型
-		 */
-		dataType?: string;
-		/**
-		 * 是否使用
-		 */
-		inUse?: number;
-		/**
-		 * 保留小数位数
-		 */
-		decimalPlaces?: number;
-		/**
-		 * 选项
-		 */
-		options?: string;
-		/**
-		 * 关联表(选项)查询方法
-		 */
-		joinTableMethod?: string;
-		/**
-		 * 关联字段
-		 */
-		joinField?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsGoodsPushStorageRecordEntity {
 		/**
 		 * 任意键值
 		 */
@@ -87,56 +36,12 @@ declare namespace Eps {
 
 	interface DepartmentEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 部门名称
-		 */
-		name?: string;
-		/**
-		 * 上级部门ID
-		 */
-		parentId?: BigInt;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface EmployeeEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 姓名
-		 */
-		name?: string;
-		/**
-		 * 性别
-		 */
-		gender?: number;
-		/**
-		 * 部门ID
-		 */
-		deptId?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -145,436 +50,12 @@ declare namespace Eps {
 
 	interface AssetsFixedEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 所属单位
-		 */
-		field1?: string;
-		/**
-		 * 资产分类
-		 */
-		field2?: string;
-		/**
-		 * 资产编号
-		 */
-		field3?: string;
-		/**
-		 * 项目代码
-		 */
-		field4?: string;
-		/**
-		 * 取得日期
-		 */
-		field5?: string;
-		/**
-		 * 投入使用日期
-		 */
-		field6?: string;
-		/**
-		 * 配置批准单位
-		 */
-		field7?: string;
-		/**
-		 * 价值类型
-		 */
-		field8?: string;
-		/**
-		 * 资产原值（元）
-		 */
-		field9?: string;
-		/**
-		 * 财政拨款（元）
-		 */
-		field10?: string;
-		/**
-		 * 非财政拨款（元）
-		 */
-		field11?: string;
-		/**
-		 * 资产状态
-		 */
-		field12?: string;
-		/**
-		 * 使用责任主体
-		 */
-		field13?: string;
-		/**
-		 * 使用人
-		 */
-		field14?: string;
-		/**
-		 * 管理人
-		 */
-		field15?: string;
-		/**
-		 * 是否共享共用
-		 */
-		field16?: string;
-		/**
-		 * 产权是否清晰
-		 */
-		field17?: string;
-		/**
-		 * 权属证明
-		 */
-		field18?: string;
-		/**
-		 * 使用权类型
-		 */
-		field19?: string;
-		/**
-		 * 独用面积
-		 */
-		field20?: string;
-		/**
-		 * 分摊面积
-		 */
-		field21?: string;
-		/**
-		 * 会计凭证号
-		 */
-		field22?: string;
-		/**
-		 * 数量
-		 */
-		field23?: string;
-		/**
-		 * 上次计提日期
-		 */
-		field24?: string;
-		/**
-		 * 发票号
-		 */
-		field25?: string;
-		/**
-		 * 是否分级运维管理
-		 */
-		field26?: string;
-		/**
-		 * 收储单位
-		 */
-		field27?: string;
-		/**
-		 * 属地交通运输主管部门联系电话
-		 */
-		field28?: string;
-		/**
-		 * 管护单位联系电话
-		 */
-		field29?: string;
-		/**
-		 * 数量计量单位
-		 */
-		field30?: string;
-		/**
-		 * 折旧/摊销状态
-		 */
-		field31?: string;
-		/**
-		 * 存放地点
-		 */
-		field32?: string;
-		/**
-		 * 公路性质
-		 */
-		field33?: string;
-		/**
-		 * 收费年限
-		 */
-		field34?: string;
-		/**
-		 * 剩余收费年限
-		 */
-		field35?: string;
-		/**
-		 * 开工日期
-		 */
-		field36?: string;
-		/**
-		 * 累计折旧/摊销（元）
-		 */
-		field37?: string;
-		/**
-		 * 收费权质押情况
-		 */
-		field38?: string;
-		/**
-		 * 供应商
-		 */
-		field39?: string;
-		/**
-		 * 入账日期
-		 */
-		field40?: string;
-		/**
-		 * 资产分类
-		 */
-		field41?: string;
-		/**
-		 * 新国标资产分类
-		 */
-		field42?: string;
-		/**
-		 * 采购组织形式
-		 */
-		field43?: string;
-		/**
-		 * 财务经办人
-		 */
-		field44?: string;
-		/**
-		 * 备注
-		 */
-		field45?: string;
-		/**
-		 * 使用部门
-		 */
-		field46?: string;
-		/**
-		 * 单位会计科目
-		 */
-		field47?: string;
-		/**
-		 * 净值
-		 */
-		field48?: string;
-		/**
-		 * 管理部门
-		 */
-		field49?: string;
-		/**
-		 * 行业分类代码
-		 */
-		field50?: string;
-		/**
-		 * 账套
-		 */
-		field51?: string;
-		/**
-		 * 国标2010资产分类
-		 */
-		field52?: string;
-		/**
-		 * 预计使用到期日
-		 */
-		field53?: string;
-		/**
-		 * 是否机构划转划入
-		 */
-		field54?: string;
-		/**
-		 * 入库日期
-		 */
-		field55?: string;
-		/**
-		 * 行业使用方向
-		 */
-		field56?: string;
-		/**
-		 * 月折旧额（元）
-		 */
-		field57?: string;
-		/**
-		 * 计提结束日期
-		 */
-		field58?: string;
-		/**
-		 * 首次计提日期
-		 */
-		field59?: string;
-		/**
-		 * 折旧（摊销）方法
-		 */
-		field60?: string;
-		/**
-		 * 残值率(%)
-		 */
-		field61?: string;
-		/**
-		 * 机身编码
-		 */
-		field62?: string;
-		/**
-		 * 折旧（摊销）年限
-		 */
-		field63?: string;
-		/**
-		 * 折旧年限
-		 */
-		field64?: string;
-		/**
-		 * 登记日期
-		 */
-		field65?: string;
-		/**
-		 * 条形码(打印)
-		 */
-		field66?: string;
-		/**
-		 * 是否折旧结束
-		 */
-		field67?: string;
-		/**
-		 * 报增单号
-		 */
-		field68?: string;
-		/**
-		 * 报账单号
-		 */
-		field69?: string;
-		/**
-		 * 终止收费时间
-		 */
-		field70?: string;
-		/**
-		 * 登记人
-		 */
-		field71?: string;
-		/**
-		 * 预算名称
-		 */
-		field72?: string;
-		/**
-		 * 资产用途
-		 */
-		field73?: string;
-		/**
-		 * 取得方式
-		 */
-		field74?: string;
-		/**
-		 * 预算编码
-		 */
-		field75?: string;
-		/**
-		 * 销帐日期
-		 */
-		field76?: string;
-		/**
-		 * 保管人
-		 */
-		field77?: string;
-		/**
-		 * 规格型号
-		 */
-		field78?: string;
-		/**
-		 * 入账形式
-		 */
-		field79?: string;
-		/**
-		 * 备用整数字段1
-		 */
-		field001?: string;
-		/**
-		 * 备用整数字段2
-		 */
-		field002?: string;
-		/**
-		 * 备用文本字段3
-		 */
-		field003?: string;
-		/**
-		 * 备用文本字段4
-		 */
-		field004?: string;
-		/**
-		 * 备用下拉字段1
-		 */
-		field005?: string;
-		/**
-		 * 备用下拉字段2
-		 */
-		field007?: string;
-		/**
-		 * 备用数值字段5
-		 */
-		field008?: string;
-		/**
-		 * 备用整数字段3
-		 */
-		field009?: string;
-		/**
-		 * 备用数值字段4
-		 */
-		field010?: string;
-		/**
-		 * 备用数值字段3
-		 */
-		field011?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface AssetsFixedFieldEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 字段ID
-		 */
-		fieldId?: string;
-		/**
-		 * 字段名称
-		 */
-		fieldName?: string;
-		/**
-		 * 排序号
-		 */
-		sortOrder?: number;
-		/**
-		 * 支持搜索
-		 */
-		searchEnable?: number;
-		/**
-		 * 数据类型
-		 */
-		dataType?: string;
-		/**
-		 * 是否使用
-		 */
-		inUse?: number;
-		/**
-		 * 保留小数位数
-		 */
-		decimalPlaces?: number;
-		/**
-		 * 选项
-		 */
-		options?: string;
-		/**
-		 * 关联表(选项)查询方法
-		 */
-		joinTableMethod?: string;
-		/**
-		 * 关联字段
-		 */
-		joinField?: string;
-		/**
-		 * 属于哪个tab
-		 */
-		belongTab?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -583,450 +64,6 @@ declare namespace Eps {
 
 	interface AssetsFixedGoodsEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 所属单位
-		 */
-		field1?: string;
-		/**
-		 * 资产分类
-		 */
-		field2?: string;
-		/**
-		 * 资产编号
-		 */
-		field3?: string;
-		/**
-		 * 项目代码
-		 */
-		field4?: string;
-		/**
-		 * 取得日期
-		 */
-		field5?: string;
-		/**
-		 * 投入使用日期
-		 */
-		field6?: string;
-		/**
-		 * 配置批准单位
-		 */
-		field7?: string;
-		/**
-		 * 价值类型
-		 */
-		field8?: string;
-		/**
-		 * 资产原值（元）
-		 */
-		field9?: string;
-		/**
-		 * 财政拨款（元）
-		 */
-		field10?: string;
-		/**
-		 * 非财政拨款（元）
-		 */
-		field11?: string;
-		/**
-		 * 资产状态
-		 */
-		field12?: string;
-		/**
-		 * 使用责任主体
-		 */
-		field13?: string;
-		/**
-		 * 使用人
-		 */
-		field14?: string;
-		/**
-		 * 管理人
-		 */
-		field15?: string;
-		/**
-		 * 是否共享共用
-		 */
-		field16?: string;
-		/**
-		 * 产权是否清晰
-		 */
-		field17?: string;
-		/**
-		 * 权属证明
-		 */
-		field18?: string;
-		/**
-		 * 使用权类型
-		 */
-		field19?: string;
-		/**
-		 * 独用面积
-		 */
-		field20?: string;
-		/**
-		 * 分摊面积
-		 */
-		field21?: string;
-		/**
-		 * 会计凭证号
-		 */
-		field22?: string;
-		/**
-		 * 数量
-		 */
-		field23?: string;
-		/**
-		 * 上次计提日期
-		 */
-		field24?: string;
-		/**
-		 * 发票号
-		 */
-		field25?: string;
-		/**
-		 * 是否分级运维管理
-		 */
-		field26?: string;
-		/**
-		 * 收储单位
-		 */
-		field27?: string;
-		/**
-		 * 属地交通运输主管部门联系电话
-		 */
-		field28?: string;
-		/**
-		 * 管护单位联系电话
-		 */
-		field29?: string;
-		/**
-		 * 数量计量单位
-		 */
-		field30?: string;
-		/**
-		 * 折旧/摊销状态
-		 */
-		field31?: string;
-		/**
-		 * 存放地点
-		 */
-		field32?: string;
-		/**
-		 * 公路性质
-		 */
-		field33?: string;
-		/**
-		 * 收费年限
-		 */
-		field34?: string;
-		/**
-		 * 剩余收费年限
-		 */
-		field35?: string;
-		/**
-		 * 开工日期
-		 */
-		field36?: string;
-		/**
-		 * 累计折旧/摊销（元）
-		 */
-		field37?: string;
-		/**
-		 * 收费权质押情况
-		 */
-		field38?: string;
-		/**
-		 * 供应商
-		 */
-		field39?: string;
-		/**
-		 * 入账日期
-		 */
-		field40?: string;
-		/**
-		 * 资产名称
-		 */
-		field41?: string;
-		/**
-		 * 新国标资产分类
-		 */
-		field42?: string;
-		/**
-		 * 采购组织形式
-		 */
-		field43?: string;
-		/**
-		 * 财务经办人
-		 */
-		field44?: string;
-		/**
-		 * 备注
-		 */
-		field45?: string;
-		/**
-		 * 使用部门
-		 */
-		field46?: string;
-		/**
-		 * 单位会计科目
-		 */
-		field47?: string;
-		/**
-		 * 净值
-		 */
-		field48?: string;
-		/**
-		 * 管理部门
-		 */
-		field49?: string;
-		/**
-		 * 行业分类代码
-		 */
-		field50?: string;
-		/**
-		 * 账套
-		 */
-		field51?: string;
-		/**
-		 * 国标2010资产分类
-		 */
-		field52?: string;
-		/**
-		 * 预计使用到期日
-		 */
-		field53?: string;
-		/**
-		 * 是否机构划转划入
-		 */
-		field54?: string;
-		/**
-		 * 入库日期
-		 */
-		field55?: string;
-		/**
-		 * 行业使用方向
-		 */
-		field56?: string;
-		/**
-		 * 月折旧额（元）
-		 */
-		field57?: string;
-		/**
-		 * 计提结束日期
-		 */
-		field58?: string;
-		/**
-		 * 首次计提日期
-		 */
-		field59?: string;
-		/**
-		 * 折旧（摊销）方法
-		 */
-		field60?: string;
-		/**
-		 * 残值率(%)
-		 */
-		field61?: string;
-		/**
-		 * 机身编码
-		 */
-		field62?: string;
-		/**
-		 * 折旧（摊销）年限
-		 */
-		field63?: string;
-		/**
-		 * 折旧年限
-		 */
-		field64?: string;
-		/**
-		 * 登记日期
-		 */
-		field65?: string;
-		/**
-		 * 条形码(打印)
-		 */
-		field66?: string;
-		/**
-		 * 是否折旧结束
-		 */
-		field67?: string;
-		/**
-		 * 报增单号
-		 */
-		field68?: string;
-		/**
-		 * 报账单号
-		 */
-		field69?: string;
-		/**
-		 * 终止收费时间
-		 */
-		field70?: string;
-		/**
-		 * 登记人
-		 */
-		field71?: string;
-		/**
-		 * 预算名称
-		 */
-		field72?: string;
-		/**
-		 * 资产用途
-		 */
-		field73?: string;
-		/**
-		 * 取得方式
-		 */
-		field74?: string;
-		/**
-		 * 预算编码
-		 */
-		field75?: string;
-		/**
-		 * 销帐日期
-		 */
-		field76?: string;
-		/**
-		 * 保管人
-		 */
-		field77?: string;
-		/**
-		 * 规格型号
-		 */
-		field78?: string;
-		/**
-		 * 入账形式
-		 */
-		field79?: string;
-		/**
-		 * 备用整数字段1
-		 */
-		field80?: string;
-		/**
-		 * 备用整数字段2
-		 */
-		field81?: string;
-		/**
-		 * 备用文本字段3
-		 */
-		field82?: string;
-		/**
-		 * 备用文本字段4
-		 */
-		field83?: string;
-		/**
-		 * 备用下拉字段1
-		 */
-		field84?: string;
-		/**
-		 * 备用下拉字段2
-		 */
-		field85?: string;
-		/**
-		 * 备用数值字段5
-		 */
-		field86?: string;
-		/**
-		 * 备用数值字段3
-		 */
-		field87?: string;
-		/**
-		 * 备用数值字段4
-		 */
-		field88?: string;
-		/**
-		 * 备用数值字段2
-		 */
-		field89?: string;
-		/**
-		 * 备用文本字段1
-		 */
-		field90?: string;
-		/**
-		 * 备用文本字段2
-		 */
-		field91?: string;
-		/**
-		 * 备用文本字段5
-		 */
-		field92?: string;
-		/**
-		 * 备用文本字段6
-		 */
-		field93?: string;
-		/**
-		 * 备用文本字段7
-		 */
-		field94?: string;
-		/**
-		 * 备用文本字段8
-		 */
-		field95?: string;
-		/**
-		 * 备用文本字段9
-		 */
-		field96?: string;
-		/**
-		 * 备用文本字段10
-		 */
-		field97?: string;
-		/**
-		 * 备用文本字段11
-		 */
-		field98?: string;
-		/**
-		 * 备用文本字段12
-		 */
-		field99?: string;
-		/**
-		 * 备用整数字段3
-		 */
-		field100?: string;
-		/**
-		 * 备用整数字段4
-		 */
-		field101?: string;
-		/**
-		 * 备用整数字段5
-		 */
-		field102?: string;
-		/**
-		 * 备用数值字段1
-		 */
-		field103?: string;
-		/**
-		 * 备用下拉字段3
-		 */
-		field104?: string;
-		/**
-		 * 管理编号
-		 */
-		customNo?: string;
-		/**
-		 * 系统编号
-		 */
-		sysNo?: string;
-		/**
-		 * 二维码文件位置
-		 */
-		qrCodeFilePath?: string;
-		/**
-		 * 标签打印状态
-		 */
-		labelStatus?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
@@ -1034,45 +71,12 @@ declare namespace Eps {
 
 	interface AssetsFixedGoodsGetEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
-		/**
-		 * 物品ID
-		 */
-		goodsId?: string;
-		/**
-		 * 领用人
-		 */
-		personName?: string;
-		/**
-		 * 领用部门
-		 */
-		deptName?: string;
-		/**
-		 * 存放地点
-		 */
-		storagePlace?: string;
-		/**
-		 * 领用日期
-		 */
-		getDate?: Date;
-		/**
-		 * 预计归还日期
-		 */
-		dueReturnDate?: Date;
-		/**
-		 * 领用原因
-		 */
-		getReason?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface AssetsFixedGoodsEntity {
 		/**
 		 * 任意键值
 		 */
@@ -1081,60 +85,12 @@ declare namespace Eps {
 
 	interface FieldCookieDataEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 字段ID
-		 */
-		fieldId?: string;
-		/**
-		 * 排序号
-		 */
-		sortOrder?: number;
-		/**
-		 * 归属
-		 */
-		belongs?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface FieldSelectOptionEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 字段ID
-		 */
-		fieldId?: string;
-		/**
-		 * 选项值
-		 */
-		optionText?: string;
-		/**
-		 * 上级ID
-		 */
-		parentId?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1143,37 +99,26 @@ declare namespace Eps {
 
 	interface FixedAssetsGoodsDiscardEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
+		[key: string]: any;
+	}
+
+	interface GoodsDiscardDocEntity {
 		/**
-		 * 物品ID
+		 * 任意键值
 		 */
-		goodsId?: string;
+		[key: string]: any;
+	}
+
+	interface GoodsReceiveDocEntity {
 		/**
-		 * 报废负责人
+		 * 任意键值
 		 */
-		personName?: string;
-		/**
-		 * 处置方式
-		 */
-		dealType?: string;
-		/**
-		 * 报废原因
-		 */
-		discardReason?: string;
-		/**
-		 * 报废日期
-		 */
-		discardDate?: Date;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface GoodsReturnDocEntity {
 		/**
 		 * 任意键值
 		 */
@@ -1182,33 +127,12 @@ declare namespace Eps {
 
 	interface GoodsSupplierEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
-		/**
-		 * 供应商名称
-		 */
-		supplierName?: string;
-		/**
-		 * 联系人
-		 */
-		userName?: string;
-		/**
-		 * 联系方式
-		 */
-		mobile?: string;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface GoodsTransferDocEntity {
 		/**
 		 * 任意键值
 		 */
@@ -1217,57 +141,61 @@ declare namespace Eps {
 
 	interface ImmaterialAssetsFieldEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGoodsEntity {
 		/**
-		 * 字段ID
+		 * 任意键值
 		 */
-		fieldId?: string;
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGoodsDiscardEntity {
 		/**
-		 * 字段名称
+		 * 任意键值
 		 */
-		fieldName?: string;
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGoodsGetEntity {
 		/**
-		 * 排序号
+		 * 任意键值
 		 */
-		sortOrder?: number;
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGoodsPushStorageRecordEntity {
 		/**
-		 * 支持搜索
+		 * 任意键值
 		 */
-		searchEnable?: number;
+		[key: string]: any;
+	}
+
+	interface AssetsFixedInventoryPlanEntity {
 		/**
-		 * 数据类型
+		 * 任意键值
 		 */
-		dataType?: string;
+		[key: string]: any;
+	}
+
+	interface AssetsFixedInventoryProfitAndLossEntity {
 		/**
-		 * 是否使用
+		 * 任意键值
 		 */
-		inUse?: number;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsInventoryPlanEntity {
 		/**
-		 * 保留小数位数
+		 * 任意键值
 		 */
-		decimalPlaces?: number;
-		/**
-		 * 选项
-		 */
-		options?: string;
-		/**
-		 * 关联表(选项)查询方法
-		 */
-		joinTableMethod?: string;
-		/**
-		 * 关联字段
-		 */
-		joinField?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsInventoryPlanEntity {
 		/**
 		 * 任意键值
 		 */
@@ -1276,33 +204,131 @@ declare namespace Eps {
 
 	interface AssetsGoodsLabelEntity {
 		/**
-		 * ID
+		 * 任意键值
 		 */
-		id?: number;
+		[key: string]: any;
+	}
+
+	interface PushStorageDocEntity {
 		/**
-		 * 资产ID
+		 * 任意键值
 		 */
-		goodsId?: string;
+		[key: string]: any;
+	}
+
+	interface StockCheckPlanEntity {
 		/**
-		 * 显示标题
+		 * 任意键值
 		 */
-		title?: string;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsGetSummaryEntity {
 		/**
-		 * 内容字段ID
+		 * 任意键值
 		 */
-		fieldId?: string;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsGetSummaryGoodsEntity {
 		/**
-		 * 排序号
+		 * 任意键值
 		 */
-		sortOrder?: number;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsInventorySummaryEntity {
 		/**
-		 * 创建时间
+		 * 任意键值
 		 */
-		createTime?: Date;
+		[key: string]: any;
+	}
+
+	interface ConsumableAssetsInventorySummaryGoodsEntity {
 		/**
-		 * 更新时间
+		 * 任意键值
 		 */
-		updateTime?: Date;
+		[key: string]: any;
+	}
+
+	interface FixedAssetsDiscardSummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface FixedAssetsDiscardSummaryGoodsEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface FixedAssetsGetSummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface FixedAssetsGetSummaryGoodsEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface FixedAssetsInventorySummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface FixedAssetsInventorySummaryGoodsEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsDiscardSummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsDiscardSummaryGoodsEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGetSummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsGetSummaryGoodsEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsInventorySummaryEntity {
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface ImmaterialAssetsInventorySummaryGoodsEntity {
 		/**
 		 * 任意键值
 		 */
@@ -1311,68 +337,12 @@ declare namespace Eps {
 
 	interface BaseSysDepartmentEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 部门名称
-		 */
-		name?: string;
-		/**
-		 * 上级部门ID
-		 */
-		parentId?: BigInt;
-		/**
-		 * 排序
-		 */
-		orderNum?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface BaseSysLogEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 用户ID
-		 */
-		userId?: BigInt;
-		/**
-		 * 行为
-		 */
-		action?: string;
-		/**
-		 * ip
-		 */
-		ip?: string;
-		/**
-		 * ip地址
-		 */
-		ipAddr?: string;
-		/**
-		 * 参数
-		 */
-		params?: json;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1381,96 +351,12 @@ declare namespace Eps {
 
 	interface BaseSysMenuEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 父菜单ID
-		 */
-		parentId?: BigInt;
-		/**
-		 * 菜单名称
-		 */
-		name?: string;
-		/**
-		 * 菜单地址
-		 */
-		router?: string;
-		/**
-		 * 权限标识
-		 */
-		perms?: string;
-		/**
-		 * 类型 0-目录 1-菜单 2-按钮
-		 */
-		type?: number;
-		/**
-		 * 图标
-		 */
-		icon?: string;
-		/**
-		 * 排序
-		 */
-		orderNum?: number;
-		/**
-		 * 视图地址
-		 */
-		viewPath?: string;
-		/**
-		 * 路由缓存
-		 */
-		keepAlive?: boolean;
-		/**
-		 * 是否显示
-		 */
-		isShow?: boolean;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface BaseSysParamEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 键
-		 */
-		keyName?: string;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 数据
-		 */
-		data?: string;
-		/**
-		 * 数据类型 0-字符串 1-富文本 2-文件
-		 */
-		dataType?: number;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1479,112 +365,12 @@ declare namespace Eps {
 
 	interface BaseSysRoleEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 用户ID
-		 */
-		userId?: string;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 角色标签
-		 */
-		label?: string;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 数据权限是否关联上下级
-		 */
-		relevance?: number;
-		/**
-		 * 菜单权限
-		 */
-		menuIdList?: json;
-		/**
-		 * 部门权限
-		 */
-		departmentIdList?: json;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface BaseSysUserEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 部门ID
-		 */
-		departmentId?: BigInt;
-		/**
-		 * 姓名
-		 */
-		name?: string;
-		/**
-		 * 用户名
-		 */
-		username?: string;
-		/**
-		 * 密码
-		 */
-		password?: string;
-		/**
-		 * 密码版本, 作用是改完密码，让原来的token失效
-		 */
-		passwordV?: number;
-		/**
-		 * 昵称
-		 */
-		nickName?: string;
-		/**
-		 * 头像
-		 */
-		headImg?: string;
-		/**
-		 * 手机
-		 */
-		phone?: string;
-		/**
-		 * 邮箱
-		 */
-		email?: string;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 状态 0:禁用 1：启用
-		 */
-		status?: boolean;
-		/**
-		 * socketId
-		 */
-		socketId?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1593,76 +379,12 @@ declare namespace Eps {
 
 	interface CloudDBEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 说明
-		 */
-		readme?: string;
-		/**
-		 * 内容
-		 */
-		content?: string;
-		/**
-		 * 类名
-		 */
-		className?: string;
-		/**
-		 * 表名
-		 */
-		tableName?: string;
-		/**
-		 * 状态 0-禁用 1-启用
-		 */
-		status?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface CloudFuncInfoEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 说明
-		 */
-		readme?: string;
-		/**
-		 * 内容
-		 */
-		content?: string;
-		/**
-		 * 状态 0-禁用 1-启用
-		 */
-		status?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1671,84 +393,12 @@ declare namespace Eps {
 
 	interface CloudFuncLogEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 云函数ID
-		 */
-		infoId?: number;
-		/**
-		 * 请求
-		 */
-		request?: json;
-		/**
-		 * 结果
-		 */
-		result?: json;
-		/**
-		 * 类型 0-失败 1-成功
-		 */
-		type?: number;
-		/**
-		 * 异常信息
-		 */
-		error?: string;
-		/**
-		 * 耗时(毫秒)
-		 */
-		time?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface DemoGoodsEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 标题
-		 */
-		title?: string;
-		/**
-		 * 价格
-		 */
-		price?: number;
-		/**
-		 * 描述
-		 */
-		description?: string;
-		/**
-		 * 主图
-		 */
-		mainImage?: string;
-		/**
-		 * 示例图
-		 */
-		exampleImages?: json;
-		/**
-		 * 库存
-		 */
-		stock?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1757,64 +407,12 @@ declare namespace Eps {
 
 	interface DictInfoEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 类型ID
-		 */
-		typeId?: number;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 排序
-		 */
-		orderNum?: number;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 父ID
-		 */
-		parentId?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface DictTypeEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 标识
-		 */
-		key?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1823,68 +421,12 @@ declare namespace Eps {
 
 	interface IotDeviceEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 图标
-		 */
-		icon?: string;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * 设备唯一ID
-		 */
-		uniqueId?: string;
-		/**
-		 * 状态 0-离线 1-在线
-		 */
-		status?: boolean;
-		/**
-		 * 客户端ID
-		 */
-		clientId?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface IotMessageEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 设备ID
-		 */
-		deviceId?: number;
-		/**
-		 * 数据
-		 */
-		data?: string;
-		/**
-		 * 类型 0-推送 1-接收
-		 */
-		type?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1893,92 +435,12 @@ declare namespace Eps {
 
 	interface RecycleDataEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 表
-		 */
-		entityInfo?: json;
-		/**
-		 * 操作人
-		 */
-		userId?: string;
-		/**
-		 * 被删除的数据
-		 */
-		data?: json;
-		/**
-		 * 请求的接口
-		 */
-		url?: string;
-		/**
-		 * 请求参数
-		 */
-		params?: json;
-		/**
-		 * 删除数据条数
-		 */
-		count?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface SpaceInfoEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 地址
-		 */
-		url?: string;
-		/**
-		 * 类型
-		 */
-		type?: string;
-		/**
-		 * 分类ID
-		 */
-		classifyId?: BigInt;
-		/**
-		 * 文件id
-		 */
-		fileId?: string;
-		/**
-		 * 文件名
-		 */
-		name?: string;
-		/**
-		 * 文件大小
-		 */
-		size?: number;
-		/**
-		 * 文档版本
-		 */
-		version?: number;
-		/**
-		 * 文件位置
-		 */
-		key?: string;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -1987,26 +449,6 @@ declare namespace Eps {
 
 	interface SpaceTypeEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 类别名称
-		 */
-		name?: string;
-		/**
-		 * 父分类ID
-		 */
-		parentId?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
@@ -2014,124 +456,12 @@ declare namespace Eps {
 
 	interface TaskInfoEntity {
 		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 任务ID
-		 */
-		jobId?: string;
-		/**
-		 * 任务配置
-		 */
-		repeatConf?: string;
-		/**
-		 * 名称
-		 */
-		name?: string;
-		/**
-		 * cron
-		 */
-		cron?: string;
-		/**
-		 * 最大执行次数 不传为无限次
-		 */
-		limit?: number;
-		/**
-		 * 每间隔多少毫秒执行一次 如果cron设置了 这项设置就无效
-		 */
-		every?: number;
-		/**
-		 * 备注
-		 */
-		remark?: string;
-		/**
-		 * 状态 0:停止 1：运行
-		 */
-		status?: boolean;
-		/**
-		 * 开始时间
-		 */
-		startDate?: Date;
-		/**
-		 * 结束时间
-		 */
-		endDate?: Date;
-		/**
-		 * 数据
-		 */
-		data?: string;
-		/**
-		 * 执行的service实例ID
-		 */
-		service?: string;
-		/**
-		 * 状态 0:系统 1：用户
-		 */
-		type?: number;
-		/**
-		 * 下一次执行时间
-		 */
-		nextRunTime?: Date;
-		/**
-		 * 状态 0:cron 1：时间间隔
-		 */
-		taskType?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
-		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface UserInfoEntity {
-		/**
-		 * ID
-		 */
-		id?: number;
-		/**
-		 * 登录唯一ID
-		 */
-		unionid?: string;
-		/**
-		 * 头像
-		 */
-		avatarUrl?: string;
-		/**
-		 * 昵称
-		 */
-		nickName?: string;
-		/**
-		 * 手机号
-		 */
-		phone?: string;
-		/**
-		 * 性别 0-未知 1-男 2-女
-		 */
-		gender?: number;
-		/**
-		 * 状态 0-禁用 1-正常
-		 */
-		status?: number;
-		/**
-		 * 登录方式 0-小程序 1-公众号 2-H5
-		 */
-		loginType?: number;
-		/**
-		 * 创建时间
-		 */
-		createTime?: Date;
-		/**
-		 * 更新时间
-		 */
-		updateTime?: Date;
 		/**
 		 * 任意键值
 		 */
@@ -2310,27 +640,27 @@ declare namespace Eps {
 
 	interface AssetsAssetsCategory {
 		/**
-		 * 树形表数据
+		 * getTreeData
 		 */
 		getTreeData(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<AssetsCategoryEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<AssetsCategoryEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2338,7 +668,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2371,21 +701,102 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsChartDataBoardController {
+		/**
+		 * getConsumableDeptGetChartData
+		 */
+		getConsumableDeptGetChartData(data?: any): Promise<any>;
+		/**
+		 * getAssetsStatusChartData
+		 */
+		getAssetsStatusChartData(data?: any): Promise<any>;
+		/**
+		 * getReceiveData4Charts
+		 */
+		getReceiveData4Charts(data?: any): Promise<any>;
+		/**
+		 * getReceiveDetailData
+		 */
+		getReceiveDetailData(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<any[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: any[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getConsumableDeptGetChartData: string;
+			getAssetsStatusChartData: string;
+			getReceiveData4Charts: string;
+			getReceiveDetailData: string;
+			list: string;
+			page: string;
+			info: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getConsumableDeptGetChartData: boolean;
+			getAssetsStatusChartData: boolean;
+			getReceiveData4Charts: boolean;
+			getReceiveDetailData: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsConsumableConsumableAssetsFieldController {
 		/**
-		 * 易耗品表配置 保存
+		 * saveConsumableAssetsFieldSet
 		 */
 		saveConsumableAssetsFieldSet(data?: any): Promise<any>;
 		/**
-		 * 字段类型
+		 * getAllDataType
 		 */
 		getAllDataType(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<ConsumableAssetsFieldEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<ConsumableAssetsFieldEntity[]>;
 		/**
@@ -2440,29 +851,290 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
-	interface AssetsDepartment {
+	interface AssetsConsumableConsumableAssetsGoodsController {
 		/**
-		 * 树形表数据
+		 * getAllConsumableGoodsListByPage
 		 */
-		getTreeData(data?: any): Promise<any>;
+		getAllConsumableGoodsListByPage(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * getConsumableGoodsInfoById
 		 */
-		delete(data?: any): Promise<any>;
+		getConsumableGoodsInfoById(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * updateConsumableGoodsInfo
+		 */
+		updateConsumableGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * deleteConsumableGoodsInfo
+		 */
+		deleteConsumableGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getInventoryTableFields
+		 */
+		getInventoryTableFields(data?: any): Promise<any>;
+		/**
+		 * getTableFields4minProg
+		 */
+		getTableFields4minProg(data?: any): Promise<any>;
+		/**
+		 * getConsumableGoodsInfo
+		 */
+		getConsumableGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * addConsumableGoodsInfo
+		 */
+		addConsumableGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getInventoryByPage
+		 */
+		getInventoryByPage(data?: any): Promise<any>;
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * deleteById
+		 */
+		deleteById(data?: any): Promise<any>;
+		/**
+		 * queryById
+		 */
+		queryById(data?: any): Promise<any>;
+		/**
+		 * queryAll
+		 */
+		queryAll(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsGoodsEntity>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsGoodsEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getAllConsumableGoodsListByPage: string;
+			getConsumableGoodsInfoById: string;
+			updateConsumableGoodsInfo: string;
+			deleteConsumableGoodsInfo: string;
+			getInventoryTableFields: string;
+			getTableFields4minProg: string;
+			getConsumableGoodsInfo: string;
+			addConsumableGoodsInfo: string;
+			getInventoryByPage: string;
+			getTableFields: string;
+			deleteById: string;
+			queryById: string;
+			queryAll: string;
+			info: string;
+			list: string;
+			page: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getAllConsumableGoodsListByPage: boolean;
+			getConsumableGoodsInfoById: boolean;
+			updateConsumableGoodsInfo: boolean;
+			deleteConsumableGoodsInfo: boolean;
+			getInventoryTableFields: boolean;
+			getTableFields4minProg: boolean;
+			getConsumableGoodsInfo: boolean;
+			addConsumableGoodsInfo: boolean;
+			getInventoryByPage: boolean;
+			getTableFields: boolean;
+			deleteById: boolean;
+			queryById: boolean;
+			queryAll: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsConsumableConsumableAssetsGoodsGetController {
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * getByGoodsId
+		 */
+		getByGoodsId(data?: any): Promise<any>;
+		/**
+		 * goodsReturn
+		 */
+		goodsReturn(data?: any): Promise<any>;
+		/**
+		 * getByPage
+		 */
+		getByPage(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsGoodsGetEntity>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsGoodsGetEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsGoodsGetEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getTableFields: string;
+			getByGoodsId: string;
+			goodsReturn: string;
+			getByPage: string;
+			info: string;
+			add: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getTableFields: boolean;
+			getByGoodsId: boolean;
+			goodsReturn: boolean;
+			getByPage: boolean;
+			info: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsConsumableConsumableAssetsGoodsPushStorageController {
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsGoodsPushStorageRecordEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsGoodsPushStorageRecordEntity[]>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsGoodsPushStorageRecordEntity>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getTableFields: string;
+			page: string;
+			list: string;
+			info: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getTableFields: boolean;
+			page: boolean;
+			list: boolean;
+			info: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsDepartment {
+		/**
+		 * getTreeData
+		 */
+		getTreeData(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
 		 */
 		info(data?: any): Promise<DepartmentEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<DepartmentEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2470,7 +1142,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2505,23 +1177,23 @@ declare namespace Eps {
 
 	interface AssetsEmployee {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<EmployeeEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<EmployeeEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2529,7 +1201,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2562,19 +1234,19 @@ declare namespace Eps {
 
 	interface AssetsFixedAssetsFixedController {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<AssetsFixedEntity>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2582,7 +1254,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2619,27 +1291,27 @@ declare namespace Eps {
 
 	interface AssetsFixedAssetsFixedField {
 		/**
-		 * 固定资产表配置 保存
+		 * saveAssetsFixedFieldSet
 		 */
 		saveAssetsFixedFieldSet(data?: any): Promise<any>;
 		/**
-		 * 查询固定资产表的设置字段
+		 * getFixedAssetsFields
 		 */
 		getFixedAssetsFields(data?: any): Promise<any>;
 		/**
-		 * 字段类型
+		 * getAllDataType
 		 */
 		getAllDataType(data?: any): Promise<any>;
 		/**
-		 * 数据显示tab
+		 * getTabList
 		 */
 		getTabList(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<AssetsFixedFieldEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<AssetsFixedFieldEntity[]>;
 		/**
@@ -2700,51 +1372,87 @@ declare namespace Eps {
 
 	interface AssetsFixedAssetsFixedGoodsController {
 		/**
-		 * 获取固定资产状态标签
+		 * getGoodsInventoryDataByCustomNo
+		 */
+		getGoodsInventoryDataByCustomNo(data?: any): Promise<any>;
+		/**
+		 * getAllFixedGoodsListByPage
+		 */
+		getAllFixedGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsStatusLabel
 		 */
 		getFixedAssetsStatusLabel(data?: any): Promise<any>;
 		/**
-		 * 获取标签的可用数据
+		 * getFixedGoodsInfoBySysId
+		 */
+		getFixedGoodsInfoBySysId(data?: any): Promise<any>;
+		/**
+		 * getTableFields4minProg
+		 */
+		getTableFields4minProg(data?: any): Promise<any>;
+		/**
+		 * getMyReceiveGoodsList
+		 */
+		getMyReceiveGoodsList(data?: any): Promise<any>;
+		/**
+		 * updateFixedGoodsInfo
+		 */
+		updateFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * deleteFixedGoodsInfo
+		 */
+		deleteFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getLabelUseableData
 		 */
 		getLabelUseableData(data?: any): Promise<any>;
 		/**
-		 * 分页查询
+		 * getInventoryByPage
 		 */
 		getInventoryByPage(data?: any): Promise<any>;
 		/**
-		 * 获取添加修改的字段
+		 * getFixedGoodsInfo
+		 */
+		getFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * addFixedGoodsInfo
+		 */
+		addFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * updateAssetsCTNo
+		 */
+		updateAssetsCTNo(data?: any): Promise<any>;
+		/**
+		 * getUpsertFields
 		 */
 		getUpsertFields(data?: any): Promise<any>;
 		/**
-		 * 询列表要显示的字段
+		 * getTableFields
 		 */
 		getTableFields(data?: any): Promise<any>;
 		/**
-		 * 固定资产生成编号
+		 * createCustomNo
 		 */
 		createCustomNo(data?: any): Promise<any>;
 		/**
-		 * 查询详情信息（tab数据格式）
+		 * getInfoBySysNo
+		 */
+		getInfoBySysNo(data?: any): Promise<any>;
+		/**
+		 * queryAll
+		 */
+		queryAll(data?: any): Promise<any>;
+		/**
+		 * getById
 		 */
 		getById(data?: any): Promise<any>;
 		/**
-		 * 财厅数据表导入
+		 * import
 		 */
 		import(data?: any): Promise<any>;
 		/**
-		 * 删除
-		 */
-		delete(data?: any): Promise<any>;
-		/**
-		 * 修改
-		 */
-		update(data?: any): Promise<any>;
-		/**
-		 * 单个信息
-		 */
-		info(data?: any): Promise<AssetsFixedGoodsEntity>;
-		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2752,50 +1460,68 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
-		 */
-		add(data?: any): Promise<any>;
-		/**
 		 * list
 		 */
 		list(data?: any): Promise<AssetsFixedGoodsEntity[]>;
 		/**
+		 * info
+		 */
+		info(data?: any): Promise<AssetsFixedGoodsEntity>;
+		/**
 		 * 权限标识
 		 */
 		permission: {
+			getGoodsInventoryDataByCustomNo: string;
+			getAllFixedGoodsListByPage: string;
 			getFixedAssetsStatusLabel: string;
+			getFixedGoodsInfoBySysId: string;
+			getTableFields4minProg: string;
+			getMyReceiveGoodsList: string;
+			updateFixedGoodsInfo: string;
+			deleteFixedGoodsInfo: string;
 			getLabelUseableData: string;
 			getInventoryByPage: string;
+			getFixedGoodsInfo: string;
+			addFixedGoodsInfo: string;
+			updateAssetsCTNo: string;
 			getUpsertFields: string;
 			getTableFields: string;
 			createCustomNo: string;
+			getInfoBySysNo: string;
+			queryAll: string;
 			getById: string;
 			import: string;
-			delete: string;
-			update: string;
-			info: string;
 			page: string;
-			add: string;
 			list: string;
+			info: string;
 		};
 		/**
 		 * 权限状态
 		 */
 		_permission: {
+			getGoodsInventoryDataByCustomNo: boolean;
+			getAllFixedGoodsListByPage: boolean;
 			getFixedAssetsStatusLabel: boolean;
+			getFixedGoodsInfoBySysId: boolean;
+			getTableFields4minProg: boolean;
+			getMyReceiveGoodsList: boolean;
+			updateFixedGoodsInfo: boolean;
+			deleteFixedGoodsInfo: boolean;
 			getLabelUseableData: boolean;
 			getInventoryByPage: boolean;
+			getFixedGoodsInfo: boolean;
+			addFixedGoodsInfo: boolean;
+			updateAssetsCTNo: boolean;
 			getUpsertFields: boolean;
 			getTableFields: boolean;
 			createCustomNo: boolean;
+			getInfoBySysNo: boolean;
+			queryAll: boolean;
 			getById: boolean;
 			import: boolean;
-			delete: boolean;
-			update: boolean;
-			info: boolean;
 			page: boolean;
-			add: boolean;
 			list: boolean;
+			info: boolean;
 		};
 		/**
 		 * 请求
@@ -2805,11 +1531,23 @@ declare namespace Eps {
 
 	interface AssetsFixedAssetsFixedGoodsGetController {
 		/**
-		 * 单个信息
+		 * getFixedAssetsGoodsGetTableFields
+		 */
+		getFixedAssetsGoodsGetTableFields(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsGoodsGetByPage
+		 */
+		getFixedAssetsGoodsGetByPage(data?: any): Promise<any>;
+		/**
+		 * fixedAssetsGoodsReturn
+		 */
+		fixedAssetsGoodsReturn(data?: any): Promise<any>;
+		/**
+		 * info
 		 */
 		info(data?: any): Promise<AssetsFixedGoodsGetEntity>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2836,6 +1574,9 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getFixedAssetsGoodsGetTableFields: string;
+			getFixedAssetsGoodsGetByPage: string;
+			fixedAssetsGoodsReturn: string;
 			info: string;
 			add: string;
 			list: string;
@@ -2847,6 +1588,9 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getFixedAssetsGoodsGetTableFields: boolean;
+			getFixedAssetsGoodsGetByPage: boolean;
+			fixedAssetsGoodsReturn: boolean;
 			info: boolean;
 			add: boolean;
 			list: boolean;
@@ -2860,29 +1604,106 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
-	interface AssetsFixedFieldCookieDataController {
+	interface AssetsFixedAssetsFixedGoodsPushStorageController {
 		/**
-		 * 获取固定资产新配置的字段
+		 * getFixedAssetsGoodsPushStorageTableFields
 		 */
-		getFixedAssetsNewCustomFields(data?: any): Promise<any>;
+		getFixedAssetsGoodsPushStorageTableFields(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * getFixedAssetsGoodsPushStorageByPage
 		 */
-		delete(data?: any): Promise<any>;
+		getFixedAssetsGoodsPushStorageByPage(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * info
+		 */
+		info(data?: any): Promise<AssetsFixedGoodsEntity>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<AssetsFixedGoodsEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getFixedAssetsGoodsPushStorageTableFields: string;
+			getFixedAssetsGoodsPushStorageByPage: string;
+			info: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getFixedAssetsGoodsPushStorageTableFields: boolean;
+			getFixedAssetsGoodsPushStorageByPage: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsFixedFieldCookieDataController {
+		/**
+		 * getImmaterialAssetsNewCustomFields
+		 */
+		getImmaterialAssetsNewCustomFields(data?: any): Promise<any>;
+		/**
+		 * getConsumableAssetsNewCustomFields
+		 */
+		getConsumableAssetsNewCustomFields(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsNewCustomFields
+		 */
+		getFixedAssetsNewCustomFields(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
 		 */
 		info(data?: any): Promise<FieldCookieDataEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<FieldCookieDataEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2890,13 +1711,15 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
 		 * 权限标识
 		 */
 		permission: {
+			getImmaterialAssetsNewCustomFields: string;
+			getConsumableAssetsNewCustomFields: string;
 			getFixedAssetsNewCustomFields: string;
 			delete: string;
 			update: string;
@@ -2909,6 +1732,8 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getImmaterialAssetsNewCustomFields: boolean;
+			getConsumableAssetsNewCustomFields: boolean;
 			getFixedAssetsNewCustomFields: boolean;
 			delete: boolean;
 			update: boolean;
@@ -2925,27 +1750,27 @@ declare namespace Eps {
 
 	interface AssetsFixedFieldSelectOptionController {
 		/**
-		 * 树形表数据
+		 * getTreeData
 		 */
 		getTreeData(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<FieldSelectOptionEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<FieldSelectOptionEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -2953,7 +1778,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -2988,11 +1813,19 @@ declare namespace Eps {
 
 	interface AssetsFixedFixedAssetsGoodsDiscardController {
 		/**
-		 * 单个信息
+		 * getFixedAssetsGoodsDiscardTableFields
+		 */
+		getFixedAssetsGoodsDiscardTableFields(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsGoodsDiscardByPage
+		 */
+		getFixedAssetsGoodsDiscardByPage(data?: any): Promise<any>;
+		/**
+		 * info
 		 */
 		info(data?: any): Promise<FixedAssetsGoodsDiscardEntity>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3019,6 +1852,8 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getFixedAssetsGoodsDiscardTableFields: string;
+			getFixedAssetsGoodsDiscardByPage: string;
 			info: string;
 			add: string;
 			list: string;
@@ -3030,6 +1865,8 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getFixedAssetsGoodsDiscardTableFields: boolean;
+			getFixedAssetsGoodsDiscardByPage: boolean;
 			info: boolean;
 			add: boolean;
 			list: boolean;
@@ -3043,25 +1880,346 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsGoodsDiscardGoodsDiscardDocController {
+		/**
+		 * getImmaterialAssetsDiscardDocByPage
+		 */
+		getImmaterialAssetsDiscardDocByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumableAssetsDiscardDocByPage
+		 */
+		getConsumableAssetsDiscardDocByPage(data?: any): Promise<any>;
+		/**
+		 * getImmaterialDiscardGoodsListByPage
+		 */
+		getImmaterialDiscardGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumableDiscardGoodsListByPage
+		 */
+		getConsumableDiscardGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsDiscardDocByPage
+		 */
+		getFixedAssetsDiscardDocByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedDiscardGoodsListByPage
+		 */
+		getFixedDiscardGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getIncompleteRecoeds
+		 */
+		getIncompleteRecoeds(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * deleteDoc
+		 */
+		deleteDoc(data?: any): Promise<any>;
+		/**
+		 * updateDoc
+		 */
+		updateDoc(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<GoodsDiscardDocEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: GoodsDiscardDocEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<GoodsDiscardDocEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getImmaterialAssetsDiscardDocByPage: string;
+			getConsumableAssetsDiscardDocByPage: string;
+			getImmaterialDiscardGoodsListByPage: string;
+			getConsumableDiscardGoodsListByPage: string;
+			getFixedAssetsDiscardDocByPage: string;
+			getFixedDiscardGoodsListByPage: string;
+			getIncompleteRecoeds: string;
+			updateStatus: string;
+			deleteDoc: string;
+			updateDoc: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getImmaterialAssetsDiscardDocByPage: boolean;
+			getConsumableAssetsDiscardDocByPage: boolean;
+			getImmaterialDiscardGoodsListByPage: boolean;
+			getConsumableDiscardGoodsListByPage: boolean;
+			getFixedAssetsDiscardDocByPage: boolean;
+			getFixedDiscardGoodsListByPage: boolean;
+			getIncompleteRecoeds: boolean;
+			updateStatus: boolean;
+			deleteDoc: boolean;
+			updateDoc: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsGoodsReceiveGoodsReceiveDocController {
+		/**
+		 * getImmaterialAssetsReceiveDocByPage
+		 */
+		getImmaterialAssetsReceiveDocByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumableAssetsReceiveDocByPage
+		 */
+		getConsumableAssetsReceiveDocByPage(data?: any): Promise<any>;
+		/**
+		 * getImmaterialReceiveGoodsListByPage
+		 */
+		getImmaterialReceiveGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumableReceiveGoodsListByPage
+		 */
+		getConsumableReceiveGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsReceiveDocByPage
+		 */
+		getFixedAssetsReceiveDocByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedReceiveGoodsListByPage
+		 */
+		getFixedReceiveGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getUserNoReturnGoodsList
+		 */
+		getUserNoReturnGoodsList(data?: any): Promise<any>;
+		/**
+		 * getIncompleteRecoeds
+		 */
+		getIncompleteRecoeds(data?: any): Promise<any>;
+		/**
+		 * getByDocIdAndGoodsId
+		 */
+		getByDocIdAndGoodsId(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * deleteDoc
+		 */
+		deleteDoc(data?: any): Promise<any>;
+		/**
+		 * updateDoc
+		 */
+		updateDoc(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<GoodsReceiveDocEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: GoodsReceiveDocEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<GoodsReceiveDocEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getImmaterialAssetsReceiveDocByPage: string;
+			getConsumableAssetsReceiveDocByPage: string;
+			getImmaterialReceiveGoodsListByPage: string;
+			getConsumableReceiveGoodsListByPage: string;
+			getFixedAssetsReceiveDocByPage: string;
+			getFixedReceiveGoodsListByPage: string;
+			getUserNoReturnGoodsList: string;
+			getIncompleteRecoeds: string;
+			getByDocIdAndGoodsId: string;
+			updateStatus: string;
+			deleteDoc: string;
+			updateDoc: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getImmaterialAssetsReceiveDocByPage: boolean;
+			getConsumableAssetsReceiveDocByPage: boolean;
+			getImmaterialReceiveGoodsListByPage: boolean;
+			getConsumableReceiveGoodsListByPage: boolean;
+			getFixedAssetsReceiveDocByPage: boolean;
+			getFixedReceiveGoodsListByPage: boolean;
+			getUserNoReturnGoodsList: boolean;
+			getIncompleteRecoeds: boolean;
+			getByDocIdAndGoodsId: boolean;
+			updateStatus: boolean;
+			deleteDoc: boolean;
+			updateDoc: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsGoodsReturnGoodsReturnDocController {
+		/**
+		 * getIncompleteRecoeds
+		 */
+		getIncompleteRecoeds(data?: any): Promise<any>;
+		/**
+		 * getGoodsListByPage
+		 */
+		getGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * getByPage
+		 */
+		getByPage(data?: any): Promise<any>;
+		/**
+		 * deleteDoc
+		 */
+		deleteDoc(data?: any): Promise<any>;
+		/**
+		 * updateDoc
+		 */
+		updateDoc(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<GoodsReturnDocEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: GoodsReturnDocEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<GoodsReturnDocEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getIncompleteRecoeds: string;
+			getGoodsListByPage: string;
+			updateStatus: string;
+			getByPage: string;
+			deleteDoc: string;
+			updateDoc: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getIncompleteRecoeds: boolean;
+			getGoodsListByPage: boolean;
+			updateStatus: boolean;
+			getByPage: boolean;
+			deleteDoc: boolean;
+			updateDoc: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsGoodsSupplier {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<GoodsSupplierEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<GoodsSupplierEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3069,7 +2227,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3100,21 +2258,108 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsGoodsTransferGoodsTransferDocController {
+		/**
+		 * getIncompleteRecoeds
+		 */
+		getIncompleteRecoeds(data?: any): Promise<any>;
+		/**
+		 * getGoodsListByPage
+		 */
+		getGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * getByPage
+		 */
+		getByPage(data?: any): Promise<any>;
+		/**
+		 * deleteDoc
+		 */
+		deleteDoc(data?: any): Promise<any>;
+		/**
+		 * updateDoc
+		 */
+		updateDoc(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<GoodsTransferDocEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: GoodsTransferDocEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<GoodsTransferDocEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getIncompleteRecoeds: string;
+			getGoodsListByPage: string;
+			updateStatus: string;
+			getByPage: string;
+			deleteDoc: string;
+			updateDoc: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getIncompleteRecoeds: boolean;
+			getGoodsListByPage: boolean;
+			updateStatus: boolean;
+			getByPage: boolean;
+			deleteDoc: boolean;
+			updateDoc: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsImmaterialImmaterialAssetsFieldController {
 		/**
-		 * 无形资产表配置 保存
+		 * saveImmaterialAssetsFieldSet
 		 */
 		saveImmaterialAssetsFieldSet(data?: any): Promise<any>;
 		/**
-		 * 字段类型
+		 * getAllDataType
 		 */
 		getAllDataType(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<ImmaterialAssetsFieldEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<ImmaterialAssetsFieldEntity[]>;
 		/**
@@ -3169,15 +2414,731 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsImmaterialImmaterialAssetsGoodsController {
+		/**
+		 * getAllImmaterialGoodsListByPage
+		 */
+		getAllImmaterialGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getImmaterialGoodsInfoById
+		 */
+		getImmaterialGoodsInfoById(data?: any): Promise<any>;
+		/**
+		 * updateImmaterialGoodsInfo
+		 */
+		updateImmaterialGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * deleteImmaterialGoodsInfo
+		 */
+		deleteImmaterialGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getTableFields4minProg
+		 */
+		getTableFields4minProg(data?: any): Promise<any>;
+		/**
+		 * getImmaterialGoodsInfo
+		 */
+		getImmaterialGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * addImmaterialGoodsInfo
+		 */
+		addImmaterialGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getLabelUseableData
+		 */
+		getLabelUseableData(data?: any): Promise<any>;
+		/**
+		 * getInventoryByPage
+		 */
+		getInventoryByPage(data?: any): Promise<any>;
+		/**
+		 * updateAssetsCTNo
+		 */
+		updateAssetsCTNo(data?: any): Promise<any>;
+		/**
+		 * getUpsertFields
+		 */
+		getUpsertFields(data?: any): Promise<any>;
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * deleteById
+		 */
+		deleteById(data?: any): Promise<any>;
+		/**
+		 * queryAll
+		 */
+		queryAll(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * import
+		 */
+		import(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGoodsEntity>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGoodsEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getAllImmaterialGoodsListByPage: string;
+			getImmaterialGoodsInfoById: string;
+			updateImmaterialGoodsInfo: string;
+			deleteImmaterialGoodsInfo: string;
+			getTableFields4minProg: string;
+			getImmaterialGoodsInfo: string;
+			addImmaterialGoodsInfo: string;
+			getLabelUseableData: string;
+			getInventoryByPage: string;
+			updateAssetsCTNo: string;
+			getUpsertFields: string;
+			getTableFields: string;
+			deleteById: string;
+			queryAll: string;
+			getById: string;
+			import: string;
+			info: string;
+			list: string;
+			page: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getAllImmaterialGoodsListByPage: boolean;
+			getImmaterialGoodsInfoById: boolean;
+			updateImmaterialGoodsInfo: boolean;
+			deleteImmaterialGoodsInfo: boolean;
+			getTableFields4minProg: boolean;
+			getImmaterialGoodsInfo: boolean;
+			addImmaterialGoodsInfo: boolean;
+			getLabelUseableData: boolean;
+			getInventoryByPage: boolean;
+			updateAssetsCTNo: boolean;
+			getUpsertFields: boolean;
+			getTableFields: boolean;
+			deleteById: boolean;
+			queryAll: boolean;
+			getById: boolean;
+			import: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsImmaterialImmaterialAssetsGoodsDiscardController {
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGoodsDiscardEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGoodsDiscardEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGoodsDiscardEntity[]>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getTableFields: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+			update: string;
+			delete: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getTableFields: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+			update: boolean;
+			delete: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsImmaterialImmaterialAssetsGoodsGetController {
+		/**
+		 * getImmaterialAssetsGoodsGetTableFields
+		 */
+		getImmaterialAssetsGoodsGetTableFields(data?: any): Promise<any>;
+		/**
+		 * getImmaterialAssetsGoodsGetByPage
+		 */
+		getImmaterialAssetsGoodsGetByPage(data?: any): Promise<any>;
+		/**
+		 * immaterialAssetsGoodsReturn
+		 */
+		immaterialAssetsGoodsReturn(data?: any): Promise<any>;
+		/**
+		 * getByGoodsId
+		 */
+		getByGoodsId(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGoodsGetEntity>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGoodsGetEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGoodsGetEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getImmaterialAssetsGoodsGetTableFields: string;
+			getImmaterialAssetsGoodsGetByPage: string;
+			immaterialAssetsGoodsReturn: string;
+			getByGoodsId: string;
+			info: string;
+			add: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getImmaterialAssetsGoodsGetTableFields: boolean;
+			getImmaterialAssetsGoodsGetByPage: boolean;
+			immaterialAssetsGoodsReturn: boolean;
+			getByGoodsId: boolean;
+			info: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsImmaterialImmaterialAssetsGoodsPushStorageController {
+		/**
+		 * getTableFields
+		 */
+		getTableFields(data?: any): Promise<any>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGoodsPushStorageRecordEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGoodsPushStorageRecordEntity[]>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGoodsPushStorageRecordEntity>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getTableFields: string;
+			page: string;
+			list: string;
+			info: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getTableFields: boolean;
+			page: boolean;
+			list: boolean;
+			info: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsInventoryAssetsFixedInventoryController {
+		/**
+		 * getAssetsFixedInventoryRecordByPage4Plan
+		 */
+		getAssetsFixedInventoryRecordByPage4Plan(data?: any): Promise<any>;
+		/**
+		 * getAssetsFixedInventoryPlanByPage
+		 */
+		getAssetsFixedInventoryPlanByPage(data?: any): Promise<any>;
+		/**
+		 * deleteAssetsFixedInventoryRecord
+		 */
+		deleteAssetsFixedInventoryRecord(data?: any): Promise<any>;
+		/**
+		 * updateAssetsFixedInventoryRecord
+		 */
+		updateAssetsFixedInventoryRecord(data?: any): Promise<any>;
+		/**
+		 * getAssetsFixedInventoryPlanData
+		 */
+		getAssetsFixedInventoryPlanData(data?: any): Promise<any>;
+		/**
+		 * updateAssetsFixedInventoryPlan
+		 */
+		updateAssetsFixedInventoryPlan(data?: any): Promise<any>;
+		/**
+		 * deleteAssetsFixedInventoryPlan
+		 */
+		deleteAssetsFixedInventoryPlan(data?: any): Promise<any>;
+		/**
+		 * addAssetsFixedInventoryRecord
+		 */
+		addAssetsFixedInventoryRecord(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<AssetsFixedInventoryPlanEntity>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<AssetsFixedInventoryPlanEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedInventoryPlanEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getAssetsFixedInventoryRecordByPage4Plan: string;
+			getAssetsFixedInventoryPlanByPage: string;
+			deleteAssetsFixedInventoryRecord: string;
+			updateAssetsFixedInventoryRecord: string;
+			getAssetsFixedInventoryPlanData: string;
+			updateAssetsFixedInventoryPlan: string;
+			deleteAssetsFixedInventoryPlan: string;
+			addAssetsFixedInventoryRecord: string;
+			info: string;
+			add: string;
+			list: string;
+			page: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getAssetsFixedInventoryRecordByPage4Plan: boolean;
+			getAssetsFixedInventoryPlanByPage: boolean;
+			deleteAssetsFixedInventoryRecord: boolean;
+			updateAssetsFixedInventoryRecord: boolean;
+			getAssetsFixedInventoryPlanData: boolean;
+			updateAssetsFixedInventoryPlan: boolean;
+			deleteAssetsFixedInventoryPlan: boolean;
+			addAssetsFixedInventoryRecord: boolean;
+			info: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsInventoryAssetsFixedInventoryProfitAndLossController {
+		/**
+		 * checkAssetsFixedInventoryPlanProfitAndLoss
+		 */
+		checkAssetsFixedInventoryPlanProfitAndLoss(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<AssetsFixedInventoryProfitAndLossEntity>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<AssetsFixedInventoryProfitAndLossEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: AssetsFixedInventoryProfitAndLossEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			checkAssetsFixedInventoryPlanProfitAndLoss: string;
+			info: string;
+			list: string;
+			page: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			checkAssetsFixedInventoryPlanProfitAndLoss: boolean;
+			info: boolean;
+			list: boolean;
+			page: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsInventoryConsumableAssetsInventoryPlanController {
+		/**
+		 * getGoodsInfoByCustomNo
+		 */
+		getGoodsInfoByCustomNo(data?: any): Promise<any>;
+		/**
+		 * checkPlanProfitAndLoss
+		 */
+		checkPlanProfitAndLoss(data?: any): Promise<any>;
+		/**
+		 * getRecordByPage4Plan
+		 */
+		getRecordByPage4Plan(data?: any): Promise<any>;
+		/**
+		 * getPlanByPage
+		 */
+		getPlanByPage(data?: any): Promise<any>;
+		/**
+		 * updateRecord
+		 */
+		updateRecord(data?: any): Promise<any>;
+		/**
+		 * deleteRecord
+		 */
+		deleteRecord(data?: any): Promise<any>;
+		/**
+		 * getPlanData
+		 */
+		getPlanData(data?: any): Promise<any>;
+		/**
+		 * updatePlan
+		 */
+		updatePlan(data?: any): Promise<any>;
+		/**
+		 * deletePlan
+		 */
+		deletePlan(data?: any): Promise<any>;
+		/**
+		 * addRecord
+		 */
+		addRecord(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsInventoryPlanEntity>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsInventoryPlanEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsInventoryPlanEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getGoodsInfoByCustomNo: string;
+			checkPlanProfitAndLoss: string;
+			getRecordByPage4Plan: string;
+			getPlanByPage: string;
+			updateRecord: string;
+			deleteRecord: string;
+			getPlanData: string;
+			updatePlan: string;
+			deletePlan: string;
+			addRecord: string;
+			info: string;
+			add: string;
+			list: string;
+			page: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getGoodsInfoByCustomNo: boolean;
+			checkPlanProfitAndLoss: boolean;
+			getRecordByPage4Plan: boolean;
+			getPlanByPage: boolean;
+			updateRecord: boolean;
+			deleteRecord: boolean;
+			getPlanData: boolean;
+			updatePlan: boolean;
+			deletePlan: boolean;
+			addRecord: boolean;
+			info: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsInventoryImmaterialAssetsInventoryPlanController {
+		/**
+		 * getGoodsInfoByCustomNo
+		 */
+		getGoodsInfoByCustomNo(data?: any): Promise<any>;
+		/**
+		 * checkPlanProfitAndLoss
+		 */
+		checkPlanProfitAndLoss(data?: any): Promise<any>;
+		/**
+		 * getRecordByPage4Plan
+		 */
+		getRecordByPage4Plan(data?: any): Promise<any>;
+		/**
+		 * getPlanByPage
+		 */
+		getPlanByPage(data?: any): Promise<any>;
+		/**
+		 * updateRecord
+		 */
+		updateRecord(data?: any): Promise<any>;
+		/**
+		 * deleteRecord
+		 */
+		deleteRecord(data?: any): Promise<any>;
+		/**
+		 * getPlanData
+		 */
+		getPlanData(data?: any): Promise<any>;
+		/**
+		 * updatePlan
+		 */
+		updatePlan(data?: any): Promise<any>;
+		/**
+		 * deletePlan
+		 */
+		deletePlan(data?: any): Promise<any>;
+		/**
+		 * addRecord
+		 */
+		addRecord(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsInventoryPlanEntity>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsInventoryPlanEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsInventoryPlanEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getGoodsInfoByCustomNo: string;
+			checkPlanProfitAndLoss: string;
+			getRecordByPage4Plan: string;
+			getPlanByPage: string;
+			updateRecord: string;
+			deleteRecord: string;
+			getPlanData: string;
+			updatePlan: string;
+			deletePlan: string;
+			addRecord: string;
+			info: string;
+			add: string;
+			list: string;
+			page: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getGoodsInfoByCustomNo: boolean;
+			checkPlanProfitAndLoss: boolean;
+			getRecordByPage4Plan: boolean;
+			getPlanByPage: boolean;
+			updateRecord: boolean;
+			deleteRecord: boolean;
+			getPlanData: boolean;
+			updatePlan: boolean;
+			deletePlan: boolean;
+			addRecord: boolean;
+			info: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface AssetsLabelAssetsGoodsLabelController {
 		/**
-		 * 物品标签保存
+		 * addGoodsLabel
 		 */
 		addGoodsLabel(data?: any): Promise<any>;
 		/**
-		 * 查询固定资产物品标签信息
+		 * getGoodsLabel
 		 */
 		getGoodsLabel(data?: any): Promise<any>;
+		/**
+		 * labelPrint
+		 */
+		labelPrint(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<AssetsGoodsLabelEntity>;
 		/**
 		 * list
 		 */
@@ -3190,10 +3151,6 @@ declare namespace Eps {
 			list: AssetsGoodsLabelEntity[];
 			[key: string]: any;
 		}>;
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<AssetsGoodsLabelEntity>;
 		/**
 		 * update
 		 */
@@ -3208,9 +3165,10 @@ declare namespace Eps {
 		permission: {
 			addGoodsLabel: string;
 			getGoodsLabel: string;
+			labelPrint: string;
+			info: string;
 			list: string;
 			page: string;
-			info: string;
 			update: string;
 			delete: string;
 		};
@@ -3220,9 +3178,10 @@ declare namespace Eps {
 		_permission: {
 			addGoodsLabel: boolean;
 			getGoodsLabel: boolean;
+			labelPrint: boolean;
+			info: boolean;
 			list: boolean;
 			page: boolean;
-			info: boolean;
 			update: boolean;
 			delete: boolean;
 		};
@@ -3232,29 +3191,1319 @@ declare namespace Eps {
 		request: Service["request"];
 	}
 
+	interface AssetsPushStorageDocExcelController {
+		/**
+		 * getDataFromExcel
+		 */
+		getDataFromExcel(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<any[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: any[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getDataFromExcel: string;
+			list: string;
+			page: string;
+			info: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getDataFromExcel: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsPushStorageDocPushStorageDocController {
+		/**
+		 * getImmaterialAssetsPushStorageDocByPage
+		 */
+		getImmaterialAssetsPushStorageDocByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumableAssetsPutStorageDocByPage
+		 */
+		getConsumableAssetsPutStorageDocByPage(data?: any): Promise<any>;
+		/**
+		 * getImmaterialPutStorageGoodsListByPage
+		 */
+		getImmaterialPutStorageGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getConsumablePutStorageGoodsListByPage
+		 */
+		getConsumablePutStorageGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedAssetsPushStorageDocByPage
+		 */
+		getFixedAssetsPushStorageDocByPage(data?: any): Promise<any>;
+		/**
+		 * getFixedPutStorageGoodsListByPage
+		 */
+		getFixedPutStorageGoodsListByPage(data?: any): Promise<any>;
+		/**
+		 * getIncompletePutStorageRecoeds
+		 */
+		getIncompletePutStorageRecoeds(data?: any): Promise<any>;
+		/**
+		 * getImmaterialStorageGoodsList
+		 */
+		getImmaterialStorageGoodsList(data?: any): Promise<any>;
+		/**
+		 * getConsumableStorageGoodsList
+		 */
+		getConsumableStorageGoodsList(data?: any): Promise<any>;
+		/**
+		 * getFixedStorageGoodsList
+		 */
+		getFixedStorageGoodsList(data?: any): Promise<any>;
+		/**
+		 * getFixedGoodsInfoById
+		 */
+		getFixedGoodsInfoById(data?: any): Promise<any>;
+		/**
+		 * deleteFixedGoodsInfo
+		 */
+		deleteFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * getFixedGoodsInfo
+		 */
+		getFixedGoodsInfo(data?: any): Promise<any>;
+		/**
+		 * batchUpdateInfo
+		 */
+		batchUpdateInfo(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * deleteDoc
+		 */
+		deleteDoc(data?: any): Promise<any>;
+		/**
+		 * updateDoc
+		 */
+		updateDoc(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<PushStorageDocEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: PushStorageDocEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<PushStorageDocEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getImmaterialAssetsPushStorageDocByPage: string;
+			getConsumableAssetsPutStorageDocByPage: string;
+			getImmaterialPutStorageGoodsListByPage: string;
+			getConsumablePutStorageGoodsListByPage: string;
+			getFixedAssetsPushStorageDocByPage: string;
+			getFixedPutStorageGoodsListByPage: string;
+			getIncompletePutStorageRecoeds: string;
+			getImmaterialStorageGoodsList: string;
+			getConsumableStorageGoodsList: string;
+			getFixedStorageGoodsList: string;
+			getFixedGoodsInfoById: string;
+			deleteFixedGoodsInfo: string;
+			getFixedGoodsInfo: string;
+			batchUpdateInfo: string;
+			updateStatus: string;
+			deleteDoc: string;
+			updateDoc: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getImmaterialAssetsPushStorageDocByPage: boolean;
+			getConsumableAssetsPutStorageDocByPage: boolean;
+			getImmaterialPutStorageGoodsListByPage: boolean;
+			getConsumablePutStorageGoodsListByPage: boolean;
+			getFixedAssetsPushStorageDocByPage: boolean;
+			getFixedPutStorageGoodsListByPage: boolean;
+			getIncompletePutStorageRecoeds: boolean;
+			getImmaterialStorageGoodsList: boolean;
+			getConsumableStorageGoodsList: boolean;
+			getFixedStorageGoodsList: boolean;
+			getFixedGoodsInfoById: boolean;
+			deleteFixedGoodsInfo: boolean;
+			getFixedGoodsInfo: boolean;
+			batchUpdateInfo: boolean;
+			updateStatus: boolean;
+			deleteDoc: boolean;
+			updateDoc: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsStockCheckStockCheckController {
+		/**
+		 * getIncompleteRecordByPage
+		 */
+		getIncompleteRecordByPage(data?: any): Promise<any>;
+		/**
+		 * getStockCheckPlanData
+		 */
+		getStockCheckPlanData(data?: any): Promise<any>;
+		/**
+		 * getIncompleteRecords
+		 */
+		getIncompleteRecords(data?: any): Promise<any>;
+		/**
+		 * updateStockCheckData
+		 */
+		updateStockCheckData(data?: any): Promise<any>;
+		/**
+		 * updateStatus
+		 */
+		updateStatus(data?: any): Promise<any>;
+		/**
+		 * deletePlan
+		 */
+		deletePlan(data?: any): Promise<any>;
+		/**
+		 * updatePlan
+		 */
+		updatePlan(data?: any): Promise<any>;
+		/**
+		 * getByPage
+		 */
+		getByPage(data?: any): Promise<any>;
+		/**
+		 * getById
+		 */
+		getById(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<StockCheckPlanEntity[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: StockCheckPlanEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<StockCheckPlanEntity>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			getIncompleteRecordByPage: string;
+			getStockCheckPlanData: string;
+			getIncompleteRecords: string;
+			updateStockCheckData: string;
+			updateStatus: string;
+			deletePlan: string;
+			updatePlan: string;
+			getByPage: string;
+			getById: string;
+			add: string;
+			list: string;
+			page: string;
+			info: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			getIncompleteRecordByPage: boolean;
+			getStockCheckPlanData: boolean;
+			getIncompleteRecords: boolean;
+			updateStockCheckData: boolean;
+			updateStatus: boolean;
+			deletePlan: boolean;
+			updatePlan: boolean;
+			getByPage: boolean;
+			getById: boolean;
+			add: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryConsumableAssetsGetSummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsGetSummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsGetSummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsGetSummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryConsumableAssetsGetSummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsGetSummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsGetSummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsGetSummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryConsumableAssetsInventorySummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsInventorySummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsInventorySummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsInventorySummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryConsumableAssetsInventorySummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ConsumableAssetsInventorySummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ConsumableAssetsInventorySummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ConsumableAssetsInventorySummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsDiscardSummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsDiscardSummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsDiscardSummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsDiscardSummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsDiscardSummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsDiscardSummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsDiscardSummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsDiscardSummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsGetSummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsGetSummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsGetSummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsGetSummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsGetSummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsGetSummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsGetSummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsGetSummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsInventorySummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsInventorySummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsInventorySummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsInventorySummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryFixedAssetsInventorySummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<FixedAssetsInventorySummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: FixedAssetsInventorySummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<FixedAssetsInventorySummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsDiscardSummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsDiscardSummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsDiscardSummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsDiscardSummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsDiscardSummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsDiscardSummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsDiscardSummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsDiscardSummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsGetSummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGetSummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGetSummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGetSummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsGetSummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsGetSummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsGetSummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsGetSummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsInventorySummaryController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsInventorySummaryEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsInventorySummaryEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsInventorySummaryEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsSummaryImmaterialAssetsInventorySummaryGoodsController {
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<ImmaterialAssetsInventorySummaryGoodsEntity>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: ImmaterialAssetsInventorySummaryGoodsEntity[];
+			[key: string]: any;
+		}>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<ImmaterialAssetsInventorySummaryGoodsEntity[]>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			update: string;
+			info: string;
+			page: string;
+			add: string;
+			list: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			update: boolean;
+			info: boolean;
+			page: boolean;
+			add: boolean;
+			list: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
+	interface AssetsUploadUploadController {
+		/**
+		 * imgUpload
+		 */
+		imgUpload(data?: any): Promise<any>;
+		/**
+		 * list
+		 */
+		list(data?: any): Promise<any[]>;
+		/**
+		 * page
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number };
+			list: any[];
+			[key: string]: any;
+		}>;
+		/**
+		 * info
+		 */
+		info(data?: any): Promise<any>;
+		/**
+		 * update
+		 */
+		update(data?: any): Promise<any>;
+		/**
+		 * delete
+		 */
+		delete(data?: any): Promise<any>;
+		/**
+		 * add
+		 */
+		add(data?: any): Promise<any>;
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			imgUpload: string;
+			list: string;
+			page: string;
+			info: string;
+			update: string;
+			delete: string;
+			add: string;
+		};
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			imgUpload: boolean;
+			list: boolean;
+			page: boolean;
+			info: boolean;
+			update: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+		/**
+		 * 请求
+		 */
+		request: Service["request"];
+	}
+
 	interface BaseComm {
 		/**
-		 * 修改个人信息
+		 * personUpdate
 		 */
 		personUpdate(data?: any): Promise<any>;
 		/**
-		 * 文件上传模式
+		 * uploadMode
 		 */
 		uploadMode(data?: any): Promise<any>;
 		/**
-		 * 权限与菜单
+		 * permmenu
 		 */
 		permmenu(data?: any): Promise<any>;
 		/**
-		 * 个人信息
+		 * person
 		 */
 		person(data?: any): Promise<any>;
 		/**
-		 * 文件上传
+		 * upload
 		 */
 		upload(data?: any): Promise<any>;
 		/**
-		 * 退出
+		 * logout
 		 */
 		logout(data?: any): Promise<any>;
 		/**
@@ -3327,23 +4576,27 @@ declare namespace Eps {
 
 	interface BaseOpen {
 		/**
-		 * 刷新token
+		 * refreshToken
 		 */
 		refreshToken(data?: any): Promise<any>;
 		/**
-		 * 验证码
+		 * wechatLogin
+		 */
+		wechatLogin(data?: any): Promise<any>;
+		/**
+		 * captcha
 		 */
 		captcha(data?: any): Promise<any>;
 		/**
-		 * 登录
+		 * login
 		 */
 		login(data?: any): Promise<any>;
 		/**
-		 * 获得网页内容的参数值
+		 * html
 		 */
 		html(data?: any): Promise<any>;
 		/**
-		 * 实体信息与路径
+		 * eps
 		 */
 		eps(data?: any): Promise<any>;
 		/**
@@ -3379,6 +4632,7 @@ declare namespace Eps {
 		 */
 		permission: {
 			refreshToken: string;
+			wechatLogin: string;
 			captcha: string;
 			login: string;
 			html: string;
@@ -3395,6 +4649,7 @@ declare namespace Eps {
 		 */
 		_permission: {
 			refreshToken: boolean;
+			wechatLogin: boolean;
 			captcha: boolean;
 			login: boolean;
 			html: boolean;
@@ -3414,23 +4669,27 @@ declare namespace Eps {
 
 	interface BaseSysDepartment {
 		/**
-		 * 删除
+		 * getTreeData
+		 */
+		getTreeData(data?: any): Promise<any>;
+		/**
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 排序
+		 * order
 		 */
 		order(data?: any): Promise<any>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<BaseSysDepartmentEntity[]>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3449,6 +4708,7 @@ declare namespace Eps {
 		 * 权限标识
 		 */
 		permission: {
+			getTreeData: string;
 			delete: string;
 			update: string;
 			order: string;
@@ -3461,6 +4721,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getTreeData: boolean;
 			delete: boolean;
 			update: boolean;
 			order: boolean;
@@ -3477,19 +4738,19 @@ declare namespace Eps {
 
 	interface BaseSysLog {
 		/**
-		 * 日志保存时间
+		 * setKeep
 		 */
 		setKeep(data?: any): Promise<any>;
 		/**
-		 * 获得日志保存时间
+		 * getKeep
 		 */
 		getKeep(data?: any): Promise<any>;
 		/**
-		 * 清理
+		 * clear
 		 */
 		clear(data?: any): Promise<any>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3552,31 +4813,35 @@ declare namespace Eps {
 
 	interface BaseSysMenu {
 		/**
-		 * 创建代码
+		 * create
 		 */
 		create(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * getAll
+		 */
+		getAll(data?: any): Promise<any>;
+		/**
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 解析
+		 * parse
 		 */
 		parse(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<BaseSysMenuEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<BaseSysMenuEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3584,7 +4849,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3592,6 +4857,7 @@ declare namespace Eps {
 		 */
 		permission: {
 			create: string;
+			getAll: string;
 			delete: string;
 			update: string;
 			parse: string;
@@ -3605,6 +4871,7 @@ declare namespace Eps {
 		 */
 		_permission: {
 			create: boolean;
+			getAll: boolean;
 			delete: boolean;
 			update: boolean;
 			parse: boolean;
@@ -3621,23 +4888,23 @@ declare namespace Eps {
 
 	interface BaseSysParam {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 获得网页内容的参数值
+		 * html
 		 */
 		html(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<BaseSysParamEntity>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3645,7 +4912,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3684,23 +4951,23 @@ declare namespace Eps {
 
 	interface BaseSysRole {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<BaseSysRoleEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<BaseSysRoleEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3708,7 +4975,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3741,27 +5008,31 @@ declare namespace Eps {
 
 	interface BaseSysUser {
 		/**
-		 * 删除
+		 * getAllInUseAccountNumberList
+		 */
+		getAllInUseAccountNumberList(data?: any): Promise<any>;
+		/**
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 移动部门
+		 * move
 		 */
 		move(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<BaseSysUserEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<BaseSysUserEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3769,13 +5040,14 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
 		 * 权限标识
 		 */
 		permission: {
+			getAllInUseAccountNumberList: string;
 			delete: string;
 			update: string;
 			move: string;
@@ -3788,6 +5060,7 @@ declare namespace Eps {
 		 * 权限状态
 		 */
 		_permission: {
+			getAllInUseAccountNumberList: boolean;
 			delete: boolean;
 			update: boolean;
 			move: boolean;
@@ -3804,31 +5077,31 @@ declare namespace Eps {
 
 	interface CloudDb {
 		/**
-		 * 初始化Entity
+		 * initEntity
 		 */
 		initEntity(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 数据操作
+		 * data
 		 */
 		data(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<CloudDBEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<CloudDBEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3836,7 +5109,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3873,27 +5146,27 @@ declare namespace Eps {
 
 	interface CloudFuncInfo {
 		/**
-		 * 调用云函数
+		 * invoke
 		 */
 		invoke(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<CloudFuncInfoEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<CloudFuncInfoEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3901,7 +5174,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3936,23 +5209,23 @@ declare namespace Eps {
 
 	interface CloudFuncLog {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<CloudFuncLogEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<CloudFuncLogEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -3960,7 +5233,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -3993,23 +5266,23 @@ declare namespace Eps {
 
 	interface DemoGoods {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<DemoGoodsEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<DemoGoodsEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4017,7 +5290,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4050,27 +5323,27 @@ declare namespace Eps {
 
 	interface DictInfo {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 获得字典数据
+		 * data
 		 */
 		data(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<DictInfoEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<DictInfoEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4078,7 +5351,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4113,23 +5386,23 @@ declare namespace Eps {
 
 	interface DictType {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<DictTypeEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<DictTypeEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4137,7 +5410,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4170,23 +5443,23 @@ declare namespace Eps {
 
 	interface IotDevice {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<IotDeviceEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<IotDeviceEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4194,7 +5467,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4227,7 +5500,7 @@ declare namespace Eps {
 
 	interface IotMessage {
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4284,11 +5557,11 @@ declare namespace Eps {
 
 	interface IotMqtt {
 		/**
-		 * 推送消息
+		 * publish
 		 */
 		publish(data?: any): Promise<any>;
 		/**
-		 * MQTT配置信息
+		 * config
 		 */
 		config(data?: any): Promise<any>;
 		/**
@@ -4353,15 +5626,15 @@ declare namespace Eps {
 
 	interface RecycleData {
 		/**
-		 * 恢复数据
+		 * restore
 		 */
 		restore(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<RecycleDataEntity>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4416,27 +5689,27 @@ declare namespace Eps {
 
 	interface SpaceInfo {
 		/**
-		 * 获得WPS配置
+		 * getConfig
 		 */
 		getConfig(data?: any): Promise<any>;
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<SpaceInfoEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<SpaceInfoEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4444,7 +5717,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4479,23 +5752,23 @@ declare namespace Eps {
 
 	interface SpaceType {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<SpaceTypeEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<SpaceTypeEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4503,7 +5776,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4536,31 +5809,31 @@ declare namespace Eps {
 
 	interface TaskInfo {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 开始
+		 * start
 		 */
 		start(data?: any): Promise<any>;
 		/**
-		 * 执行一次
+		 * once
 		 */
 		once(data?: any): Promise<any>;
 		/**
-		 * 停止
+		 * stop
 		 */
 		stop(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<TaskInfoEntity>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4568,11 +5841,11 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 日志
+		 * log
 		 */
 		log(data?: any): Promise<any>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4617,23 +5890,23 @@ declare namespace Eps {
 
 	interface UserInfo {
 		/**
-		 * 删除
+		 * delete
 		 */
 		delete(data?: any): Promise<any>;
 		/**
-		 * 修改
+		 * update
 		 */
 		update(data?: any): Promise<any>;
 		/**
-		 * 单个信息
+		 * info
 		 */
 		info(data?: any): Promise<UserInfoEntity>;
 		/**
-		 * 列表查询
+		 * list
 		 */
 		list(data?: any): Promise<UserInfoEntity[]>;
 		/**
-		 * 分页查询
+		 * page
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number };
@@ -4641,7 +5914,7 @@ declare namespace Eps {
 			[key: string]: any;
 		}>;
 		/**
-		 * 新增
+		 * add
 		 */
 		add(data?: any): Promise<any>;
 		/**
@@ -4685,8 +5958,12 @@ declare namespace Eps {
 		test: Test;
 		assets: {
 			assetsCategory: AssetsAssetsCategory;
+			chart: { dataBoardController: AssetsChartDataBoardController };
 			consumable: {
 				consumableAssetsFieldController: AssetsConsumableConsumableAssetsFieldController;
+				consumableAssetsGoodsController: AssetsConsumableConsumableAssetsGoodsController;
+				consumableAssetsGoodsGetController: AssetsConsumableConsumableAssetsGoodsGetController;
+				consumableAssetsGoodsPushStorageController: AssetsConsumableConsumableAssetsGoodsPushStorageController;
 			};
 			department: AssetsDepartment;
 			employee: AssetsEmployee;
@@ -4695,15 +5972,60 @@ declare namespace Eps {
 				assetsFixedField: AssetsFixedAssetsFixedField;
 				assetsFixedGoodsController: AssetsFixedAssetsFixedGoodsController;
 				assetsFixedGoodsGetController: AssetsFixedAssetsFixedGoodsGetController;
+				assetsFixedGoodsPushStorageController: AssetsFixedAssetsFixedGoodsPushStorageController;
 				fieldCookieDataController: AssetsFixedFieldCookieDataController;
 				fieldSelectOptionController: AssetsFixedFieldSelectOptionController;
 				fixedAssetsGoodsDiscardController: AssetsFixedFixedAssetsGoodsDiscardController;
 			};
+			goodsDiscard: {
+				goodsDiscardDocController: AssetsGoodsDiscardGoodsDiscardDocController;
+			};
+			goodsReceive: {
+				goodsReceiveDocController: AssetsGoodsReceiveGoodsReceiveDocController;
+			};
+			goodsReturn: { goodsReturnDocController: AssetsGoodsReturnGoodsReturnDocController };
 			goodsSupplier: AssetsGoodsSupplier;
+			goodsTransfer: {
+				goodsTransferDocController: AssetsGoodsTransferGoodsTransferDocController;
+			};
 			immaterial: {
 				immaterialAssetsFieldController: AssetsImmaterialImmaterialAssetsFieldController;
+				immaterialAssetsGoodsController: AssetsImmaterialImmaterialAssetsGoodsController;
+				immaterialAssetsGoodsDiscardController: AssetsImmaterialImmaterialAssetsGoodsDiscardController;
+				immaterialAssetsGoodsGetController: AssetsImmaterialImmaterialAssetsGoodsGetController;
+				immaterialAssetsGoodsPushStorageController: AssetsImmaterialImmaterialAssetsGoodsPushStorageController;
+			};
+			inventory: {
+				assetsFixedInventoryController: AssetsInventoryAssetsFixedInventoryController;
+				assetsFixedInventoryProfitAndLossController: AssetsInventoryAssetsFixedInventoryProfitAndLossController;
+				consumableAssetsInventoryPlanController: AssetsInventoryConsumableAssetsInventoryPlanController;
+				immaterialAssetsInventoryPlanController: AssetsInventoryImmaterialAssetsInventoryPlanController;
 			};
 			label: { assetsGoodsLabelController: AssetsLabelAssetsGoodsLabelController };
+			pushStorageDoc: {
+				excelController: AssetsPushStorageDocExcelController;
+				pushStorageDocController: AssetsPushStorageDocPushStorageDocController;
+			};
+			stockCheck: { stockCheckController: AssetsStockCheckStockCheckController };
+			summary: {
+				consumableAssetsGetSummaryController: AssetsSummaryConsumableAssetsGetSummaryController;
+				consumableAssetsGetSummaryGoodsController: AssetsSummaryConsumableAssetsGetSummaryGoodsController;
+				consumableAssetsInventorySummaryController: AssetsSummaryConsumableAssetsInventorySummaryController;
+				consumableAssetsInventorySummaryGoodsController: AssetsSummaryConsumableAssetsInventorySummaryGoodsController;
+				fixedAssetsDiscardSummaryController: AssetsSummaryFixedAssetsDiscardSummaryController;
+				fixedAssetsDiscardSummaryGoodsController: AssetsSummaryFixedAssetsDiscardSummaryGoodsController;
+				fixedAssetsGetSummaryController: AssetsSummaryFixedAssetsGetSummaryController;
+				fixedAssetsGetSummaryGoodsController: AssetsSummaryFixedAssetsGetSummaryGoodsController;
+				fixedAssetsInventorySummaryController: AssetsSummaryFixedAssetsInventorySummaryController;
+				fixedAssetsInventorySummaryGoodsController: AssetsSummaryFixedAssetsInventorySummaryGoodsController;
+				immaterialAssetsDiscardSummaryController: AssetsSummaryImmaterialAssetsDiscardSummaryController;
+				immaterialAssetsDiscardSummaryGoodsController: AssetsSummaryImmaterialAssetsDiscardSummaryGoodsController;
+				immaterialAssetsGetSummaryController: AssetsSummaryImmaterialAssetsGetSummaryController;
+				immaterialAssetsGetSummaryGoodsController: AssetsSummaryImmaterialAssetsGetSummaryGoodsController;
+				immaterialAssetsInventorySummaryController: AssetsSummaryImmaterialAssetsInventorySummaryController;
+				immaterialAssetsInventorySummaryGoodsController: AssetsSummaryImmaterialAssetsInventorySummaryGoodsController;
+			};
+			upload: { uploadController: AssetsUploadUploadController };
 		};
 		base: {
 			comm: BaseComm;

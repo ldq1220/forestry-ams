@@ -54,6 +54,7 @@ const Crud = useCrud({ service: service.base.sys.role }, (app) => {
 const Upsert = useUpsert({
 	dialog: {
 		width: '800px',
+		draggable: true,
 	},
 
 	items: [

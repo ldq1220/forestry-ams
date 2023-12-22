@@ -1,6 +1,6 @@
-import { BaseService, Service } from "/@/cool";
+import { BaseService, Service } from '/@/cool'
 
-@Service("test")
+@Service('test')
 class Test extends BaseService {}
 
-export default Test;
+export default Test

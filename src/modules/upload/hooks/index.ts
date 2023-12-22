@@ -1,8 +1,8 @@
-import { inject } from "vue";
-import { Upload } from "../types";
+import { inject } from 'vue'
+import { Upload } from '../types'
 
 export function useSpace() {
-	const space = inject("upload-space") as Upload.Space;
+	const space = inject('upload-space') as Upload.Space
 
-	return { space };
+	return { space }
 }

@@ -11,7 +11,7 @@
 		</el-row>
 
 		<template #reference>
-			<el-input v-model="name" placeholder="请选择" clearable @input="onChange" />
+			<el-input v-model="name" placeholder="请选择" @input="onChange" />
 		</template>
 	</el-popover>
 </template>

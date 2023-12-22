@@ -124,18 +124,20 @@ export default defineComponent({
 			const filename = await getFileName()
 
 			// 过滤
-			data = data.map((d: any) => fields.map((f) => d[f]))
-
-			// 导出 excel
-			export_json_to_excel({
-				header,
-				data,
-				filename,
-				autoWidth: props.autoWidth,
-				bookType: props.bookType,
-			})
-
-			loading.value = false
+			try {
+				data = data.map((d: any) => fields.map((f) => d[f]))
+				// 导出 excel
+				export_json_to_excel({
+					header,
+					data,
+					filename,
+					autoWidth: props.autoWidth,
+					bookType: props.bookType,
+				})
+				loading.value = false
+			} catch (error) {
+				loading.value = false
+			}
 		}
 
 		return () => {

@@ -11,7 +11,7 @@
 			<cl-multi-delete-btn />
 
 			<!-- 自动创建菜单 -->
-			<auto-menu />
+			<!-- <auto-menu /> -->
 		</cl-row>
 
 		<cl-row>
@@ -78,7 +78,7 @@ import { Check, Close } from '@element-plus/icons-vue'
 import { setFocus, useCrud, useTable, useUpsert } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
 import { deepTree } from '/@/cool/utils'
-import AutoMenu from '/$/magic/components/auto-menu/index.vue'
+// import AutoMenu from '/$/magic/components/auto-menu/index.vue'
 import { useStore } from '../store'
 
 const { service, mitt } = useCool()
@@ -194,6 +194,7 @@ const Table = useTable({
 const Upsert = useUpsert({
 	dialog: {
 		width: '800px',
+		draggable: true,
 	},
 	items: [
 		{

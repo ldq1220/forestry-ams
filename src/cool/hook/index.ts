@@ -1,40 +1,40 @@
-import { getCurrentInstance, Ref, reactive } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { service } from "../service";
-import { useBrowser } from "./browser";
-import { useMitt } from "./mitt";
+import { getCurrentInstance, Ref, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { service } from '../service'
+import { useBrowser } from './browser'
+import { useMitt } from './mitt'
 
 export function useRefs() {
-	const refs = reactive<{ [key: string]: any }>({});
+	const refs = reactive<{ [key: string]: any }>({})
 	function setRefs(name: string) {
 		return (el: any) => {
-			refs[name] = el;
-		};
+			refs[name] = el
+		}
 	}
 
-	return { refs, setRefs };
+	return { refs, setRefs }
 }
 
 export function useParent(name: string, r: Ref) {
-	const d = getCurrentInstance();
+	const d = getCurrentInstance()
 
 	if (d) {
-		let parent = d.proxy?.$.parent;
+		let parent = d.proxy?.$.parent
 
 		if (parent) {
 			while (parent && parent.type?.name != name) {
-				parent = parent?.parent;
+				parent = parent?.parent
 			}
 
 			if (parent) {
 				if (parent.type.name == name) {
-					r.value = parent.exposed;
+					r.value = parent.exposed
 				}
 			}
 		}
 	}
 
-	return r;
+	return r
 }
 
 export function useCool() {
@@ -44,9 +44,9 @@ export function useCool() {
 		router: useRouter(),
 		mitt: useMitt(),
 		...useBrowser(),
-		...useRefs()
-	};
+		...useRefs(),
+	}
 }
 
-export * from "./browser";
-export * from "./hmr";
+export * from './browser'
+export * from './hmr'

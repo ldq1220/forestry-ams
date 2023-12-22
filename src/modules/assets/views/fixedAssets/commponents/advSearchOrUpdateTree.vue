@@ -19,7 +19,6 @@ watch(treeValue, (newValue) => {
 
 // 点击树形节点
 const changenode = (currentData: any) => {
-	// console.log(advSearchStore.searchData[props.page])
 	// 高级搜索
 	if (props.type === 'adeSearch') {
 		if (advSearchStore.searchData[props.page]) {

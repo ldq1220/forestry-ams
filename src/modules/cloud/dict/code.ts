@@ -28,8 +28,8 @@ export class Xxx extends CloudCrud {
 	"params": {
 		
 	}
-}`
-};
+}`,
+}
 
 export const CodeDeclare = `
 declare module 'typeorm' {
@@ -804,4 +804,4 @@ declare module '@cool-midway/cloud' {
     private getOptionFind;
   }
 }
-`;
+`

@@ -1,11 +1,11 @@
-import { useStore } from "./store";
+import { useStore } from './store'
 
 export function useBase() {
 	return {
-		...useStore()
-	};
+		...useStore(),
+	}
 }
 
-export * from "./common";
-export * from "./hooks";
-export * from "./types/index.d";
+export * from './common'
+export * from './hooks'
+export * from './types/index.d'

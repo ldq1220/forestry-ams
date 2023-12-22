@@ -9,10 +9,10 @@
 			<!-- <cl-multi-delete-btn /> -->
 			<!-- 自定义列 -->
 			<cl-column-custom :columns="custom" name="assetsFixedGoods" />
-			<!-- <cl-column-custom :columns="Table?.columns" /> -->
+			<!-- 批量修改 -->
+			<el-button type="primary" size="default" @click="handleBatchUpdate" v-permission="service.assets.pushStorageDoc.pushStorageDocController.permission.batchUpdateInfo">批量修改</el-button>
 
-			<div class="upload__">
-				<!-- <cl-upload v-model="urls" multiple text="财厅数据表导入" :limit="1" type="file" accept=".xls,.xlsx" @success="onSuccess" /> -->
+			<div class="upload" v-permission="service.assets.fixed.assetsFixedGoodsController.permission.import">
 				<cl-upload
 					v-model="urls"
 					type="file"
@@ -20,37 +20,31 @@
 					:limit="1"
 					:limit-upload="false"
 					multiple="false"
-					text="财厅数据表导入"
+					text="财厅编号更新导入"
 					accept=".xls,.xlsx"
 					@success="onSuccess"
 					:auto-upload="true"
 				></cl-upload>
 			</div>
 
+			<!-- 导出 -->
+			<cl-export-btn type="success" :columns="exportColumns" :filename="'固定资产表-' + dayjs().format('YYYY-MM-DD')" :data="onExportData">导出</cl-export-btn>
+
 			<cl-flex1 />
 
+			<!-- 入库日期筛选 -->
 			<div class="date_picker">
 				<span style="font-size: 12px; margin-right: 10px">入库日期</span>
-				<el-date-picker
-					v-model="putStorageTime"
-					type="daterange"
-					range-separator="至"
-					start-placeholder="开始日期"
-					end-placeholder="结束日期"
-					style="width: 240px"
-					@change="handlePutStorageTime"
-				/>
+				<el-date-picker v-model="putStorageTime" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width: 220px" />
 			</div>
 
 			<!-- 资产状态筛选 -->
 			<cl-filter label="资产状态">
-				<!-- 配置props，选择后会自动过滤列表 -->
-				<!-- <cl-select :options="options.status" prop="field14" /> -->
-				<cl-select :options="options.status" prop="field14" />
+				<cl-select style="width: 120px" :options="assetsStatusStore.assetsStatus" prop="field12" />
 			</cl-filter>
 
 			<!-- 关键字搜索 -->
-			<cl-search-key placeholder="请输入资产名名称" field="field41" />
+			<cl-search-key placeholder="搜索资产名称" />
 
 			<!-- <cl-flex1 /> -->
 			<!-- 高级搜索按钮 -->
@@ -59,7 +53,21 @@
 
 		<cl-row>
 			<!-- 数据表格 -->
-			<cl-table ref="Table" />
+			<cl-table ref="Table" @selection-change="selectionChange">
+				<!-- 资产编号 -->
+				<template #column-customNo="{ scope }">
+					{{ scope.row.customNo }}
+					<el-tooltip content="复制资产编号" placement="top" effect="dark">
+						<span class="customNo_copy_icon" @click="copy_customNo(scope.row.customNo)">
+							<el-icon><copy-document /></el-icon>
+						</span>
+					</el-tooltip>
+				</template>
+				<!-- 入库日期 -->
+				<template #column-field55="{ scope }">
+					{{ dayjs(scope.row.field55).format('YYYY-MM-DD') }}
+				</template>
+			</cl-table>
 		</cl-row>
 
 		<cl-row>
@@ -68,13 +76,60 @@
 			<cl-pagination />
 		</cl-row>
 
+		<!-- 批量修改对话框 -->
+		<batchUpdateDialog :visiable="visiable" dataType="固定资产" :selectionChangeData="selectionChangeData" @closeDialog="closeDialog" />
+
 		<!-- 新增、编辑 -->
-		<cl-upsert ref="Upsert" />
+		<cl-upsert ref="Upsert">
+			<template #slot-op-btns="{ scope }">
+				<el-button type="primary" @click="addRow(scope)" :icon="Plus">添加</el-button>
+				<el-button type="danger" @click="deleteRow(scope)" :icon="Delete">删除</el-button>
+			</template>
+			<template #slot-accessory-list="{ scope }">
+				<el-table :data="scope.accessoryList" :stripe="true" style="width: 100%" @select="accessoryDataSelect" @select-all="accessoryDataSelect">
+					<el-table-column type="selection" width="40" />
+					<el-table-column type="index" />
+					<el-table-column prop="name" label="配件名称" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.name" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="sku" label="规格型号" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.sku" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="cnt" label="数量" header-align="center" width="120">
+						<template #default="scope2">
+							<el-input-number v-model="scope2.row.cnt" placeholder="请填写" :min="1" :precision="0" class="full-width" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="buyDate" label="购置日期" header-align="center">
+						<template #default="scope2">
+							<el-date-picker v-model="scope2.row.buyDate" type="date" placeholder="请选择" format="YYYY-MM-DD" value-format="YYYY-MM-DD" style="width: 100%" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="price" label="原值(元)" header-align="center">
+						<template #default="scope2">
+							<el-input-number :precision="2" v-model="scope2.row.price" placeholder="请填写" class="full-width" />
+						</template>
+					</el-table-column>
+					<el-table-column prop="manufacturer" label="生产厂商" header-align="center">
+						<template #default="scope2">
+							<el-input v-model="scope2.row.manufacturer" placeholder="请填写" />
+						</template>
+					</el-table-column>
+					<template #empty>
+						<el-empty />
+					</template>
+				</el-table>
+			</template>
+		</cl-upsert>
 
 		<!-- 详情对话框 -->
 		<div class="info_dialog">
-			<cl-dialog v-model="infoDialog" title="固定资产详情" width="800" center>
-				<el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+			<cl-dialog v-model="infoDialog" title="固定资产详情" width="950" center draggable>
+				<el-tabs v-model="activeName" class="demo-tabs">
 					<el-tab-pane label="基础信息" name="basics">
 						<div class="info_dialog_content">
 							<div class="content_item" v-for="(item, index) in fixedAssetsInfo.baseData" :key="index">
@@ -115,6 +170,44 @@
 							</div>
 						</div>
 					</el-tab-pane>
+					<el-tab-pane label="附属附件" name="accessoryList">
+						<el-table :data="fixedAssetsInfo.accessoryList" :stripe="true" style="width: 100%">
+							<el-table-column type="index" width="40" />
+							<el-table-column prop="name" label="配件名称" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.name ? scope.row.name : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="sku" label="规格型号" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.sku ? scope.row.sku : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="cnt" label="数量" width="130" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.cnt ? scope.row.cnt : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="buyDate" label="购置日期" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.buyDate ? scope.row.buyDate : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="price" label="原值(元)" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.price ? scope.row.price : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<el-table-column prop="manufacturer" label="生产厂商" header-align="center">
+								<template #default="scope">
+									<el-text>{{ scope.row.manufacturer ? scope.row.manufacturer : '-' }}</el-text>
+								</template>
+							</el-table-column>
+							<template #empty>
+								<el-empty />
+							</template>
+						</el-table>
+					</el-tab-pane>
 				</el-tabs>
 				<template #footer>
 					<span class="dialog-footer">
@@ -124,37 +217,67 @@
 			</cl-dialog>
 		</div>
 
-		<!-- 二维码标签对话框 -->
-		<cl-dialog v-model="QRCdoeDialog" title="固定资产二维码标签" width="600" center>
-			<div class="QRcode_box">
-				<h3>广东省林业调查规划院</h3>
-				<div class="flag"></div>
-				<img src="" alt="" />
-				<div class="code_info">
-					<div class="content_item">
-						<div class="item_label">编号</div>
-						<div class="item_content">Y-201006-00005</div>
+		<!-- 打印 -->
+		<div class="print">
+			<cl-dialog v-model="printVisible" title="打印设置" width="590px" class="print" :close-on-click-modal="false" align-center :before-close="beforePrintClose">
+				<div class="print_box" v-show="printInfo.labelArr.length == 0">
+					<div class="print_left">
+						<h3 style="text-align: center">广东省林业调查</h3>
+						<h3 style="text-align: center">规划院资产</h3>
+						<img :src="printInfo.qrCodeFilePath" alt="" />
 					</div>
-					<div class="content_item">
-						<div class="item_label">资产名称</div>
-						<div class="item_content">Y-201006-00005</div>
-					</div>
-					<div class="content_item">
-						<div class="item_label">使用部门</div>
-						<div class="item_content">后勤服务科</div>
-					</div>
-					<div class="content_item">
-						<div class="item_label">使用部门</div>
-						<div class="item_content">后勤服务科</div>
+					<div class="form_box">
+						<div class="form_item" v-for="(item, index) in printData.labelArr" :key="index">
+							<el-input v-model="item.title" placeholder="打印标题" class="inprt_input"></el-input>
+							<el-select v-model="item.fieldId" class="m-2" placeholder="请选择打印内容" clearable>
+								<el-option
+									v-for="field in printInfo.fieldArr"
+									:key="field.fieldId"
+									:label="field.fieldName"
+									:value="field.fieldId"
+									@click="handleChangePrintContent(field.fieldName, index)"
+								/>
+							</el-select>
+						</div>
 					</div>
 				</div>
-			</div>
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="QRCdoeDialog = false">打印</el-button>
-				</span>
-			</template>
-		</cl-dialog>
+				<div v-show="printInfo.labelArr.length !== 0" v-loading="printLoaing" element-loading-text="打印中,请稍等...">
+					<div class="print_box" ref="print_dom" id="print_dom">
+						<div class="print_left">
+							<h3 style="text-align: center">广东省林业调查</h3>
+							<h3 style="text-align: center">规划院资产</h3>
+							<img :src="printOptionsInfo.qrCodeFilePath" alt="" style="display: block; width: 100px; height: 100px; margin: 10px auto" />
+						</div>
+
+						<div class="form_box">
+							<div class="info_dialog_content">
+								<div class="content_item" v-for="item in printOptionsInfo.labelArr" :key="item.label">
+									<div class="item_label">{{ item.label }}</div>
+									<div class="item_content">
+										{{ item.value.includes(']') ? item.value.split(']')[1] : item.value }}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<template #footer>
+					<div class="dialog_footer">
+						<div class="print_status">
+							<!-- 状态
+							<span>{{ labelStatus }}</span> -->
+						</div>
+						<div class="footer_btns">
+							<el-button @click="handlePrintClose">取消</el-button>
+							<el-button type="success" @click="handlePrintSave" v-show="printInfo.labelArr.length == 0">保存</el-button>
+							<el-button type="success" @click="handlePrintUpdate" v-show="printInfo.labelArr.length != 0">修改</el-button>
+							<!-- <el-button type="primary" v-print="printObj" @click="printPage" v-show="printInfo.labelArr.length != 0">打印</el-button> -->
+							<printButton v-if="printInfo.labelArr.length != 0 && printVisible" :printData="printOptionsInfo" @beginPrint="beginPrint" @overPrint="overPrint" />
+						</div>
+					</div>
+				</template>
+			</cl-dialog>
+		</div>
 
 		<!-- 高级搜索 -->
 		<cl-adv-search ref="AdvSearch">
@@ -169,14 +292,26 @@
 import { useCrud, useTable, useUpsert, useAdvSearch } from '@cool-vue/crud'
 import { useCool } from '/@/cool'
 import { onMounted, reactive, ref, watch } from 'vue'
-import type { TabsPaneContext } from 'element-plus'
+import useDepartmentOptions from '/@/modules/base/store/departmentOptions'
+import useEmployeeList from '/@/modules/base/store/employeeList'
+import useGoodsSupplier from '/@/modules/base/store/goodsSupplier'
+import useAssetsCategory from '/@/modules/base/store/assetsCategory'
+import useAssetsStatus from '/@/modules/base/store/assetsStatus'
+import batchUpdateDialog from '../../components/batchUpdateDialog.vue'
+import printButton from './commponents/printButton.vue'
 import dayjs from 'dayjs'
-import { ElMessage } from 'element-plus'
-// import advSearchOrUpdateTree from './commponents/advSearchOrUpdateTree.vue'
-import useAdvSearchStore from '/@/modules/base/store/advSearch'
+import { ElMessage, ElButton } from 'element-plus'
+import useClipboard from 'vue-clipboard3'
+import { CopyDocument, Plus, Delete } from '@element-plus/icons-vue'
+
+const { toClipboard } = useClipboard()
+const departmentOptionsStore = useDepartmentOptions()
+const employeeListStore = useEmployeeList()
+const goodsSupplierStore = useGoodsSupplier()
+const assetsCategoryStore = useAssetsCategory()
+const assetsStatusStore = useAssetsStatus()
 
 const { service } = useCool()
-const advSearchStore = useAdvSearchStore()
 
 const custom = ref() // 自定义列 数据
 const urls = ref()
@@ -186,44 +321,23 @@ const fixedAssetsInfo: any = reactive({
 	useData: [],
 	incomeData: [],
 	otherData: [],
+	accessoryList: [],
 })
 const activeName = ref('basics')
 const infoDialog = ref(false)
-const QRCdoeDialog = ref(false)
 const searchEnable: any = ref([]) // 高级搜索数据
 const putStorageTime: any = ref([]) // 入库日期
-// 资产状态
-const options = reactive({
-	status: [
-		{
-			label: '闲置',
-			value: 0,
-			children: [
-				{ label: '闲置1', value: 0 },
-				{ label: '闲置2', value: 2 },
-			],
-		},
-		{
-			label: '闲置333',
-			value: 0,
-			children: [
-				{ label: '闲置1', value: 0 },
-				{ label: '闲置2', value: 2 },
-			],
-		},
-	],
-})
+const labelStatus = ref('未打印')
+
 // 上传成功
 function onSuccess<T extends { id: number }>(data: T) {
-	// console.log(data.url)
+	// 更新财厅编号
 	service.assets.fixed.assetsFixedGoodsController
-		.import({
+		.updateAssetsCTNo({
 			// @ts-ignore
 			filePath: data.url,
 		})
-		.then((res) => {
-			console.log(res)
-
+		.then(() => {
 			// 导入结果
 			ElMessage.success('导入成功')
 			refresh()
@@ -233,7 +347,6 @@ function onSuccess<T extends { id: number }>(data: T) {
 onMounted(() => {
 	addOptionsNode() //新加的字段查询方法
 	getColumns() // 获取表格显示字段
-	getFixedStatusOption() // 获取资产状态列表
 
 	// 监听自定义列的变化
 	watch(custom, () => {
@@ -241,11 +354,35 @@ onMounted(() => {
 	})
 })
 
+// 复制资产编号
+const copy_customNo = async (copyText: string) => {
+	try {
+		await toClipboard(copyText)
+		ElMessage.success('复制成功')
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+// 批量修改
+const visiable = ref(false)
+const selectionChangeData = ref([])
+const handleBatchUpdate = () => {
+	selectionChangeData.value.length === 0 ? ElMessage.info('请选择批量修改项') : (visiable.value = true)
+}
+const closeDialog = () => {
+	visiable.value = false
+	refresh()
+}
+const selectionChange = (row: any) => {
+	selectionChangeData.value = row
+}
+
 // 新加的字段查询方法
 const addOptionsNode = () => {
 	service.assets.fixed.fieldCookieDataController?.getFixedAssetsNewCustomFields().then((res) => {
-		let assetsFixedGoods = JSON.parse(localStorage.getItem('column-custom__assetsFixedGoods') as string)
-		if (res.length > 0 && assetsFixedGoods.length > 0) {
+		let assetsFixedGoods = JSON.parse(localStorage.getItem('column_custom_assetsFixedGoods') as string) || []
+		if (res.length > 0 || assetsFixedGoods.length > 0) {
 			let lebelArr: any = []
 			assetsFixedGoods.forEach((item: { label: any }) => {
 				lebelArr.push(item.label)
@@ -256,21 +393,55 @@ const addOptionsNode = () => {
 				}
 			})
 
-			localStorage.setItem('column-custom__assetsFixedGoods', JSON.stringify(assetsFixedGoods))
-			// console.log(assetsFixedGoods)
+			localStorage.setItem('column_custom_assetsFixedGoods', JSON.stringify(assetsFixedGoods))
 		}
 	})
+}
+
+// 列设定一些宽度
+const addStyle = (obj: any, item: any) => {
+	if (item.fieldName === '所属单位') {
+		obj.width = 250
+		obj.headerAlign = 'center'
+		obj.align = 'left'
+	} else if (item.fieldName === '资产分类') {
+		obj.width = 250
+		obj.headerAlign = 'center'
+		obj.align = 'left'
+	} else if (item.fieldName === '财厅编号') {
+		obj.width = 200
+		obj.headerAlign = 'center'
+		obj.align = 'center'
+	} else if (item.fieldName === '资产名称') {
+		obj.width = 200
+		obj.headerAlign = 'center'
+		obj.align = 'center'
+	} else {
+		obj.width = 150
+	}
 }
 
 // 获取表格显示字段 && 高级搜索 && 编辑form表单
 const getColumns = () => {
 	service.assets.fixed.assetsFixedGoodsController.getTableFields().then((res) => {
 		// 表格配置项
-		res.forEach((item: { fieldId: any; fieldName: any; searchEnable: number }) => {
-			const obj = {
+		res.forEach((item: { fieldId: string; fieldName: any; dataType: string; searchEnable: number }) => {
+			const obj: any = {
 				prop: item.fieldId,
 				label: item.fieldName,
 				hidden: false,
+			}
+			addStyle(obj, item)
+			if (item.fieldId === 'customNo') {
+				obj.width = 180
+			}
+			if (['date', 'number', 'integer'].includes(item.dataType)) {
+				obj.sortable = 'asc'
+			}
+			if (item.dataType === 'date') {
+				obj.formatter = (row: any) => {
+					return row[item.fieldId] ? dayjs(row[item.fieldId]).format('YYYY-MM-DD') : ''
+				}
 			}
 			Table.value.columns.push(obj)
 
@@ -281,11 +452,15 @@ const getColumns = () => {
 		})
 
 		custom.value = Table.value.columns // 给自定义列 数据
+		// 给 导出添加数据
+		custom.value.forEach((item: any) => {
+			exportColumns.value.unshift(item)
+		})
 
 		if (Table.value.columns.length > 0) {
 			Table.value.columns.push({
 				type: 'op',
-				width: 340,
+				width: 300,
 				// @ts-ignore
 				buttons({ scope }) {
 					return [
@@ -294,9 +469,9 @@ const getColumns = () => {
 							label: '详情',
 							type: 'info',
 							onClick() {
-								service.assets.fixed.assetsFixedGoodsController.getById({ id: scope.row.id }).then((res) => {
+								service.assets.pushStorageDoc.pushStorageDocController.getFixedGoodsInfoById({ id: scope.row.id }).then((res) => {
+									// console.log(res)
 									Object.assign(fixedAssetsInfo, res)
-									console.log(fixedAssetsInfo)
 								})
 
 								infoDialog.value = true
@@ -304,11 +479,52 @@ const getColumns = () => {
 						},
 						'delete',
 						{
-							label: '二维码标签',
-							type: 'info',
-							onClick({}) {
-								// ElMessage.success(scope.row.name + '正常')
-								QRCdoeDialog.value = true
+							label: '打印',
+							type: 'primary',
+							onClick() {
+								printData.labelArr = [
+									{
+										title: '',
+										fieldId: '',
+									},
+									{
+										title: '',
+										fieldId: '',
+									},
+									{
+										title: '',
+										fieldId: '',
+									},
+									{
+										title: '',
+										fieldId: '',
+									},
+								]
+								service.assets.fixed.assetsFixedGoodsController.getLabelUseableData({ id: scope.row.id }).then((res) => {
+									printInfo.value = res
+									printInfo.value.id = scope.row.id
+									printVisible.value = true
+									labelStatus.value = '未打印'
+
+									// 如果已经配置过打印设置
+									if (res.labelArr.length > 0) {
+										// 查询固定资产标物品签信息（标签详情）
+										service.assets.label.assetsGoodsLabelController.getGoodsLabel({ goodsId: scope.row.id, dataType: '固定资产' }).then((res) => {
+											Object.assign(printOptionsInfo, res)
+
+											let labelArr: any[] = []
+											res.labelArr.forEach((item: any, index: number) => {
+												if (index <= 3) {
+													labelArr.push(item)
+												}
+											})
+											Object.assign(printOptionsInfo, { labelArr })
+
+											res.labelStatus === 1 ? (labelStatus.value = '已打印') : (labelStatus.value = '未打印')
+											printOptionsInfo.id = scope.row.id
+										})
+									}
+								})
 							},
 						},
 					]
@@ -323,15 +539,6 @@ const getColumns = () => {
 				AdvSearchOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
-					// component: {
-					// 	vm: advSearchOrUpdateTree,
-					// 	props: {
-					// 		treeData: item.optionList,
-					// 		fieldId: item.fieldId,
-					// 		page: 'fixedAssetsListAdvSearchAdvSearch',
-					// 		type: 'adeSearch',
-					// 	},
-					// },
 					component: {
 						name: 'el-tree-select',
 						props: {
@@ -349,12 +556,84 @@ const getColumns = () => {
 						},
 					},
 				})
-			} else if (item.searchEnable === 1 && ['text', 'number', 'interger', 'joinTable'].includes(item.dataType)) {
+			} else if (item.searchEnable === 1 && ['text', 'number', 'integer'].includes(item.dataType)) {
 				AdvSearchOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
 					component: {
 						name: 'el-input',
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('employee')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-autocomplete',
+						props: {
+							placeholder: `请输入${item.fieldName}`,
+							'fetch-suggestions': employeeListStore.employeeList,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('department')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: departmentOptionsStore.departmentOptions,
+							clearable: true,
+							filterable: true,
+							'check-strictly': true,
+							'render-after-expand': false,
+							'show-checkbox': true,
+							'check-on-click-node': true,
+							'default-expand-all': true,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('goodsSupplier')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: goodsSupplierStore.goodsSupplier,
+							props: {
+								label: 'supplierName',
+								value: 'supplierName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+				})
+			} else if (item.searchEnable === 1 && ['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('assetsCategory')) {
+				AdvSearchOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: assetsCategoryStore.assetsCategory,
+							props: {
+								label: 'categoryName',
+								value: 'categoryName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
 					},
 				})
 			}
@@ -367,6 +646,7 @@ const getColumns = () => {
 					label: item.fieldName,
 					prop: item.fieldId,
 					group: item.belongTab,
+					hidden: item.fieldName === '使用部门',
 					component: {
 						name: 'el-tree-select',
 						props: {
@@ -383,14 +663,112 @@ const getColumns = () => {
 							'check-strictly': true,
 						},
 					},
+					props: {
+						labelWidth: '125',
+					},
 				})
-			} else if (['text', 'number', 'interger', 'joinTable'].includes(item.dataType)) {
+			} else if (['text', 'number', 'integer'].includes(item.dataType)) {
 				clUpsertOptions.items.push({
 					label: item.fieldName,
 					prop: item.fieldId,
 					group: item.belongTab,
 					component: {
 						name: 'el-input',
+						props: {
+							disabled: item.fieldName === '资产编号',
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('employee')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-autocomplete',
+						props: {
+							placeholder: `请输入${item.fieldName}`,
+							'fetch-suggestions': employeeListStore.employeeList,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('department')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: departmentOptionsStore.departmentOptions,
+							clearable: true,
+							filterable: true,
+							'check-strictly': true,
+							'render-after-expand': false,
+							'show-checkbox': true,
+							'check-on-click-node': true,
+							'default-expand-all': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('goodsSupplier')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: goodsSupplierStore.goodsSupplier,
+							props: {
+								label: 'supplierName',
+								value: 'supplierName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
+					},
+				})
+			} else if (['joinTable'].includes(item.dataType) && item.joinTableMethod.includes('assetsCategory')) {
+				clUpsertOptions.items.push({
+					label: item.fieldName,
+					prop: item.fieldId,
+					group: item.belongTab,
+					value: '固定资产',
+					component: {
+						name: 'el-tree-select',
+						props: {
+							data: assetsCategoryStore.assetsCategory,
+							props: {
+								label: 'categoryName',
+								value: 'categoryName',
+								children: 'children',
+								disabled: 'disabled',
+							},
+							clearable: true,
+							filterable: true,
+							'default-expand-all': true,
+							'check-strictly': true,
+						},
+					},
+					props: {
+						labelWidth: '125',
 					},
 				})
 			} else if (item.dataType === 'date') {
@@ -406,23 +784,102 @@ const getColumns = () => {
 							'value-format': 'YYYY-MM-DD',
 						},
 					},
+					props: {
+						labelWidth: '125',
+					},
 				})
 			}
 		})
 	})
 }
 
-// 获取资产状态列表
-const getFixedStatusOption = () => {
-	service.assets.fixed.assetsFixedGoodsController.getFixedAssetsStatusLabel().then((res) => {
-		options.status = res
+// 打印
+const printVisible = ref(false) // 打印对话框
+//打印标签设置下拉框，需要用到的数据
+const printInfo = ref()
+const print_dom = ref()
+const printOptionsInfo: any = reactive({
+	id: '',
+	qrCodeFilePath: '',
+	labelArr: [],
+})
+const printData = reactive({
+	labelArr: [
+		{
+			title: '',
+			fieldId: '',
+		},
+		{
+			title: '',
+			fieldId: '',
+		},
+		{
+			title: '',
+			fieldId: '',
+		},
+		{
+			title: '',
+			fieldId: '',
+		},
+	],
+})
+// 选择打印内容
+const handleChangePrintContent = (fieldName: any, index: any) => {
+	printData.labelArr[index].title = fieldName
+}
+// 保存打印配置
+const handlePrintSave = () => {
+	service.assets.label.assetsGoodsLabelController
+		.addGoodsLabel({
+			goodsId: printInfo.value.id + '',
+			labelArr: printData.labelArr,
+			dataType: '固定资产',
+		})
+		.then(() => {
+			// 查询固定资产标物品签信息（标签详情）
+			service.assets.fixed.assetsFixedGoodsController.getLabelUseableData({ id: printInfo.value.id }).then((res) => {
+				printInfo.value.labelArr = res.labelArr
+
+				// 如果已经配置过打印设置
+				if (res.labelArr.length > 0) {
+					// 查询固定资产标物品签信息（标签详情）
+					service.assets.label.assetsGoodsLabelController.getGoodsLabel({ dataType: '固定资产', goodsId: printInfo.value.id }).then((res) => {
+						Object.assign(printOptionsInfo, res)
+						ElMessage.success('保存成功')
+					})
+				}
+			})
+		})
+}
+// 修改打印设置
+const handlePrintUpdate = () => {
+	printInfo.value.labelArr = []
+
+	printData.labelArr = printOptionsInfo.labelArr.map((item: { label: any; fieldId: any }) => {
+		return {
+			title: item.label,
+			fieldId: item.fieldId,
+		}
 	})
 }
 
-const handleClick = (tab: TabsPaneContext, event: Event) => {
-	console.log(tab, event)
+// 打印
+const printLoaing = ref(false)
+const beginPrint = () => {
+	printLoaing.value = true
 }
-
+const overPrint = () => {
+	printLoaing.value = false
+	printVisible.value = false
+}
+const handlePrintClose = () => {
+	printVisible.value = false
+	printLoaing.value = false
+}
+const beforePrintClose = (done: any) => {
+	printLoaing.value = false
+	done()
+}
 // cl-upsert
 const clUpsertOptions: any = reactive({
 	items: [
@@ -451,7 +908,31 @@ const clUpsertOptions: any = reactive({
 						label: '其他信息',
 						value: 'otherData',
 					},
+					{
+						label: '附属配件',
+						value: 'accessoryData',
+					},
 				],
+			},
+		},
+		{
+			group: 'accessoryData',
+			props: {
+				labelWidth: '0 !important',
+			},
+			prop: 'op-btns',
+			component: {
+				name: 'slot-op-btns',
+			},
+		},
+		{
+			group: 'accessoryData',
+			props: {
+				labelWidth: '0 !important',
+			},
+			prop: 'accessory',
+			component: {
+				name: 'slot-accessory-list',
 			},
 		},
 	],
@@ -459,55 +940,35 @@ const clUpsertOptions: any = reactive({
 const Upsert = useUpsert({
 	...clUpsertOptions,
 
+	dialog: {
+		width: 950,
+		draggable: true,
+	},
+
 	// 详情钩子
-	// onInfo(data, { next, done }) {
-	// 继续请求 info 接口，可以带其他自定义参数
-	// next({
-	// 	id: data.id,
-	//	status: 1
-	// });
-
-	// 使用其他接口
-	// service.demo.goods.info({ id: data.id }).then((res) => {
-	// 	done(res);
-	// });
-	// console.log(data, custom.value)
-
-	// 直接取列表的数据返回
-	// done(data)
-	// },
+	onInfo(data, { done }) {
+		// 使用其他接口
+		service.assets.pushStorageDoc.pushStorageDocController.getFixedGoodsInfo({ id: data.id }).then((res) => {
+			done(res)
+		})
+	},
 })
 
 // cl-table
 const Table: any = useTable({
 	columns: [
+		{
+			type: 'selection',
+		},
+		{
+			type: 'index',
+		},
+
 		// {
 		// 	prop: 'field1',
 		// 	label: '所属单位',
 		// 	// hidden: false,
 		// 	orderNum: 0,
-		// },
-		// {
-		// 	prop: 'field3',
-		// 	label: '资产编号',
-		// 	// hidden: false,
-		// 	orderNum: 0,
-		// },
-		// {
-		// 	prop: 'field5',
-		// 	label: '取得日期',
-		// 	orderNum: 0,
-		// },
-		// {
-		// 	prop: 'field12',
-		// 	label: '资产状态',
-		// 	orderNum: 0,
-		// },
-		// {
-		// 	type: 'op',
-		// 	width: 200,
-		// 	hidden: false,
-		// 	buttons: ['info', 'edit', 'delete'],
 		// },
 	],
 })
@@ -516,12 +977,15 @@ const Table: any = useTable({
 const Crud = useCrud(
 	{
 		service: service.assets.fixed.assetsFixedGoodsController,
+		onDelete(selection, { next }) {
+			// 删除时
+			next({
+				id: selection[0]['id'],
+			})
+		},
 		async onRefresh(params, { next, render }) {
 			// 带上其他查询参数（分页查询）
-			// console.log(putStorageTime.value, putStorageTime.value.length > 0)
-			console.log(advSearchStore.searchData.fixedAssetsListAdvSearch)
-
-			if (putStorageTime.value.length > 0) {
+			if (putStorageTime.value != null && putStorageTime.value.length > 0) {
 				params['startCreateTime'] = dayjs(putStorageTime.value[0]).format('YYYY-MM-DD') // 入库日期（开始）
 				params['endCreateTime'] = dayjs(putStorageTime.value[1]).format('YYYY-MM-DD') // 入库日期（结束）
 			} else {
@@ -529,12 +993,12 @@ const Crud = useCrud(
 				params['endCreateTime'] = undefined // 入库日期（结束）
 			}
 
-			params['status'] = params['field14'] // 资产状态
+			// params['status'] = params['field14'] // 资产状态
 			// params['field3'] = '000024' // 资产状态
 
 			// 高级搜索
 			// eslint-disable-next-line
-			const { page, size, startCreateTime, endCreateTime, status, field14, ...req } = params // 解构
+			const { page, size, startCreateTime, endCreateTime, status, keyWord, ...req } = params // 解构
 
 			params['moreSearch'] = {
 				// field41: params['field41'], // 资产名称
@@ -542,18 +1006,24 @@ const Crud = useCrud(
 				// field3: '000024',
 				...req,
 			}
-			if (advSearchStore.searchData.fixedAssetsListAdvSearch) {
-				for (const key in advSearchStore.searchData.fixedAssetsListAdvSearch) {
-					params['moreSearch'][key] = advSearchStore.searchData.fixedAssetsListAdvSearch[key]
-				}
-			}
 
-			console.log(params, req)
+			// 在点击列排序的时候，这个moreSearch里面会加了一个排序的sort、order在里面，这会让后端SQL直接报错，如果有这两个东西在里面，得去掉这两个
+			if (params['moreSearch'] != null && params['moreSearch'].sort != null) delete params['moreSearch'].sort
+			if (params['moreSearch'] != null && params['moreSearch'].order != null) delete params['moreSearch'].order
 
-			// console.log(params)
 			const { list } = await next(params)
 			// 渲染数据
 			render(list)
+		},
+		dict: {
+			api: {
+				page: 'getAllFixedGoodsListByPage',
+				list: 'queryAll',
+				add: 'addFixedGoodsInfo',
+				update: 'updateFixedGoodsInfo',
+				delete: 'deleteFixedGoodsInfo',
+				info: 'getFixedGoodsInfo',
+			},
 		},
 	},
 	(app) => {
@@ -566,13 +1036,31 @@ function refresh(params?: any) {
 	Crud.value?.refresh(params)
 }
 
-// 入库日期搜素
-const handlePutStorageTime = () => {
-	if (putStorageTime.value == null) {
-		putStorageTime.value = []
-		refresh()
+// 导出
+const exportColumns: any = ref([
+	{
+		prop: 'customContent',
+		label: '供应商',
+		hidden: false,
+		orderNum: 0,
+	},
+])
+
+const onExportData = () => {
+	if (selectionChangeData.value.length === 0) {
+		return ElMessage.info('请选择导出项')
 	} else {
-		refresh()
+		selectionChangeData.value.forEach((item: any) => {
+			Object.assign(item, {
+				customContent: item.customNo,
+			})
+		})
+
+		setTimeout(() => {
+			Table.value.clearSelection()
+		}, 0)
+
+		return selectionChangeData.value
 	}
 }
 
@@ -582,6 +1070,38 @@ const AdvSearchOptions: any = reactive({
 	op: ['close', 'reset', 'search'],
 })
 const AdvSearch = useAdvSearch(AdvSearchOptions)
+
+// 添加行
+let idCheckArr: any[] = []
+const addRow = (scope: any) => {
+	let id = new Date().getTime()
+	if (idCheckArr.includes(id)) id += 1000
+	idCheckArr.push(id)
+	scope['accessoryList'].push({ id: id, name: '', cnt: 1, sku: '', buyDate: dayjs(new Date()).format('YYYY-MM-DD'), price: '0.00', manufacturer: '' })
+}
+// 附属配件 表格选择事件
+let accessoryDataSelections: any[] = []
+const accessoryDataSelect = (selections: any[]) => {
+	accessoryDataSelections = []
+	if (selections != null && selections.length > 0) {
+		for (let i = 0; i < selections.length; i++) {
+			accessoryDataSelections.push(selections[i].id)
+		}
+	}
+}
+// 删除行
+const deleteRow = (scope: any) => {
+	if (accessoryDataSelections != null && accessoryDataSelections.length > 0 && scope['accessoryList'] != null && scope['accessoryList'].length > 0) {
+		for (let i = 0; i < accessoryDataSelections.length; i++) {
+			for (let k = 0; k < scope['accessoryList'].length; k++) {
+				if (scope['accessoryList'][k]['id'] == accessoryDataSelections[i]) {
+					scope['accessoryList'].splice(k, 1)
+					break
+				}
+			}
+		}
+	}
+}
 </script>
 
 <style lang="scss">
@@ -611,63 +1131,126 @@ const AdvSearch = useAdvSearch(AdvSearchOptions)
 	text-align: right;
 }
 
-.el-form-item__label {
-	min-width: 125px !important;
+.el-form-item .el-form-item__label {
+	// min-width: 125px !important;
 	// width: auto !important;
-}
-.el-form-item__label {
+	min-width: unset !important;
 	justify-content: left;
+}
+// 打印
+.print {
+	.el-dialog__body {
+		padding: 20px 40px !important;
+	}
+}
+
+.full-width {
+	width: 100%;
 }
 </style>
 
 <style scoped lang="scss">
+// 复制
+.customNo_copy_icon {
+	cursor: pointer;
+}
+.customNo_copy_icon:hover {
+	color: var(--el-color-primary);
+}
 // 详情
 .info_dialog_content {
 	display: flex;
 	flex-wrap: wrap;
+	margin-left: 20px;
 	.content_item {
-		width: 50%;
+		width: 100%;
 		display: flex;
-		margin: 16px 0;
+		border: 1px solid rgb(128, 128, 128);
 		.item_label {
-			min-width: 110px;
+			width: 90px;
+			height: 40px;
+			line-height: 40px;
+			padding: 0 5px;
+			overflow: hidden;
+			border-right: 1px solid rgb(128, 128, 128);
 		}
 		.item_content {
+			width: 100%;
+			height: 40px;
+			line-height: 40px;
+			overflow: hidden;
+			padding: 0 5px;
 			color: rgba(166, 166, 166, 1);
 		}
 	}
+	.content_item {
+		border-bottom: none;
+	}
+	.content_item:last-child {
+		border-bottom: 1px solid rgb(128, 128, 128);
+	}
 }
-// 二维码
-.QRcode_box {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+// 打印
+.print {
 	h3 {
-		color: rgba(80, 80, 80, 1);
-		font-size: 14px;
+		font-size: 16px;
+		width: 120px;
+		text-align: center;
 	}
-	.flag {
-		width: 80px;
-		height: 80px;
-		background-color: pink;
-		margin: 20px 0;
-	}
-	.code_info {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		.content_item {
-			width: 50%;
-			display: flex;
-			margin: 16px 0;
 
-			.item_label {
-				min-width: 80px;
-				margin-left: 50px;
+	.print_box {
+		padding: 20px;
+		display: flex;
+		// flex-direction: column;
+		align-items: center;
+		margin: 0;
+		.print_left {
+			width: 120px;
+			margin: 16px 0 0 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		img {
+			display: block;
+			width: 100px;
+			height: 100px;
+			margin: 10px auto;
+		}
+		.form_box {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			margin-left: 20px;
+			.form_item {
+				width: 100%;
+				border: 1px solid rgb(128, 128, 128);
+				display: flex;
+				.inprt_input {
+					padding: 5px 10px;
+					width: 97px !important;
+					font-size: 12px;
+					border-right: 1px solid rgb(128, 128, 128);
+				}
+				.el-select {
+					padding: 5px 10px;
+					flex-grow: 1;
+				}
 			}
-			.item_content {
-				color: rgba(166, 166, 166, 1);
+			.form_item {
+				border-bottom: none;
 			}
+			.form_item:last-child {
+				border-bottom: 1px solid rgb(128, 128, 128);
+			}
+		}
+	}
+	.dialog_footer {
+		display: flex;
+		justify-content: space-between;
+		.print_status {
+			font-size: 12px;
+			color: rgba(80, 80, 80, 1);
 		}
 	}
 }
